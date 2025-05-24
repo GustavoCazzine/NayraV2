@@ -70,7 +70,6 @@
 }
 
 html, body, main {
-    overflow-x: hidden;
     text-align: center;
 }
 
@@ -85,7 +84,6 @@ body {
     width: 100%; /* Garante que o body ocupe toda a largura */
     font-family: var(--fonte-corpo);
     line-height: 1.6;
-    background-color: var(--cor-fundo-creme);
     max-width: 1200px; /* Mantém a largura máxima */
 }
 
@@ -103,14 +101,12 @@ h3 {
 
 /* Estilos gerais para o container */
 .controle_geral {
-    margin-bottom: 2rem;
-    background-color: var(--cor-fundo-creme);
-}
-
-.conteudo_principais{
     margin: 0 auto;
     width: 100%;
+    max-width: 1200px; /* Seu limite de largura principal. */
+    overflow: hidden;
 }
+
 
 /* ---------------------------- CABEÇALHO ---------------------------- */
 .cabecalho {
@@ -274,7 +270,7 @@ h3 {
     position: absolute;
     bottom: -5px;
     left: 0;
-    width: 150%;
+    width: 200%;
     height: 40%; /* Aumente se quiser um degradê mais longo */
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, var(--cor-fundo-creme) 100%);
     z-index: 3; /* abaixo da imagem mas acima do fundo */
@@ -296,7 +292,7 @@ h3 {
     align-items: center;
     z-index: 3;
     color: var(--cor-vinho-escuro);
-    margin-top: var(--espacamento-grande);
+    margin-top: 60px;
 }
 
 .scroll-text {
@@ -349,13 +345,16 @@ h3 {
     font-size: var(--tamanho-h1);
 }
 
+.palavras_destaques{
+    color: var(--cor-vinho-escuro);
+}
+
 /* ---------------------------- SEÇÃO CATÁLOGO ---------------------------- */
 .catalogo {
-    padding: var(--espacamento-grande) 1.5rem;
+    padding: var(--espacamento-grande) 1.5rem; /* Este padding é o espaço VISUAL nas laterais da seção. */
+    width: 100%; /* Ocupa 100% da largura disponível do .controle_geral */
     background-color: var(--cor-fundo-creme);
     font-family: var(--fonte-paragrafos);
-    max-width: 1200px;
-    margin: 0 auto;
     text-align: center;
 }
 
@@ -395,37 +394,48 @@ h3 {
     transition: .1s;
 }
 
+/* O Carrossel: Deve conter os cards e permitir a rolagem. */
 .catalogo__carrossel {
     display: flex;
-    overflow-x: auto;
-    gap: var(--espacamento-medio);
-    padding-bottom: 1.5rem;
+    overflow-x: auto; /* PERMANECE: essenciais para o carrossel */
+    gap: var(--espacamento-medio); /* Espaço entre os cards */
+    padding-bottom: 1.5rem; /* Espaço para a scrollbar na parte inferior */
     scroll-snap-type: x mandatory;
-    scroll-padding: 1rem;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     position: relative;
     scrollbar-width: 1px;
+    width: 100%; 
+    scroll-padding-inline: calc(50% - 160px);
 }
 
 .catalogo__carrossel::-webkit-scrollbar {
     display: block;
+    height: 8px;
 }
 
+/* Cor e arredondamento do "polegar" da scrollbar */
 .catalogo__carrossel::-webkit-scrollbar-thumb {
     background: var(--gradiente-vinho);
     border-radius: 25px;
 }
 
+/* Opcional: Estiliza o "trilho" da scrollbar */
+.catalogo__carrossel::-webkit-scrollbar-track {
+    background: var(--cor-fundo-branco);
+    border-radius: 25px;
+}
+
 .catalogo__card {
-    flex: 0 0 100%;
-    max-width: 320px;
+    flex: 0 0 auto; /* Impede encolhimento/crescimento e mantém a largura base */
+    width: 100%; /* Ocupa a largura total disponível pelo flex-item */
+    max-width: 300px; /* Largura fixa do card */
+    scroll-snap-align: center; /* Centraliza o card no ponto de snap */
     background-color: var(--cor-fundo-branco);
     border: 1px solid var(--cor-fundo-creme);
     border-radius: var(--espacamento-medio);
-    scroll-snap-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* A sombra */
+    overflow: hidden; /* Importante para o conteúdo do card */
     transition: transform var(--transition-duration) ease,
                 box-shadow var(--transition-duration) ease;
 }
@@ -437,7 +447,7 @@ h3 {
 }
 
 .catalogo__card.destacado {
-    transform: scale(1.03);
+    transform: scale(1.01);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
@@ -460,7 +470,8 @@ h3 {
 .catalogo__card__titulo {
     font-family: var(--fonte-titulos);
     font-size: var(--tamanho-subtitulo);
-    color: var(--cor-titulo);
+    color: var(--cor-vinho);
+    transform: scale(1.3);
     margin: 0;
 }
 
@@ -482,7 +493,7 @@ h3 {
     color: var(--cor-fundo-creme);
     padding: 0.1rem 0.8rem;
     border-radius: var(--espacamento-pequeno);
-    font-size: 0.70rem;
+    font-size: 0.80rem;
     font-weight: bold;
 }
 
@@ -1593,7 +1604,7 @@ h3 {
     .foto-wrapper {
         margin-top: var(--espacamento-medio);
         margin-bottom: var(--espacamento-grande);
-        width: 100%;
+        width: 150%;
         display: flex;
         justify-content: center;
     }
