@@ -19,14 +19,64 @@
 
     <link rel="apple-touch-icon" href="assets/img/logo_nayra.png">
 
-    <link rel="icon" href="assets/img/logo_nayra.png" sizes="192x192" type="image/png">
+    <meta name="description" content="Transforme seu olhar com extensão de cílios, design de sobrancelhas e outros procedimentos estéticos em Piracicaba. Atendimento especializado e personalizado para mulheres que buscam beleza e autoestima. Agende agora!">
+
 
     <title>Studio Nayra Ananias</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "BeautySalon", // Ou "LocalBusiness", ou "HealthAndBeautyBusiness"
+        "name": "Studio Nayra Ananias",
+        "image": "https://studionayraananias.com.br/assets/img/logo_nayra.png", // URL completa da sua logo
+        "@id": "https://studionayraananias.com.br/", // URL do seu site
+        "url": "https://studionayraananias.com.br/",
+        "telephone": "+5519999670165",
+        "priceRange": "$$", // Ou "$, $$$, etc." - Opcional
+        "description": "Especialista em extensão de cílios, design de sobrancelhas e estética em Piracicaba. Agende seu horário e realce sua beleza.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Rua Ingá, 62",
+            "addressLocality": "Piracicaba",
+            "addressRegion": "SP",
+            "postalCode": "13401-543", // Coloque seu CEP aqui
+            "addressCountry": "BR"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -22.74760, // Encontre no Google Maps
+            "longitude": -47.65076 // Encontre no Google Maps
+        },
+        "openingHoursSpecification": [ // Opcional, mas recomendado
+            {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "18:00"
+            },
+            {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "13:00"
+            }
+        ],
+        "sameAs": [ // Links para suas redes sociais corretas!
+            "https://www.instagram.com/studionayraananias",
+            "https://www.pinterest.com/SEU_USUARIO_PINTEREST",
+            "https://www.tiktok.com/@SEU_USUARIO_TIKTOK"
+        ]
+        }
+</script>
 
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">     <meta name="description" content="Transforme seu olhar com extensão de cílios, design de sobrancelhas e outros procedimentos estéticos. Atendimento especializado e personalizado para mulheres que buscam beleza e autoestima. Agende agora!">
 </head>
 
 <body>
@@ -56,13 +106,14 @@
                 <div class="textos-titulo">
                     <div class="linha linha-superior"></div>
                     <div class="nome-container">
-                        <h2 class="nome nayra">Nayra</h2>
-                        <h1 class="nome ananias">Ananias</h1>
+                        <span class="nome nayra">Nayra</span>
+                        <span class="nome ananias">Ananias</span>
                     </div>
                     <div class="linha linha-inferior"></div>
                     <h1 class="secao-principal__subtitulo">
-                        Especialista em extensão de cílios e design de sobrancelhas em Piracicaba.
+                        Nayra Ananias - Especialista em Extensão de Cílios e Design de Sobrancelhas em Piracicaba
                     </h1>
+
                 </div>
 
                 <div class="scroll-indicator">
@@ -78,7 +129,7 @@
             <section class="catalogo" id="catalogo">
                 <h2 class="container__conteudo__titulo texto-com-gradiente">Destaques</h2>
                 <p class="container__conteudo__descricao">
-                    Explore alguns de nossos <span class="palavras_destaques">serviços mais populares</span> no carrossel interativo. Para a <span class="palavras_destaques">lista completa</span> de todos os nossos serviços, confira nosso catálogo em PDF.
+                    Descubra os tratamentos que são <span class="palavras_destaques">sucesso entre nossas clientes!</span> Navegue pelo carrossel e, para ver todas as opções, baixe nosso catálogo completo.
                 </p>
 
                 <div class="catalogo__menu">
@@ -99,29 +150,31 @@
                     </a>
                 </div>
 
-                <div id="quiz-modal" style="display:none">
-                    <div id="quiz-container">
-                        <button onclick="fecharQuizExterno()" class="quiz-fechar-botao">X</button>
-                        <h2 id="pergunta"></h2>
-                        <div id="opcoes"></div>
-                        <div id="quiz-progresso">
-                            <div style="width: 0%; height: 100%; background-color: var(--cor-dourado); border-radius: 5px; text-align: center; color: white; font-size: 0.8em; line-height: 10px;">0%</div>
-                        </div>
-                    </div>
-                    <div id="resultado" style="display:none">
-                        <button onclick="fecharQuizExterno()" class="quiz-fechar-botao">X</button>
-                        <h2>Descubra seu tratamento ideal</h2>
-                        <div id="servico-recomendado-msg"></div>
-                        <a id="whatsapp-link" style="display:none" target="_blank">Agendar pelo WhatsApp</a>
+            <section class="catalogo" id="catalogo">
+                <div class="catalogo__intro">
+                    <h2 class="container__conteudo__titulo texto-com-gradiente">Destaques</h2>
+                    <p class="container__conteudo__descricao">
+                        Descubra os tratamentos que são <span class="palavras_destaques">sucesso entre nossas clientes!</span> Navegue pelo carrossel e, para ver todas as opções, baixe nosso catálogo completo.
+                    </p>
+                    <div class="catalogo__menu">
+                        <button class="catalogo__botao ativo" onclick="mostrarServicos('sobrancelhas')">Sobrancelhas</button>
+                        <button class="catalogo__botao" onclick="mostrarServicos('cilios')">Cílios</button>
                     </div>
                 </div>
-
-                <div class="catalogo__quiz">
-                    <a href="#" id="abrir-quiz-link" class="catalogo__quiz__link">
-                        Não sabe qual serviço escolher? <span>Faça nosso quiz rápido.</span>
-                    </a>
+                <div class="catalogo__carrossel" id="catalogo-carrossel"></div> <div class="catalogo__intro"> <div class="catalogo__pdf">
+                        <p class="container__conteudo__descricao">
+                            Não encontrou o que procurava?
+                        </p>
+                        <a href="assets/pdf/CatálogoNayraAnanias.pdf" class="catalogo__pdf__link texto-com-gradiente" target="_blank">
+                            <i class="fa-solid fa-file-pdf"></i> Nosso catálogo COMPLETO
+                        </a>
+                    </div>
+                    <div class="catalogo__quiz">
+                        <a href="#" id="abrir-quiz-link" class="catalogo__quiz__link">
+                            Não sabe qual serviço escolher? <span>Faça nosso quiz rápido.</span>
+                        </a>
+                    </div>
                 </div>
-
             </section>
 
 
@@ -163,15 +216,7 @@
                     <p>Estamos ansiosos para te receber! Nossa localização é de fácil acesso:</p>
 
                     <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.846779817919!2d-47.66382432354898!3d-22.19580837970395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c63b03e451b2b1%3A0x901cb8981f44991!2sR.%20Ing%C3%A1%2C%2062%20-%20Paulic%C3%A9ia%2C%20Piracicaba%20-%20SP%2C%2013401-521!5e0!3m2!1spt-BR!2sbr!4v1715814907935"
-                                width="100%"
-                                height="450"
-                                style="border:0;"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                title="Localização do Studio Nayra Ananias no Google Maps">
-                        </iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.474790079448!2d-47.653346490492666!3d-22.747754779281248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c630fa19568361%3A0x6a5e1cb9bd05b369!2sR.%20Ing%C3%A1%2C%2062%20-%20Paulic%C3%A9ia%2C%20Piracicaba%20-%20SP%2C%2013401-543!5e0!3m2!1spt-BR!2sbr!4v1748469857506!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
 
                     <div class="location-details">
@@ -191,32 +236,31 @@
             </div>
 
             <div class="social-bar" id="socialBar">
+                <a href="https://www.pinterest.com/SEU_USUARIO_PINTEREST" target="_blank" class="social-icon pinterest">
+                    <i class="fab fa-pinterest"></i>
+                </a>
+                <a href="https://www.tiktok.com/@SEU_USUARIO_TIKTOK" target="_blank" class="social-icon tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
                 <a href="https://www.instagram.com/studionayraananias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.instagram.com/studionayraananias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon pinterest">
-                    <i class="fab fa-pinterest"></i>
-                </a>
-                <a href="https://www.instagram.com/studionayraananias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon tiktok">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://www.instagram.com/studionayraananias" target="_blank" class="newsletter">FOLLOW</a>
             </div>
             <div id="toggleBar" class="toggle-bar"></div>
 
             <footer class="site-footer">
                 <div class="site-footer__container">
                     <div class="footer-credits">
-                        <p>© 2025 <a href="https://www.instagram.com/studionayraananias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">Nayra Ananias</a> - Todos os direitos reservados.</p>
+                        <p>© 2024 <a href="https://www.instagram.com/studionayraananias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">Nayra Ananias</a> - Todos os direitos reservados.</p>
                     </div>
                     <div class="footer-social">
                         <a href="https://www.instagram.com/studionayraananias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://www.instagram.com/studionayraananias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Pinterest">
+                        <a href="https://www.pinterest.com/SEU_USUARIO_PINTEREST" target="_blank" class="social-icon pinterest">
                             <i class="fab fa-pinterest"></i>
                         </a>
-                        <a href="https://www.tiktok.com/@seuperfil" target="_blank" aria-label="TikTok">
+                        <a href="https://www.tiktok.com/@SEU_USUARIO_TIKTOK" target="_blank" class="social-icon tiktok">
                             <i class="fab fa-tiktok"></i>
                         </a>
                     </div>
