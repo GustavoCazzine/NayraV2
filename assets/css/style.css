@@ -408,21 +408,46 @@ section {
     font-weight: bold; /* << ADICIONADO: Para dar mais ênfase */
 }
 
-/* ---------------------------- SEÇÃO CATÁLOGO ---------------------------- */
+/* ---------------------------- SEÇÃO CATÁLOGO (Mobile First) ---------------------------- */
 .catalogo {
-    padding: var(--espacamento-grande) 1.5rem; /* Este padding é o espaço VISUAL nas laterais da seção. */
-    width: 100%; /* Ocupa 100% da largura disponível do .controle_geral */
+    padding-top: var(--espacamento-vertical-secao);
+    padding-bottom: var(--espacamento-vertical-secao);
+    width: 100%;
     background-color: var(--cor-fundo-creme);
-    font-family: var(--fonte-paragrafos);
+    font-family: var(--fonte-corpo);
+    text-align: center;
+    overflow: hidden; /* Crucial para a técnica do carrossel abaixo */
+}
+
+.catalogo__intro {
+    margin-bottom: var(--espacamento-grande);
+    /* Padding lateral herdado do .controle_geral */
+}
+
+.catalogo__intro:last-child {
+    margin-bottom: 0;
+}
+
+.catalogo__carrossel + .catalogo__intro {
+    margin-top: var(--espacamento-grande);
+}
+
+.catalogo .container__conteudo__titulo {
+    font-family: var(--fonte-titulo);
+    font-size: var(--tamanho-h2);
+    margin-bottom: var(--espacamento-medio);
     text-align: center;
 }
 
-.catalogo__titulo {
-    font-family: var(--fonte-titulos);
-    font-size: var(--tamanho-h2);
-    color: var(--cor-titulo);
-    text-align: center;
+.catalogo .container__conteudo__descricao {
+    color: var(--cor-texto-corpo);
+    font-size: var(--tamanho-texto-base);
+    line-height: 1.6;
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: var(--espacamento-grande);
+    text-align: center;
 }
 
 .catalogo__menu {
@@ -430,89 +455,93 @@ section {
     justify-content: center;
     flex-wrap: wrap;
     gap: var(--espacamento-medio);
-    margin: var(--espacamento-grande) auto;
+    margin-top: var(--espacamento-grande);
+    margin-bottom: var(--espacamento-grande);
 }
 
 .catalogo__botao {
     background-color: var(--cor-dourado);
-    color: var(--cor-fundo-creme);
+    color: var(--cor-fundo-branco);
     border: none;
-    padding: 0.6rem 1.4rem;
+    padding: 0.7rem 1.5rem;
     font-size: var(--tamanho-texto-base);
+    font-family: var(--fonte-corpo);
+    font-weight: bold;
     border-radius: var(--espacamento-pequeno);
     cursor: pointer;
-    transition: background-color var(--transition-duration) ease;
-
+    transition: background-color var(--transition-duration) ease, transform 0.2s ease;
 }
 
 .catalogo__botao:hover,
 .catalogo__botao.ativo {
     background: var(--gradiente-vinho);
-    color: var(--cor-fundo-creme);
+    color: var(--cor-fundo-branco);
     font-weight: bold;
-    transition: .1s;
+    transform: scale(1.05);
+    transition-duration: 0.2s;
 }
 
-/* O Carrossel: Deve conter os cards e permitir a rolagem. */
 .catalogo__carrossel {
     display: flex;
-    overflow-x: auto; /* PERMANECE: essenciais para o carrossel */
-    gap: var(--espacamento-medio); /* Espaço entre os cards */
-    padding-bottom: 1.5rem; /* Espaço para a scrollbar na parte inferior */
+    overflow-x: auto;
+    gap: var(--espacamento-medio); /* Espaço ENTRE os cards */
+    width: calc(100% + 4rem); /* (2rem de padding de cada lado) */
+    margin-left: -2rem;
+    margin-right: -2rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-bottom: 2.5rem; /* Espaço para a scrollbar */
+    padding-top: 0.5rem; /* Adiciona um pequeno espaço no topo dos cards, se necessário */
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    position: relative;
-    scrollbar-width: 1px;
-    width: 100%; 
-    scroll-padding-inline: calc(50% - 160px);
+    scroll-padding-inline-start: var(--espacamento-pequeno); /* Ex: 0.5rem */
+    scroll-padding-inline-end: var(--espacamento-pequeno);   /* Ex: 0.5rem */
+    scrollbar-width: thin;
+    scrollbar-color: var(--cor-vinho-escuro) var(--cor-dourado);
 }
 
 .catalogo__carrossel::-webkit-scrollbar {
-    display: block;
     height: 8px;
+    background-color: var(--cor-fundo-branco);
+    border-radius: 25px;
 }
 
-/* Cor e arredondamento do "polegar" da scrollbar */
 .catalogo__carrossel::-webkit-scrollbar-thumb {
     background: var(--gradiente-vinho);
     border-radius: 25px;
 }
 
-/* Opcional: Estiliza o "trilho" da scrollbar */
-.catalogo__carrossel::-webkit-scrollbar-track {
-    background: var(--cor-fundo-branco);
-    border-radius: 25px;
-}
-
 .catalogo__card {
-    flex: 0 0 auto; /* Impede encolhimento/crescimento e mantém a largura base */
-    width: 100%; /* Ocupa a largura total disponível pelo flex-item */
-    max-width: 300px; /* Largura fixa do card */
-    scroll-snap-align: center; /* Centraliza o card no ponto de snap */
+    flex: 0 0 100%; /* Reduzido de 75% para dar mais folga lateral */
+    max-width: 400px; /* Reduzido para dar mais folga lateral */
+    scroll-snap-align: center;
+
     background-color: var(--cor-fundo-branco);
-    border: 1px solid var(--cor-fundo-creme);
+    border: 1px solid #efefef;
     border-radius: var(--espacamento-medio);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* A sombra */
-    overflow: hidden; /* Importante para o conteúdo do card */
-    transition: transform var(--transition-duration) ease,
-                box-shadow var(--transition-duration) ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Importante para o conteúdo interno do card */
+    transition: transform var(--transition-duration) var(--transition-timing),
+                box-shadow var(--transition-duration) var(--transition-timing);
+    display: flex;
+    flex-direction: column;
 }
 
-/* Efeitos nos cards */
 .catalogo__card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px) scale(1.02); /* Levemente reduzido o scale no hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
 }
 
 .catalogo__card.destacado {
-    transform: scale(1.01);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    transform: scale(1.03); /* Scale do destaque um pouco menor para evitar cortes */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    z-index: 1; /* Para garantir que o card destacado fique por cima se houver sobreposição */
 }
 
 .catalogo__card img {
     width: 100%;
-    height: 220px;
+    height: 180px; /* Altura um pouco menor para dar mais espaço vertical se necessário */
     object-fit: cover;
     display: block;
 }
@@ -521,59 +550,66 @@ section {
     padding: var(--espacamento-medio);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    gap: var(--espacamento-pequeno);
+    text-align: center;
+    gap: var(--espacamento-xs); /* Diminuído o gap interno do card */
+    flex-grow: 1;
 }
 
 .catalogo__card__titulo {
-    font-family: var(--fonte-titulos);
-    font-size: var(--tamanho-subtitulo);
+    font-family: var(--fonte-titulo);
+    font-size: 1.2rem; /* Ajustado */
     color: var(--cor-vinho);
-    transform: scale(1.3);
-    margin: 0;
+    margin-bottom: var(--espacamento-xs);
+    line-height: 1.3;
 }
 
 .catalogo__card__descricao {
     font-size: var(--tamanho-texto-base);
-    color: var(--cor-paragrafos);
+    color: var(--cor-texto-corpo);
     line-height: 1.5;
+    margin-bottom: var(--espacamento-pequeno); /* Diminuído */
+    flex-grow: 1;
 }
 
 .catalogo__card__caracteristicas {
     display: flex;
     gap: var(--espacamento-pequeno);
     flex-wrap: wrap;
-    margin-top: var(--espacamento-pequeno);
+    justify-content: center;
+    margin-bottom: var(--espacamento-medio);
 }
 
 .catalogo__card__caracteristicas span {
     background-color: var(--cor-dourado);
-    color: var(--cor-fundo-creme);
-    padding: 0.1rem 0.8rem;
+    color: var(--cor-fundo-branco);
+    padding: 0.2rem 0.8rem;
     border-radius: var(--espacamento-pequeno);
-    font-size: 0.80rem;
+    font-size: 0.8rem;
     font-weight: bold;
 }
 
 .catalogo__cta {
-    margin-top: var(--espacamento-medio);
-    text-align: center;
+    margin-top: auto;
+    width: 100%;
 }
 
 .catalogo__cta a {
+    display: inline-block;
     background: var(--gradiente-vinho);
     color: var(--cor-fundo-branco);
     text-decoration: none;
-    padding: 0.7rem 1.6rem;
+    padding: 0.7rem 1.5rem; /* Ajustado */
     border-radius: var(--espacamento-pequeno);
-    font-size: var(--tamanho-texto-base);
+    font-size: var(--tamanho-botao);
+    font-family: var(--fonte-corpo);
     font-weight: bold;
-    transition: filter var(--transition-duration) ease;
+    transition: filter var(--transition-duration) ease, transform 0.2s ease;
 }
 
 .catalogo__cta a:hover {
-    filter: brightness(1.1);
+    filter: brightness(1.15);
+    transform: scale(1.03);
 }
 
 .catalogo__pdf {
@@ -581,289 +617,416 @@ section {
     text-align: center;
 }
 
+/* Ajuste para diminuir espaço entre o <p> e o <a> do PDF */
+.catalogo__pdf .container__conteudo__descricao {
+    margin-bottom: var(--espacamento-xs); /* BEM MENOR, quase colado */
+}
+
 .catalogo__pdf__link {
     display: inline-flex;
     align-items: center;
     gap: var(--espacamento-pequeno);
-    padding: 0.8rem 1.4rem;
+    padding: 0.1rem 1.6rem;
     border-radius: 30px;
     font-weight: bold;
-    font-size: var(--tamanho-texto-base);
+    font-size: var(--tamanho-botao);
     transition: all var(--transition-duration) ease;
     text-decoration: none;
-    transition: .1s;
 }
 
 .catalogo__pdf__link:hover {
-    background: var(--gradiente-vinho);
-    color: var(--cor-fundo-creme);
-    -webkit-text-fill-color: var(--cor-fundo-creme);
-    background-clip: border-box;
-    -webkit-background-clip: border-box;
-    transition: .1s;
+    opacity: 0.85;
+    transform: scale(1.03);
 }
 
 .catalogo__pdf__link i {
     font-size: 1.2rem;
 }
 
+.catalogo__quiz {
+    margin-top: var(--espacamento-medio);
+    text-align: center;
+}
+
+.catalogo__quiz__link {
+    font-family: var(--fonte-corpo);
+    font-size: var(--tamanho-texto-base);
+    color: var(--cor-texto-corpo);
+    text-decoration: none;
+    padding: var(--espacamento-pequeno) var(--espacamento-medio);
+    border-radius: var(--espacamento-pequeno);
+    transition: color var(--transition-duration) ease-in-out;
+    display: inline-block;
+}
+
+.catalogo__quiz__link span {
+    font-weight: bold;
+    color: var(--cor-vinho);
+    text-decoration: underline;
+}
+
+.catalogo__quiz__link:hover span {
+    color: var(--cor-vinho-escuro);
+}
+
 /* ---------------------------- QUIZ ---------------------------- */
+/* ==========================================================================
+   ESTILOS PARA O LINK QUE ATIVA O QUIZ (GERALMENTE NO CATÁLOGO)
+   ========================================================================== */
+
+.catalogo__quiz { 
+    margin-top: var(--espacamento-grande); 
+    text-align: center;
+}
+
+.catalogo__quiz__link { 
+    font-family: var(--fonte-destaque); 
+    font-size: var(--tamanho-subtitulo); 
+    color: var(--cor-texto-corpo);
+    text-decoration: none;
+    padding: var(--espacamento-medio); 
+    border-radius: var(--espacamento-pequeno);
+    transition: color var(--transition-duration) ease-in-out, border-color var(--transition-duration) ease-in-out;
+    display: inline-block; 
+    border: 1px dashed transparent; 
+}
+
+.catalogo__quiz__link:hover,
+.catalogo__quiz__link:focus { 
+    color: var(--cor-vinho-escuro);
+    border-color: var(--cor-dourado); 
+}
+
+.catalogo__quiz__link span { 
+    font-weight: bold;
+    color: var(--cor-vinho);
+    text-decoration: underline; 
+    text-decoration-color: var(--cor-dourado); 
+    text-decoration-thickness: 2px; 
+    transition: color var(--transition-duration) ease-in-out, text-decoration-color var(--transition-duration) ease-in-out;
+}
+
+.catalogo__quiz__link:hover span,
+.catalogo__quiz__link:focus span {
+    color: var(--cor-vinho-escuro);
+    text-decoration-color: var(--cor-vinho-escuro);
+}
+
+
+/* ==========================================================================
+    ESTILOS PARA O QUIZ MODAL (POPUP)
+   ========================================================================== */
 
 #quiz-modal {
-    display: none;
+    display: none; /* Controlado via JavaScript para exibir como 'flex' */
     position: fixed;
-    z-index: 1000;
+    z-index: 1000; /* Garante que fique acima de outros conteúdos */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente */
+    
+    /* Para centralizar o conteúdo do modal na tela */
+    display: flex; 
     justify-content: center;
     align-items: center;
-    padding: var(--espacamento-grande);
-    overflow: auto;
+    
+    padding: var(--espacamento-medio); /* Espaçamento nas bordas da tela */
+    overflow-y: auto; /* Permite rolagem se o conteúdo do modal for maior que a tela */
+    box-sizing: border-box;
 }
 
 #quiz-container,
 #resultado {
     background-color: var(--cor-fundo-branco);
     border-radius: var(--espacamento-medio);
-    padding: var(--espacamento-medio); /* Reduzi o padding geral do card */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: var(--espacamento-grande); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     text-align: center;
-    max-width: 550px;
-    width: 95%;
-    position: relative;
-    display: flex; /* Para ordenar os elementos internos */
-    flex-direction: column; /* Para colocar a barra de progresso abaixo */
+    max-width: 550px; /* Largura máxima do modal */
+    width: 100%;    /* Ocupa a largura disponível dentro do padding do #quiz-modal */
+    position: relative; /* Para o posicionamento absoluto do botão de fechar */
+    display: flex; /* Usado para organizar o conteúdo interno e a barra de progresso */
+    flex-direction: column;
+    gap: var(--espacamento-medio); 
+    box-sizing: border-box;
 }
 
-#quiz-container h2 {
+#quiz-container h2, 
+#resultado h3 { 
     font-family: var(--fonte-titulo);
     color: var(--cor-vinho);
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi a margem inferior */
-    font-size: var(--tamanho-h3);
+    margin-top: 0;
+    margin-bottom: var(--espacamento-medio); 
     font-weight: bold;
 }
 
-/* Removendo o estilo do h2 principal dentro de #resultado, ele não será mais usado como título */
-#resultado h2 {
+#quiz-container h2 { /* Título do Quiz: "Descubra o tratamento ideal!" */
+    font-size: var(--tamanho-h2); 
+}
+
+#resultado h3 { /* Título da tela de Resultado: "Seu Tratamento Ideal é:" */
+    font-size: var(--tamanho-h2); 
+}
+
+#resultado h2 { /* Esconde H2 genérico dentro do resultado, se houver */
     display: none;
 }
 
-#resultado h3 {
-    font-family: var(--fonte-titulo);
-    color: var(--cor-vinho);
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi a margem inferior */
-    font-size: var(--tamanho-h2);
-    font-weight: bold;
-}
-
 #pergunta {
+    font-size: var(--tamanho-subtitulo); 
     font-weight: bold;
     color: var(--cor-texto-titulo);
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi a margem inferior */
-    margin-top: var(--espacamento-grande);
+    margin-top: var(--espacamento-pequeno); 
+    margin-bottom: var(--espacamento-grande); 
+    line-height: 1.4;
+    min-height: 2.8em; /* Para evitar que o layout pule muito com perguntas de tamanhos diferentes */
 }
 
 #opcoes {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--espacamento-pequeno); /* Reduzi o gap entre as opções */
-    margin-bottom: var(--espacamento-grande); /* Reduzi a margem inferior */
+    grid-template-columns: 1fr; 
+    gap: var(--espacamento-medio); 
+    margin-bottom: var(--espacamento-grande);
 }
 
 #opcoes button {
     background-color: var(--cor-fundo-creme);
-    border: 1px solid var(--cor-vinho);
+    border: 1px solid var(--cor-dourado); 
     color: var(--cor-vinho);
-    padding: 8px 12px; /* Reduzi o padding dos botões */
+    padding: var(--espacamento-medio); 
     border-radius: var(--espacamento-pequeno);
-    font-size: var(--tamanho-texto-pequeno);
+    font-size: var(--tamanho-texto-base); 
     font-family: var(--fonte-corpo);
+    font-weight: 600; 
     cursor: pointer;
     transition: background-color var(--transition-duration) ease,
                 color var(--transition-duration) ease,
+                border-color var(--transition-duration) ease,
                 box-shadow 0.1s ease,
                 transform 0.1s ease;
+    line-height: 1.5; /* Melhorar leitura em botões com mais texto */
 }
 
 #opcoes button:hover {
     background-color: var(--cor-vinho);
     color: var(--cor-fundo-branco);
+    border-color: var(--cor-vinho); 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transform: scale(1.01);
+    transform: scale(1.02); 
 }
 
 #opcoes button.selecionado {
-    background-color: var(--cor-vinho); /* Mantém o hover color como seleção */
+    background-color: var(--cor-vinho);
     color: var(--cor-fundo-branco);
+    border-color: var(--cor-vinho-escuro);
     font-weight: bold;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
 }
 
-/* Estilos para a exibição do resultado */
 #servico-recomendado-msg {
     display: flex;
-    flex-direction: column; /* Centralizar os itens horizontalmente */
-    align-items: center; /* Centralizar os itens horizontalmente */
-    gap: var(--espacamento-medio); /* Reduzi o espaçamento entre os itens do resultado */
-    text-align: center; /* Alinhar o texto ao centro */
-}
-
-#servico-recomendado-msg > div {
-    background-color: var(--cor-fundo-branco);
-    border-radius: var(--espacamento-pequeno);
-    padding: var(--espacamento-pequeno); /* Reduzi o padding interno do container do serviço */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    width: 100%; /* Ocupar a largura total do container */
-    max-width: 350px; /* Reduzi a largura máxima para o combo */
-    display: flex;
-    flex-direction: column; /* Um item abaixo do outro */
-    align-items: center; /* Centralizar os itens horizontalmente dentro de cada div */
-    text-align: center; /* Centralizar o texto dentro de cada div */
-    justify-content: center;
-}
-
-#servico-recomendado-msg h3 {
-    color: var(--cor-vinho);
+    flex-direction: column; 
+    align-items: center; 
+    gap: var(--espacamento-grande); 
+    text-align: center;
     margin-top: var(--espacamento-pequeno);
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi a margem inferior */
-    font-size: var(--tamanho-h2); /* Ajustei o tamanho do título do serviço */
-    font-weight: bold;
 }
 
-#servico-recomendado-msg strong {
+#servico-recomendado-msg > div { /* Container do serviço recomendado individual ou combo */
+    background-color: var(--cor-fundo-branco);
+    border: 1px solid #eee; 
+    border-radius: var(--espacamento-pequeno);
+    padding: var(--espacamento-medio); 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    width: 100%; 
+    max-width: 380px; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: var(--espacamento-medio); 
+}
+
+#servico-recomendado-msg h3 { /* Título do serviço recomendado, ex: "Brow Lamination" */
+    font-family: var(--fonte-titulo); 
     color: var(--cor-vinho);
-    margin-top: 0;
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi a margem inferior */
-    font-size: var(--tamanho-subtitulo); /* Ajustei o tamanho do título do serviço */
+    font-size: var(--tamanho-h3); 
     font-weight: bold;
+    margin-top: 0;
+    margin-bottom: var(--espacamento-xs);
+}
+
+#servico-recomendado-msg strong { /* Usado para "Combo Ideal:" ou similar */
+    font-family: var(--fonte-corpo); 
+    color: var(--cor-texto-titulo); 
+    font-size: var(--tamanho-subtitulo); 
+    font-weight: bold;
+    margin-bottom: var(--espacamento-pequeno);
 }
 
 #servico-recomendado-msg img {
-    max-width: 100px; /* Reduzi o tamanho máximo da imagem */
+    max-width: 120px; 
     height: auto;
     border-radius: var(--espacamento-pequeno);
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi a margem inferior */
+    margin-bottom: var(--espacamento-pequeno); 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
-/* Estilo para o combo no resultado (um serviço abaixo do outro) */
-#servico-recomendado-msg > div > div {
+#servico-recomendado-msg .servico-combo-item { 
     display: flex;
-    flex-direction: column; /* Um item abaixo do outro */
-    align-items: center; /* Centralizar os itens horizontalmente dentro de cada div */
-    text-align: center; /* Centralizar o texto dentro de cada div */
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi o espaçamento entre os serviços do combo */
-    width: 100%; /* Ocupar a largura total do container */
+    flex-direction: column; 
+    align-items: center; 
+    margin-bottom: var(--espacamento-medio); 
+    width: 100%; 
 }
 
-#servico-recomendado-msg > div > div > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#servico-recomendado-msg .servico-combo-item img {
+    max-width: 80px; 
+    margin-bottom: var(--espacamento-xs); 
 }
 
-#servico-recomendado-msg > div > div > div > img {
-    max-width: 80px; /* Reduzi a imagem do combo */
-    height: auto;
-    border-radius: var(--espacamento-pequeno);
-    margin-bottom: var(--espacamento-pequeno); /* Reduzi a margem da imagem do combo */
+#servico-recomendado-msg .servico-combo-item p { 
+    font-size: var(--tamanho-texto-pequeno);
+    color: var(--cor-texto-corpo);
+    margin-bottom: 0;
 }
 
 #whatsapp-link {
     display: inline-block;
     background: var(--gradiente-vinho);
-    color: var(--cor-fundo-branco) !important;
-    padding: 10px 20px; /* Reduzi o padding do link */
+    color: var(--cor-fundo-branco); 
+    padding: var(--espacamento-medio) var(--espacamento-grande); 
     border-radius: var(--espacamento-pequeno);
-    font-size: var(--tamanho-texto-pequeno);
-    text-decoration: none !important;
+    font-size: var(--tamanho-texto-base); 
+    font-weight: bold;
+    font-family: var(--fonte-corpo);
+    text-decoration: none; 
     transition: transform var(--transition-duration) ease-in-out,
-                box-shadow var(--transition-duration) ease-in-out;
+                box-shadow var(--transition-duration) ease-in-out,
+                filter var(--transition-duration) ease;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
-    margin-top: var(--espacamento-pequeno); /* Reduzi a margem superior */
+    margin-top: var(--espacamento-medio); 
 }
 
 #whatsapp-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px) scale(1.02); 
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1);
 }
 
-/* Botão de fechar o modal */
 .quiz-fechar-botao {
     position: absolute;
-    top: var(--espacamento-pequeno);
-    right: var(--espacamento-pequeno);
+    top: var(--espacamento-medio); 
+    right: var(--espacamento-medio); 
     background: none;
     border: none;
-    font-size: 1.6rem;
-    color: var(--cor-vinho-escuro);
+    font-size: 1.8rem; 
+    color: var(--cor-texto-neutro); 
     cursor: pointer;
-    transition: color var(--transition-duration) ease-in-out;
-    padding: 0;
+    transition: color var(--transition-duration) ease-in-out, transform 0.2s ease;
+    padding: 0.25rem; 
     line-height: 1;
+    z-index: 10; 
 }
 
 .quiz-fechar-botao:hover {
-    color: var(--cor-dourado);
+    color: var(--cor-vinho-escuro);
+    transform: scale(1.1);
 }
 
-/* Barra de progresso movida para baixo */
 #quiz-progresso {
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #e9e9e9; /* Cor de fundo da barra (trilha) */
     border-radius: var(--espacamento-pequeno);
-    margin-top: var(--espacamento-pequeno); /* Espaçamento acima da barra */
-    height: 10px;
-    overflow: hidden;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    display: flex; /* Para alinhar o div interno */
-    align-items: center; /* Alinhar verticalmente */
+    margin-top: auto; /* Empurra para baixo no flex container do quiz */
+    /* padding-top: var(--espacamento-medio); /* Removido: não necessário se height é fixo */
+    height: 14px; /* Altura da barra - pode ajustar */
+    overflow: hidden; /* Para o border-radius funcionar no preenchimento */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-#quiz-progresso > div {
-    background: var(--gradiente-vinho);
+#quiz-progresso > div { /* A div interna que representa o preenchimento */
+    background: var(--gradiente-vinho); /* SEU GRADIENTE AQUI */
+    /* PARA TESTE, descomente a linha abaixo e comente a de cima: */
+    /* background: var(--cor-vinho); */
     height: 100%;
-    border-radius: var(--espacamento-pequeno);
+    border-radius: var(--espacamento-pequeno); 
     text-align: center;
     color: var(--cor-fundo-branco);
     font-weight: bold;
-    font-size: 0.8em;
-    line-height: 10px;
-    width: 0%; /* Inicialmente 0 */
-    transition: width 0.3s ease-out;
+    font-size: 0.75em; 
+    line-height: 14px; /* Igual à altura do #quiz-progresso */
+    width: 0%; /* Será atualizado pelo JavaScript */
+    transition: width 0.4s ease-out; 
+    white-space: nowrap; /* Para o texto não quebrar linha */
+    overflow: hidden; /* Para o texto não vazar se for maior que a barra */
 }
 
-/* Link para abrir o quiz no catálogo */
-.catalogo__quiz {
-    margin-top: var(--espacamento-grande); /* Reduzi a margem superior */
+#resultado { 
+    display: none; 
+}
+
+/* Container geral da mensagem de resultado */
+#servico-recomendado-msg {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: var(--espacamento-pequeno); /* Reduzido o gap principal para combos */
     text-align: center;
+    margin-top: var(--espacamento-pequeno);
 }
 
-.catalogo__quiz__link {
-    font-family: var(--fonte-destaque);
-    font-size: var(--tamanho-texto-base);
-    color: var(--cor-texto-corpo);
-    text-decoration: none;
-    padding: var(--espacamento-pequeno) var(--espacamento-medio); /* Reduzi o padding do link */
-    border-radius: var(--espacamento-pequeno);
-    transition: color var(--transition-duration) ease-in-out;
+/* Estilo para cada item de serviço individualmente, seja único ou em combo */
+#servico-recomendado-msg .servico-combo-item { 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    width: 100%; 
+    margin-bottom: var(--espacamento-pequeno); /* Espaço abaixo de cada item de serviço */
 }
 
-.catalogo__quiz__link span {
-    font-weight: bold;
+/* Título do serviço dentro do card de resultado (H4) */
+#servico-recomendado-msg .servico-combo-item h4 {
+    font-family: var(--fonte-titulo);
     color: var(--cor-vinho);
+    font-size: var(--tamanho-h3); /* Pode ser um pouco menor que o H3 principal do modal */
+    margin-top: var(--espacamento-xs);
+    margin-bottom: var(--espacamento-xs);
 }
 
-.catalogo__quiz__link:hover {
-    color: var(--cor-vinho-escuro);
+/* Descrição do serviço dentro do card de resultado */
+#servico-recomendado-msg .servico-combo-item p {
+    font-size: var(--tamanho-texto-pequeno); /* Um pouco menor para mais descrição */
+    color: var(--cor-texto-corpo);
+    line-height: 1.4;
+    margin-bottom: 0;
 }
 
-/* Esconde inicialmente a div de resultado */
-#resultado {
-    display: none;
+/* Imagem do serviço no resultado */
+#servico-recomendado-msg .servico-combo-item img {
+    max-width: 100px; /* Ajustado para consistência */
+    height: auto;
+    border-radius: var(--espacamento-pequeno);
+    margin-bottom: var(--espacamento-xs); 
+}
+
+/* Estilo para o "+" entre os serviços no combo */
+#servico-recomendado-msg .separador-combo {
+    font-size: 2rem; /* Tamanho do '+' */
+    color: var(--cor-dourado); /* Cor do '+' */
+    font-weight: bold;
+    margin: var(--espacamento-xs) 0; /* Espaçamento vertical mínimo ao redor do '+' */
+    line-height: 1;
+}
+
+/* Ajuste no strong que precede o combo (ex: "Para um look impactante:") */
+#servico-recomendado-msg > strong {
+    display: block; /* Para ocupar a linha toda e respeitar margem */
+    margin-bottom: var(--espacamento-medio);
+    font-family: var(--fonte-corpo);
+    font-size: var(--tamanho-subtitulo);
+    color: var(--cor-texto-titulo);
 }
 
 /* ---------------------------- SEÇÃO DE CURSOS ---------------------------- */

@@ -265,21 +265,25 @@ let scrollListenerAplicado = false;
 // Renderiza os serviços na tela
 function mostrarServicos(tipo) {
     const container = document.getElementById("catalogo-carrossel");
+    if (!container) return; // Adiciona verificação se o container existe
     container.innerHTML = "";
 
     const servicos = tipo === "sobrancelhas" ? servicosSobrancelhas : servicosCilios;
 
-    // DUPLICAR para simular carrossel infinito
-    const servicosDuplicados = [...servicos]
+    // DUPLICAR para simular carrossel infinito (opcional, pode remover se não quiser duplicar)
+    // const servicosDuplicados = [...servicos, ...servicos]; 
+    // Por simplicidade, vamos usar apenas 'servicos' por enquanto
+    const servicosParaRenderizar = servicos;
 
-    servicosDuplicados.forEach((servico) => {
+
+    servicosParaRenderizar.forEach((servico) => {
         const card = document.createElement("div");
         card.className = "catalogo__card";
         card.setAttribute("role", "group");
-        card.setAttribute("aria-label", servico.titulo);
+        card.setAttribute("aria-label", `Detalhes sobre ${servico.titulo}`); // Melhor acessibilidade
 
         card.innerHTML = `
-            <img src="${servico.imagem}" alt="${servico.titulo}" loading="lazy" onerror="this.src='assets/img/erro-fallback.jpg'">
+            <img src="${servico.imagem}" alt="Imagem ilustrativa do serviço ${servico.titulo}" loading="lazy" onerror="this.onerror=null; this.src='assets/img/placeholder-imagem.png';">
             <div class="catalogo__card__conteudo">
                 <h3 class="catalogo__card__titulo">${servico.titulo}</h3>
                 <p class="catalogo__card__descricao">${servico.descricao}</p>
@@ -287,7 +291,7 @@ function mostrarServicos(tipo) {
                     ${servico.caracteristicas.map(item => `<span>${item}</span>`).join("")}
                 </div>
                 <div class="catalogo__cta">
-                    <a href="#contato">Agendar agora</a>
+                    <a href="https://wa.me/5519999670165?text=Oi%20Nayra!%20😊%20Gostaria%20de%20saber%20mais%20sobre%20o%20serviço%20${encodeURIComponent(servico.titulo)}%20e%20agendar%20um%20horário." target="_blank">Agendar agora</a>
                 </div>
             </div>
         `;
@@ -297,49 +301,71 @@ function mostrarServicos(tipo) {
     document.querySelectorAll(".catalogo__botao").forEach(botao => {
         botao.classList.remove("ativo");
     });
-    document.querySelector(`.catalogo__botao[onclick*="${tipo}"]`).classList.add("ativo");
+    const botaoAtivo = document.querySelector(`.catalogo__botao[onclick*="'${tipo}'"]`); // Ajuste no seletor
+    if (botaoAtivo) {
+        botaoAtivo.classList.add("ativo");
+    }
+    
 
     aplicarSnapHighlight();
 }
 
 function aplicarSnapHighlight() {
     const container = document.getElementById("catalogo-carrossel");
+    if (!container) return;
 
     const destacarCardCentral = () => {
         const cards = container.querySelectorAll(".catalogo__card");
-        const center = container.scrollLeft + container.offsetWidth / 2;
+        if (cards.length === 0) return;
+
+        const containerRect = container.getBoundingClientRect();
+        const containerCenter = containerRect.left + containerRect.width / 2;
 
         cards.forEach(card => {
-            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-            const distancia = Math.abs(center - cardCenter);
-            card.classList.toggle("destacado", distancia < card.offsetWidth / 2);
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const distancia = Math.abs(containerCenter - cardCenter);
+            
+            // Destaca se o centro do card estiver suficientemente próximo do centro do container
+            card.classList.toggle("destacado", distancia < (cardRect.width / 2) * 0.8 ); // 0.8 é um fator de sensibilidade
         });
     };
 
-    if (!scrollListenerAplicado) {
-        container.addEventListener("scroll", () => {
-            window.requestAnimationFrame(destacarCardCentral);
-        });
-        scrollListenerAplicado = true;
+    // Remove listener antigo para evitar duplicação se a função for chamada múltiplas vezes
+    if (container._scrollListener) {
+        container.removeEventListener("scroll", container._scrollListener);
     }
+    
+    container._scrollListener = () => {
+        window.requestAnimationFrame(destacarCardCentral);
+    };
 
-    destacarCardCentral(); // Inicial
+    container.addEventListener("scroll", container._scrollListener);
+    
+    // Chamar uma vez para o estado inicial após os cards serem renderizados
+    window.requestAnimationFrame(destacarCardCentral);
 }
 
-// Iniciar com sobrancelhas carregado
 document.addEventListener("DOMContentLoaded", () => {
     mostrarServicos("sobrancelhas");
 
-    requestAnimationFrame(() => {
+    // A lógica de scroll inicial pode precisar de um pequeno delay 
+    // para garantir que tudo esteja renderizado e as dimensões corretas.
+    setTimeout(() => {
         const container = document.getElementById("catalogo-carrossel");
+        if (!container) return;
         const primeiroCard = container.querySelector(".catalogo__card");
         if (primeiroCard) {
+            // Calcula a posição para centralizar o primeiro card
+            const scrollPosition = primeiroCard.offsetLeft - (container.offsetWidth / 2) + (primeiroCard.offsetWidth / 2);
             container.scrollTo({
-                left: primeiroCard.offsetLeft - container.offsetWidth / 2 + primeiroCard.offsetWidth / 2,
+                left: scrollPosition,
                 behavior: "smooth"
             });
         }
-    });
+        // Garante que o destaque seja aplicado após o scroll inicial
+        setTimeout(aplicarSnapHighlight, 50); // Delay adicional para o scroll completar
+    }, 100); // Delay inicial
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -371,13 +397,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+// --- DADOS DOS SERVIÇOS PARA O QUIZ ---
 const listaSobrancelhasQuiz = [
     { id: 'design_sobrancelha', titulo: "Design de Sobrancelha", descricao: "Trabalhamos com o formato natural...", caracteristicas: ["Formato natural", "Desenho único", "Pode ser natural ou marcado"], imagem: 'assets/img/servicos/sobrancelhas/Personalizado.png' },
     { id: 'design_com_henna', titulo: "Design com Henna", descricao: "Ideal para quem tem falhas...", caracteristicas: ["Preenchimento de falhas", "Natural", "Levemente marcado"], imagem: 'assets/img/servicos/sobrancelhas/Henna.png' },
     { id: 'brow_lamination', titulo: "Brow Lamination", descricao: "Alinhamento dos fios por até 8 semanas...", caracteristicas: ["Alinhamento duradouro", "Preenche falhas", "Volume"], imagem: 'assets/img/servicos/sobrancelhas/BrowLamination.png' },
     { id: 'nanobrows', titulo: "NanoBrows", descricao: "Evolução da micropigmentação...", caracteristicas: ["Fios realistas", "Indolor", "Volume", "Correção do formato"], imagem: 'assets/img/servicos/sobrancelhas/NanoBrow.png' }
 ];
-
 const listaCiliosQuiz = [
     { id: 'lash_lifting', titulo: "Lash Lifting", descricao: "Curvamento dos fios naturais...", caracteristicas: ["Curvamento natural", "Pode tingir", "Hidrata os fios"], imagem: 'assets/img/servicos/cilios/LashLifting.png' },
     { id: 'volume_brasileiro', titulo: "Volume Brasileiro", descricao: "Fios em formato de Y...", caracteristicas: ["Volume", "Preenche 80% a 100% dos fios"], imagem: 'assets/img/servicos/cilios/VolumeBrasileiro.png' },
@@ -388,524 +414,437 @@ const listaCiliosQuiz = [
     { id: 'volume_shine', titulo: "Volume Shine", descricao: "Volume luminoso e radiante...", caracteristicas: ["Volume", "Luminoso", "Radiante"], imagem: 'assets/img/servicos/cilios/VolumeShine.png' }
 ];
 
-// Perguntas do quiz (Você precisará adaptar essas perguntas para cobrir todos os serviços)
+// --- PERGUNTAS DO QUIZ (Com lógica otimizada para "Ambos") ---
 const quizPerguntas = [
-    {
+    { // Pergunta 0
         pergunta: "Qual área você deseja realçar principalmente?",
         tipo: "unica",
         opcoes: ["Cílios", "Sobrancelhas", "Ambos"],
-        pontuacao: {
-            "Cílios": { areas: { cilios: 1 } },
-            "Sobrancelhas": { areas: { sobrancelhas: 1 } },
-            "Ambos": { areas: { sobrancelhas: 1, cilios: 1, ambos: 1 } }
-        }
+        pontuacao: { "Cílios": { areas: { cilios: 1 } }, "Sobrancelhas": { areas: { sobrancelhas: 1 } }, "Ambos": { areas: { sobrancelhas: 1, cilios: 1, ambos: 1 } } }
     },
-    {
+    { // Pergunta 1 - Cílios (Efeito) - MANTER para Ambos
         pergunta: "Qual o efeito de cílios que você mais deseja?",
         tipo: "unica",
         opcoes: ["Cílios curvados e alongados naturalmente", "Cílios com volume e preenchimento", "Um olhar mais exótico e marcante"],
-        pontuacao: {
-            "Cílios curvados e alongados naturalmente": { lash_lifting: 1, volume_moana: 0.7 },
-            "Cílios com volume e preenchimento": { volume_brasileiro: 0.8, volume_jasmine: 0.9, volume_shine: 0.8 },
-            "Um olhar mais exótico e marcante": { fox_eyes: 1, extensoes_pro: 0.6 }
-        },
+        pontuacao: { "Cílios curvados e alongados naturalmente": { lash_lifting: 1, volume_moana: 0.7 }, "Cílios com volume e preenchimento": { volume_brasileiro: 0.8, volume_jasmine: 0.9, volume_shine: 0.8 }, "Um olhar mais exótico e marcante": { fox_eyes: 1, extensoes_pro: 0.6 } },
         condicao: (respostas) => respostas.areas?.cilios > 0 || respostas.areas?.ambos > 0
     },
-    {
+    { // Pergunta 2 - Cílios (Manutenção) - MANTER para Ambos
         pergunta: "Com que frequência você prefere fazer a manutenção dos cílios?",
         tipo: "unica",
         opcoes: ["Prefiro um procedimento sem manutenção", "Estou disposta a fazer manutenção regular", "Prefiro algo de curta duração para eventos"],
-        pontuacao: {
-            "Prefiro um procedimento sem manutenção": { extensoes_pro: 1 },
-            "Estou disposta a fazer manutenção regular": { volume_brasileiro: 0.7, volume_moana: 0.6, volume_jasmine: 0.7, volume_shine: 0.6, lash_lifting: 0.6, fox_eyes: 0.6 },
-            "Prefiro algo de curta duração para eventos": { lash_lifting: 0.5}
-        },
+        pontuacao: { "Prefiro um procedimento sem manutenção": { extensoes_pro: 1 }, "Estou disposta a fazer manutenção regular": { volume_brasileiro: 0.7, volume_moana: 0.6, volume_jasmine: 0.7, volume_shine: 0.6, lash_lifting: 0.6, fox_eyes: 0.6 }, "Prefiro algo de curta duração para eventos": { lash_lifting: 0.5} },
         condicao: (respostas) => respostas.areas?.cilios > 0 || respostas.areas?.ambos > 0
     },
-    {
+    { // Pergunta 3 - Cílios (Estilo) - PULAR se "Ambos" (a menos que queira 3 de cílios)
         pergunta: "Qual estilo de cílios você acha mais atraente?",
         tipo: "unica",
         opcoes: ["Cílios discretos e elegantes", "Cílios mais chamativos e volumosos", "Um estilo que levante o olhar"],
-        pontuacao: {
-            "Cílios discretos e elegantes": { volume_moana: 0.8, lash_lifting: 0.7 },
-            "Cílios mais chamativos e volumosos": { volume_brasileiro: 0.7, volume_jasmine: 0.9, volume_shine: 0.8, extensoes_pro: 0.7 },
-            "Um estilo que levante o olhar": { fox_eyes: 1 }
-        },
-        condicao: (respostas) => respostas.areas?.cilios > 0 || respostas.areas?.ambos > 0
+        pontuacao: { "Cílios discretos e elegantes": { volume_moana: 0.8, lash_lifting: 0.7 }, "Cílios mais chamativos e volumosos": { volume_brasileiro: 0.7, volume_jasmine: 0.9, volume_shine: 0.8, extensoes_pro: 0.7 }, "Um estilo que levante o olhar": { fox_eyes: 1 } },
+        condicao: (respostas) => respostas.areas?.cilios > 0 && !respostas.areas?.ambos // SÓ se for APENAS cílios
     },
-    {
+    { // Pergunta 4 - Cílios (Sensibilidade) - PULAR se "Ambos"
         pergunta: "Você tem alguma sensibilidade nos olhos ou prefere evitar produtos químicos fortes?",
         tipo: "unica",
         opcoes: ["Sim, tenho sensibilidade", "Não tenho problemas com isso"],
-        pontuacao: {
-            "Sim, tenho sensibilidade": { lash_lifting: 0.7 },
-            "Não tenho problemas com isso": { lash_lifting: 0.6, volume_brasileiro: 0.6, volume_moana: 0.6, volume_jasmine: 0.6, volume_shine: 0.6, fox_eyes: 0.6, extensoes_pro: 0.6 }
-        },
-        condicao: (respostas) => respostas.areas?.cilios > 0 || respostas.areas?.ambos > 0
+        pontuacao: { "Sim, tenho sensibilidade": { lash_lifting: 0.7 }, "Não tenho problemas com isso": { } },
+        condicao: (respostas) => respostas.areas?.cilios > 0 && !respostas.areas?.ambos
     },
-    {
+    { // Pergunta 5 - Cílios (Prioridade) - PULAR se "Ambos"
         pergunta: "Qual a sua prioridade ao escolher um procedimento para cílios?",
         tipo: "unica",
         opcoes: ["Realçar a beleza natural", "Transformar o olhar", "Praticidade e durabilidade"],
-        pontuacao: {
-            "Realçar a beleza natural": { lash_lifting: 0.9, volume_moana: 0.7 },
-            "Transformar o olhar": { volume_brasileiro: 0.7, volume_jasmine: 0.7, volume_shine: 0.7, fox_eyes: 0.6, extensoes_pro: 0.8 },
-            "Praticidade e durabilidade": { extensoes_pro: 0.9, lash_lifting: 0.6 }
-        },
-        condicao: (respostas) => respostas.areas?.cilios > 0 || respostas.areas?.ambos > 0
+        pontuacao: { "Realçar a beleza natural": { lash_lifting: 0.9, volume_moana: 0.7 }, "Transformar o olhar": { volume_brasileiro: 0.7, volume_jasmine: 0.7, volume_shine: 0.7, fox_eyes: 0.6 }, "Praticidade e durabilidade": { extensoes_pro: 0.9 } },
+        condicao: (respostas) => respostas.areas?.cilios > 0 && !respostas.areas?.ambos
     },
-    {
+    { // Pergunta 6 - Sobrancelhas (Formato) - MANTER para Ambos
         pergunta: "Qual o formato de sobrancelha que você mais te agrada?",
         tipo: "unica",
         opcoes: ["Natural, seguindo o formato original", "Mais definido e marcado", "Mais volumoso e cheio"],
-        pontuacao: {
-            "Natural, seguindo o formato original": { design_sobrancelha: 1, brow_lamination: 0.7 },
-            "Mais definido e marcado": { design_com_henna: 0.9, nanobrows: 0.8 },
-            "Mais volumoso e cheio": { brow_lamination: 0.9 }
-        },
+        pontuacao: { "Natural, seguindo o formato original": { design_sobrancelha: 1, brow_lamination: 0.7, nanobrows: 0.5 }, "Mais definido e marcado": { design_com_henna: 0.9, nanobrows: 0.8 }, "Mais volumoso e cheio": { brow_lamination: 0.9, nanobrows: 0.6 } },
         condicao: (respostas) => respostas.areas?.sobrancelhas > 0 || respostas.areas?.ambos > 0
     },
-    {
+    { // Pergunta 7 - Sobrancelhas (Duração) - MANTER para Ambos
         pergunta: "Você busca um procedimento de longa duração para as sobrancelhas?",
         tipo: "unica",
         opcoes: ["Sim, quero algo que dure", "Não, prefiro opções temporárias"],
-        pontuacao: {
-            "Sim, quero algo que dure": { nanobrows: 1 },
-            "Não, prefiro opções temporárias": { design_sobrancelha: 0.6, design_com_henna: 0.7, brow_lamination: 0.8 }
-        },
+        pontuacao: { "Sim, quero algo que dure": { nanobrows: 1, brow_lamination: 0.5 }, "Não, prefiro opções temporárias": { design_sobrancelha: 0.6, design_com_henna: 0.7 } },
         condicao: (respostas) => respostas.areas?.sobrancelhas > 0 || respostas.areas?.ambos > 0
     },
-    {
+    { // Pergunta 8 - Sobrancelhas (Preocupação) - PULAR se "Ambos" (a menos que queira 3 de sobrancelhas)
         pergunta: "Qual a sua maior preocupação com suas sobrancelhas?",
         tipo: "unica",
         opcoes: ["Falhas e assimetrias", "Pouca definição e cor", "Fios desalinhados e sem forma"],
-        pontuacao: {
-            "Falhas e assimetrias": { nanobrows: 0.9, design_com_henna: 0.7 },
-            "Pouca definição e cor": { design_sobrancelha: 0.7, brow_lamination: 0.6 },
-            "Fios desalinhados e sem forma": { brow_lamination: 1 }
-        },
-        condicao: (respostas) => respostas.areas?.sobrancelhas > 0 || respostas.areas?.ambos > 0
+        pontuacao: { "Falhas e assimetrias": { nanobrows: 0.9, design_com_henna: 0.7 }, "Pouca definição e cor": { design_com_henna: 0.8, design_sobrancelha: 0.7 }, "Fios desalinhados e sem forma": { brow_lamination: 1 } },
+        condicao: (respostas) => respostas.areas?.sobrancelhas > 0 && !respostas.areas?.ambos // SÓ se for APENAS sobrancelhas
     },
-    {
+    { // Pergunta 9 - Sobrancelhas (Estilo) - PULAR se "Ambos"
         pergunta: "Qual estilo de sobrancelha você considera ideal para você?",
         tipo: "unica",
         opcoes: ["Sobrancelhas delicadas e sutis", "Sobrancelhas expressivas e marcantes"],
-        pontuacao: {
-            "Sobrancelhas delicadas e sutis": { design_sobrancelha: 0.8, brow_lamination: 0.6 },
-            "Sobrancelhas expressivas e marcantes": { design_com_henna: 0.9, nanobrows: 0.7 }
-        },
-        condicao: (respostas) => respostas.areas?.sobrancelhas > 0 || respostas.areas?.ambos > 0
+        pontuacao: { "Sobrancelhas delicadas e sutis": { design_sobrancelha: 0.8, brow_lamination: 0.6, nanobrows: 0.5 }, "Sobrancelhas expressivas e marcantes": { design_com_henna: 0.9, nanobrows: 0.7 } },
+        condicao: (respostas) => respostas.areas?.sobrancelhas > 0 && !respostas.areas?.ambos
     },
-    {
+    { // Pergunta 10 - Sobrancelhas (Importância) - PULAR se "Ambos"
         pergunta: "O que é mais importante para você em um serviço de sobrancelhas?",
         tipo: "unica",
         opcoes: ["Realçar a beleza natural do rosto", "Corrigir imperfeições e definir o olhar", "Praticidade e facilidade no dia a dia"],
-        pontuacao: {
-            "Realçar a beleza natural do rosto": { design_sobrancelha: 0.9, brow_lamination: 0.6 },
-            "Corrigir imperfeições e definir o olhar": { design_com_henna: 0.8, nanobrows: 0.7 },
-            "Praticidade e facilidade no dia a dia": { brow_lamination: 0.8, nanobrows: 0.6 }
-        },
-        condicao: (respostas) => respostas.areas?.sobrancelhas > 0 || respostas.areas?.ambos > 0
+        pontuacao: { "Realçar a beleza natural do rosto": { design_sobrancelha: 0.9 }, "Corrigir imperfeições e definir o olhar": { nanobrows: 0.8, design_com_henna: 0.7 }, "Praticidade e facilidade no dia a dia": { brow_lamination: 0.8 } },
+        condicao: (respostas) => respostas.areas?.sobrancelhas > 0 && !respostas.areas?.ambos
     },
-    {
-        pergunta: "Ao realçar seu olhar, qual área você considera mais importante?",
+    { // Pergunta 11 - Ambos específica - PULAR para reduzir
+        pergunta: "Ao realçar seu olhar completo, qual o seu foco principal?",
         tipo: "unica",
-        opcoes: ["Cílios (para expressividade)", "Sobrancelhas (para moldura do rosto)", "Ambas as áreas igualmente"],
-        pontuacao: {
-            "Cílios (para expressividade)": { lash_lifting: 0.6, volume_brasileiro: 0.5, volume_moana: 0.5, volume_jasmine: 0.5, volume_shine: 0.5, fox_eyes: 0.5, extensoes_pro: 0.5 },
-            "Sobrancelhas (para moldura do rosto)": { design_sobrancelha: 0.6, design_com_henna: 0.6, brow_lamination: 0.6, nanobrows: 0.6 },
-            "Ambas as áreas igualmente": { lash_lifting: 0.5, volume_brasileiro: 0.5, volume_moana: 0.5, volume_jasmine: 0.5, volume_shine: 0.5, fox_eyes: 0.5, extensoes_pro: 0.5, design_sobrancelha: 0.5, design_com_henna: 0.5, brow_lamination: 0.5, nanobrows: 0.5 }
-        },
+        opcoes: ["Cílios mais expressivos", "Sobrancelhas bem definidas", "Um equilíbrio perfeito entre os dois"],
+        pontuacao: { "Cílios mais expressivos": { areas: { ciliosBonus: 0.2 } }, "Sobrancelhas bem definidas": { areas: { sobrancelhasBonus: 0.2 } }, "Um equilíbrio perfeito entre os dois": { areas: { equilibrio: 0.1 } } },
+        condicao: (respostas) => false // Pular esta para o caminho "Ambos" ficar mais curto
+    },
+    { // Pergunta 12 - Ambos específica - MANTER
+        pergunta: "Considerando um look completo, você prefere um visual mais natural ou mais produzido/transformador?",
+        tipo: "unica",
+        opcoes: ["Natural e elegante", "Produzido e impactante"],
+        pontuacao: { "Natural e elegante": { naturalFactorGlobal: 1 }, "Produzido e impactante": { transformadorFactorGlobal: 1 } },
         condicao: (respostas) => respostas.areas?.ambos > 0
     },
-    {
-        pergunta: "Você prefere um visual mais natural ou transformador?",
+    { // Pergunta 13 - Ambos específica - PULAR para reduzir
+        pergunta: "Qual sua maior prioridade ao combinar os dois serviços?",
         tipo: "unica",
-        opcoes: ["Natural (realçar minha beleza)", "Transformador (mudar meu visual)"],
-        pontuacao: {
-            "Natural (realçar minha beleza)": { lash_lifting: 0.7, volume_moana: 0.6, design_sobrancelha: 0.7, brow_lamination: 0.6 },
-            "Transformador (mudar meu visual)": { volume_brasileiro: 0.6, volume_jasmine: 0.7, volume_shine: 0.6, fox_eyes: 0.7, extensoes_pro: 0.7, design_com_henna: 0.7, nanobrows: 0.7 }
-        },
+        opcoes: ["Durabilidade e menos manutenção", "Resultado mais impactante possível", "Processo mais rápido e suave"],
+        pontuacao: { "Durabilidade e menos manutenção": { comboPrioridade: 'durabilidade' }, "Resultado mais impactante possível": { comboPrioridade: 'impacto' }, "Processo mais rápido e suave": { comboPrioridade: 'rapidez' } },
+        condicao: (respostas) => false // Pular esta para o caminho "Ambos" ficar mais curto
+    },
+    { // Pergunta 14 - Ambos específica - MANTER
+        pergunta: "Você busca procedimentos que economizem tempo na sua rotina de beleza diária?",
+        tipo: "unica",
+        opcoes: ["Sim, quero praticidade!", "Não me importo tanto com o tempo da rotina"],
+        pontuacao: { "Sim, quero praticidade!": { praticidadeGlobal: 1 }, "Não me importo tanto com o tempo da rotina": { } },
         condicao: (respostas) => respostas.areas?.ambos > 0
     },
-    {
-        pergunta: "Qual a sua prioridade em um serviço de beleza completo?",
-        tipo: "unica",
-        opcoes: ["Harmonia entre cílios e sobrancelhas", "Destaque de uma área específica"],
-        pontuacao: {
-            "Harmonia entre cílios e sobrancelhas": { lash_lifting: 0.5, volume_moana: 0.5, volume_jasmine: 0.5, fox_eyes: 0.5, volume_shine: 0.5, extensoes_pro: 0.5, design_sobrancelha: 0.5, design_com_henna: 0.5, brow_lamination: 0.5, nanobrows: 0.5 },
-            "Destaque de uma área específica": { lash_lifting: 0.5, volume_moana: 0.5, volume_jasmine: 0.5, fox_eyes: 0.5, volume_shine: 0.5, extensoes_pro: 0.5, design_sobrancelha: 0.5, design_com_henna: 0.5, brow_lamination: 0.5, nanobrows: 0.5 }
-        },
-        condicao: (respostas) => respostas.areas?.ambos > 0
-    },
-    {
-        pergunta: "Você busca procedimentos que economizem tempo na sua rotina de beleza?",
-        tipo: "unica",
-        opcoes: ["Sim, quero praticidade", "Não me importo com a rotina"],
-        pontuacao: {
-            "Sim, quero praticidade": { extensoes_pro: 0.6, nanobrows: 0.6, brow_lamination: 0.7, lash_lifting: 0.7 },
-            "Não me importo com a rotina": { volume_brasileiro: 0.5, volume_moana: 0.5, volume_jasmine: 0.5, volume_shine: 0.5, fox_eyes: 0.5, design_sobrancelha: 0.5, design_com_henna: 0.5 }
-        },
-            condicao: (respostas) => respostas.areas?.ambos > 0
-    },
-    {
+    { // Pergunta 15 - Ambos específica - PULAR para reduzir
         pergunta: "Qual a sua expectativa geral ao combinar serviços de cílios e sobrancelhas?",
         tipo: "unica",
-        opcoes: ["Um resultado elegante e equilibrado", "Um visual marcante e impactante"],
-        pontuacao: {
-            "Um resultado elegante e equilibrado": { lash_lifting: 0.6, volume_moana: 0.6, volume_jasmine: 0.6, fox_eyes: 0.6, volume_shine: 0.6, extensoes_pro: 0.6, design_sobrancelha: 0.6, design_com_henna: 0.6, brow_lamination: 0.6, nanobrows: 0.6 },
-            "Um visual marcante e impactante": { lash_lifting: 0.5, volume_moana: 0.5, volume_jasmine: 0.5, fox_eyes: 0.5, volume_shine: 0.5, extensoes_pro: 0.5, design_sobrancelha: 0.5, design_com_henna: 0.5, brow_lamination: 0.5, nanobrows: 0.5 }
-        },
-            condicao: (respostas) => respostas.areas?.ambos > 0
+        opcoes: ["Um resultado elegante e equilibrado", "Um visual marcante e glamoroso"],
+        pontuacao: { "Um resultado elegante e equilibrado": { expectativaGlobal: 'equilibrio' }, "Um visual marcante e glamoroso": { expectativaGlobal: 'glamour' } },
+        condicao: (respostas) => false // Pular esta para o caminho "Ambos" ficar mais curto
     }
 ];
 
-// Elementos do DOM
-const quizModal = document.getElementById("quiz-modal");
-const quizContainer = document.getElementById("quiz-container");
-const perguntaElement = document.getElementById("pergunta");
-const opcoesElement = document.getElementById("opcoes");
-const resultadoElement = document.getElementById("resultado");
-const servicoRecomendadoMsg = document.getElementById("servico-recomendado-msg");
-const whatsappLink = document.getElementById("whatsapp-link");
-const quizProgresso = document.getElementById("quiz-progresso");
+// --- Variáveis Globais para Elementos do DOM e Estado do Quiz ---
+let abrirQuizLinkEl, quizModalEl, quizContainerEl, resultadoElementEl, 
+    perguntaEl, opcoesEl, quizProgressoEl, 
+    quizProgressoDivEl, 
+    servicoRecomendadoMsgEl, whatsappLinkEl;
+let fecharQuizBotoesEl = []; 
 
-// Verificação crítica de elementos
-if (!quizModal || !quizContainer || !perguntaElement || !opcoesElement ||
-    !resultadoElement || !servicoRecomendadoMsg || !whatsappLink || !quizProgresso) {
-    console.error("Elementos essenciais do quiz não encontrados no DOM!");
-}
-
-// Variáveis de estado
-let quizAtivo = false;
 let perguntaAtualIndex = 0;
-const respostasUsuario = { areas: {} };
+const respostasUsuario = { areas: {} }; 
 const pontuacaoSobrancelhas = {};
 const pontuacaoCilios = {};
 
-// Inicializar pontuações
-listaSobrancelhasQuiz.forEach(servico => pontuacaoSobrancelhas[servico.id] = 0);
-listaCiliosQuiz.forEach(servico => pontuacaoCilios[servico.id] = 0);
+// --- FUNÇÕES PRINCIPAIS DO QUIZ ---
 
-// Função para abrir o quiz
-function abrirQuiz() {
-    quizModal.style.display = "flex";
-    quizAtivo = true;
+function inicializarPontuacoesQuiz() {
+    listaSobrancelhasQuiz.forEach(servico => pontuacaoSobrancelhas[servico.id] = 0);
+    listaCiliosQuiz.forEach(servico => pontuacaoCilios[servico.id] = 0);
+}
+
+function abrirQuiz() { 
+    if (!quizModalEl) { 
+        console.error("Quiz não pode abrir: elemento #quiz-modal não foi encontrado.");
+        return; 
+    }
+    quizModalEl.style.display = 'flex';
     perguntaAtualIndex = 0;
+    Object.keys(respostasUsuario).forEach(key => { 
+        if (key !== 'areas') delete respostasUsuario[key]; 
+    });
+    respostasUsuario.areas = {}; 
+    inicializarPontuacoesQuiz();
 
-    // Resetar respostas e pontuações
-    Object.keys(respostasUsuario).forEach(key => delete respostasUsuario[key]);
-    respostasUsuario.areas = {};
-    Object.keys(pontuacaoSobrancelhas).forEach(key => pontuacaoSobrancelhas[key] = 0);
-    Object.keys(pontuacaoCilios).forEach(key => pontuacaoCilios[key] = 0);
-
-    // Mostrar elementos do quiz e esconder resultado
-    quizContainer.style.display = "block";
-    resultadoElement.style.display = "none";
-
-    // Forçar uma atualização inicial da barra para 0%
-    const barraInterna = quizProgresso.querySelector('div');
-    if (barraInterna) {
-        barraInterna.style.width = `0%`;
-        barraInterna.textContent = `0%`;
+    if (quizContainerEl) quizContainerEl.style.display = 'flex'; 
+    if (resultadoElementEl) resultadoElementEl.style.display = 'none'; 
+    
+    if (quizProgressoDivEl) { 
+        quizProgressoDivEl.style.width = '0%';
+        quizProgressoDivEl.textContent = '0%';
     }
-
-    mostrarPergunta();
+    mostrarProximaPerguntaQuiz(); 
 }
 
-// Função para fechar o quiz
-function fecharQuiz() {
-    quizModal.style.display = "none";
-    quizAtivo = false;
-}
-
-
-function atualizarProgresso() {
-    const totalPerguntasVisiveis = quizPerguntas.filter(p => !p.condicao || p.condicao(respostasUsuario)).length;
-    // O progresso será baseado em quantas perguntas *foram* respondidas
-    const perguntasRespondidas = Object.keys(respostasUsuario).filter(key => key.startsWith('q')).length;
-    const progresso = totalPerguntasVisiveis > 0 ? (perguntasRespondidas / totalPerguntasVisiveis) * 100 : 0;
-
-    console.log("--- Atualizar Progresso ---");
-    console.log("perguntaAtualIndex:", perguntaAtualIndex);
-    console.log("respostasUsuario:", respostasUsuario);
-    console.log("Total perguntas visíveis:", totalPerguntasVisiveis);
-    console.log("Perguntas respondidas:", perguntasRespondidas);
-    console.log("Progresso:", progresso);
-
-    const barraInterna = quizProgresso.querySelector('div');
-    if (barraInterna) {
-        barraInterna.style.width = `${progresso}%`;
-        barraInterna.textContent = `${Math.round(progresso)}%`;
-    } else {
-        console.log("Elemento div interno da barra de progresso não encontrado!");
+function fecharQuiz() { 
+    if (quizModalEl) {
+        quizModalEl.style.display = 'none';
     }
 }
 
-function abrirQuiz() {
-    quizModal.style.display = "flex";
-    quizAtivo = true;
-    perguntaAtualIndex = 0;
-
-    // Resetar respostas e pontuações
-    Object.keys(respostasUsuario).forEach(key => delete respostasUsuario[key]);
-    respostasUsuario.areas = {};
-    Object.keys(pontuacaoSobrancelhas).forEach(key => pontuacaoSobrancelhas[key] = 0);
-    Object.keys(pontuacaoCilios).forEach(key => pontuacaoCilios[key] = 0);
-
-    // Mostrar elementos do quiz e esconder resultado
-    quizContainer.style.display = "block";
-    resultadoElement.style.display = "none";
-
-    // Atualização inicial da barra para 0%
-    const barraInterna = quizProgresso.querySelector('div');
-    if (barraInterna) {
-        barraInterna.style.width = `0%`;
-        barraInterna.textContent = `0%`;
+function atualizarBarraProgressoQuiz() {
+    if (!quizProgressoDivEl) { return; }
+    let totalDePerguntasNoCaminho = 0;
+    for (let i = 0; i < quizPerguntas.length; i++) {
+        if (!quizPerguntas[i].condicao || quizPerguntas[i].condicao(respostasUsuario)) {
+            totalDePerguntasNoCaminho++;
+        }
     }
-
-    atualizarProgresso(); // Chamar a atualização imediatamente após resetar
-
-    mostrarPergunta();
+    let perguntasRespondidasEVisiveis = 0;
+    for (let i = 0; i < perguntaAtualIndex; i++) { 
+        if (!quizPerguntas[i].condicao || quizPerguntas[i].condicao(respostasUsuario)) {
+            perguntasRespondidasEVisiveis++;
+        }
+    }
+    const progresso = totalDePerguntasNoCaminho > 0 ? (perguntasRespondidasEVisiveis / totalDePerguntasNoCaminho) * 100 : 0;
+    quizProgressoDivEl.style.width = `${Math.min(progresso, 100)}%`;
+    quizProgressoDivEl.textContent = `${Math.round(Math.min(progresso, 100))}%`;
 }
 
-function mostrarPergunta() {
-    atualizarProgresso(); // Atualiza a barra de progresso ao mostrar a pergunta
-
-    // Pular perguntas cujas condições não são atendidas
+function mostrarProximaPerguntaQuiz() {
+    atualizarBarraProgressoQuiz(); 
     while (perguntaAtualIndex < quizPerguntas.length &&
-        quizPerguntas[perguntaAtualIndex].condicao &&
-        !quizPerguntas[perguntaAtualIndex].condicao(respostasUsuario)) {
+           quizPerguntas[perguntaAtualIndex].condicao &&
+           !quizPerguntas[perguntaAtualIndex].condicao(respostasUsuario)) {
         perguntaAtualIndex++;
     }
 
-    // Verificar se terminou o quiz
     if (perguntaAtualIndex >= quizPerguntas.length) {
-        mostrarResultado();
+        mostrarResultadoQuiz();
         return;
     }
-
+    
     const perguntaAtual = quizPerguntas[perguntaAtualIndex];
-    perguntaElement.textContent = perguntaAtual.pergunta;
-    opcoesElement.innerHTML = "";
+    if (perguntaEl) perguntaEl.textContent = perguntaAtual.pergunta;
+    if (opcoesEl) opcoesEl.innerHTML = ""; 
 
-    perguntaAtual.opcoes.forEach(opcao => {
+    perguntaAtual.opcoes.forEach(opcaoTexto => {
         const botaoOpcao = document.createElement("button");
-        botaoOpcao.textContent = opcao;
-        botaoOpcao.addEventListener("click", () => selecionarResposta(opcao, perguntaAtual.pontuacao, botaoOpcao));
-        opcoesElement.appendChild(botaoOpcao);
+        botaoOpcao.type = "button"; 
+        botaoOpcao.textContent = opcaoTexto;
+        botaoOpcao.addEventListener("click", () => {
+            selecionarRespostaQuiz(opcaoTexto, perguntaAtual.pontuacao, botaoOpcao);
+        });
+        if (opcoesEl) opcoesEl.appendChild(botaoOpcao);
     });
 }
 
-function selecionarResposta(resposta, pontuacao, botaoSelecionado) {
-    const perguntaAtual = quizPerguntas[perguntaAtualIndex];
-    respostasUsuario[`q${perguntaAtualIndex}`] = resposta;
-
-    // Adicionar classe de selecionado ao botão clicado e remover dos outros
-    const botoes = opcoesElement.querySelectorAll('button');
-    botoes.forEach(botao => {
-        if (botao === botaoSelecionado) {
-            botao.classList.add('selecionado');
-        } else {
-            botao.classList.remove('selecionado');
-        }
-    });
-
-    if (pontuacao && pontuacao[resposta]) {
-        Object.keys(pontuacao[resposta]).forEach(key => {
-            if (key === 'areas') {
-                Object.keys(pontuacao[resposta].areas).forEach(area => {
-                    respostasUsuario.areas[area] = (respostasUsuario.areas[area] || 0) + pontuacao[resposta].areas[area];
+function selecionarRespostaQuiz(opcaoSelecionada, pontuacoesOpcao, botaoClicado) {
+    respostasUsuario[`q${perguntaAtualIndex}`] = opcaoSelecionada;
+    if (pontuacoesOpcao && pontuacoesOpcao[opcaoSelecionada]) {
+        const scores = pontuacoesOpcao[opcaoSelecionada];
+        Object.keys(scores).forEach(key => {
+            if (key === 'areas') { 
+                Object.keys(scores.areas).forEach(area => {
+                    respostasUsuario.areas[area] = (respostasUsuario.areas[area] || 0) + scores.areas[area];
                 });
-            } else {
+            } else { 
                 if (listaSobrancelhasQuiz.some(s => s.id === key)) {
-                    pontuacaoSobrancelhas[key] += pontuacao[resposta][key];
+                    pontuacaoSobrancelhas[key] = (pontuacaoSobrancelhas[key] || 0) + scores[key];
                 } else if (listaCiliosQuiz.some(s => s.id === key)) {
-                    pontuacaoCilios[key] += pontuacao[resposta][key];
+                    pontuacaoCilios[key] = (pontuacaoCilios[key] || 0) + scores[key];
+                } else {
+                     respostasUsuario[key] = scores[key]; 
                 }
             }
         });
     }
-
-    // Atraso para visualização do feedback antes de ir para a próxima pergunta
+    if(opcoesEl) {
+        opcoesEl.querySelectorAll('button').forEach(b => b.classList.remove('selecionado'));
+    }
+    botaoClicado.classList.add('selecionado');
     setTimeout(() => {
-        perguntaAtualIndex++;
-        mostrarPergunta();
-    }, 300);
+        perguntaAtualIndex++; 
+        mostrarProximaPerguntaQuiz(); 
+    }, 300); 
 }
-
-// Função para mostrar a pergunta atual
-function mostrarPergunta() {
-    atualizarProgresso(); // Atualiza a barra de progresso ao mostrar a pergunta
-
-    // Pular perguntas cujas condições não são atendidas
-    while (perguntaAtualIndex < quizPerguntas.length &&
-        quizPerguntas[perguntaAtualIndex].condicao &&
-        !quizPerguntas[perguntaAtualIndex].condicao(respostasUsuario)) {
-        perguntaAtualIndex++;
-    }
-
-    // Verificar se terminou o quiz
-    if (perguntaAtualIndex >= quizPerguntas.length) {
-        mostrarResultado();
-        return;
-    }
-
-    const perguntaAtual = quizPerguntas[perguntaAtualIndex];
-    perguntaElement.textContent = perguntaAtual.pergunta;
-    opcoesElement.innerHTML = "";
-
-    perguntaAtual.opcoes.forEach(opcao => {
-        const botaoOpcao = document.createElement("button");
-        botaoOpcao.textContent = opcao;
-        botaoOpcao.addEventListener("click", () => selecionarResposta(opcao, perguntaAtual.pontuacao, botaoOpcao));
-        opcoesElement.appendChild(botaoOpcao);
-    });
-}
-
-// Função para selecionar uma resposta
-function selecionarResposta(resposta, pontuacao, botaoSelecionado) {
-    const perguntaAtual = quizPerguntas[perguntaAtualIndex];
-    respostasUsuario[`q${perguntaAtualIndex}`] = resposta;
-
-    // Adicionar classe de selecionado ao botão clicado e remover dos outros
-    const botoes = opcoesElement.querySelectorAll('button');
-    botoes.forEach(botao => {
-        if (botao === botaoSelecionado) {
-            botao.classList.add('selecionado');
-        } else {
-            botao.classList.remove('selecionado');
-        }
-    });
-
-    if (pontuacao && pontuacao[resposta]) {
-        Object.keys(pontuacao[resposta]).forEach(key => {
-            if (key === 'areas') {
-                Object.keys(pontuacao[resposta].areas).forEach(area => {
-                    respostasUsuario.areas[area] = (respostasUsuario.areas[area] || 0) + pontuacao[resposta].areas[area];
-                });
-            } else {
-                if (listaSobrancelhasQuiz.some(s => s.id === key)) {
-                    pontuacaoSobrancelhas[key] += pontuacao[resposta][key];
-                } else if (listaCiliosQuiz.some(s => s.id === key)) {
-                    pontuacaoCilios[key] += pontuacao[resposta][key];
-                }
-            }
-        });
-    }
-
-    // Atraso para visualização do feedback antes de ir para a próxima pergunta
-    setTimeout(() => {
-        perguntaAtualIndex++;
-        mostrarPergunta();
-    }, 300);
-}
-
-// Função para recomendar serviços baseado nas respostas
-function recomendarServicos() {
+    
+function recomendarServicosQuiz() {
     let recomendacaoSobrancelhas = null;
     let maxPontuacaoSobrancelhas = -1;
-
     for (const id in pontuacaoSobrancelhas) {
         if (pontuacaoSobrancelhas[id] > maxPontuacaoSobrancelhas) {
             maxPontuacaoSobrancelhas = pontuacaoSobrancelhas[id];
             recomendacaoSobrancelhas = listaSobrancelhasQuiz.find(s => s.id === id);
         }
     }
-
     let recomendacaoCilios = null;
     let maxPontuacaoCilios = -1;
-
     for (const id in pontuacaoCilios) {
         if (pontuacaoCilios[id] > maxPontuacaoCilios) {
             maxPontuacaoCilios = pontuacaoCilios[id];
             recomendacaoCilios = listaCiliosQuiz.find(s => s.id === id);
         }
     }
+    const querAmbos = respostasUsuario.areas?.ambos > 0;
+    const indicouSobrancelhasApenas = respostasUsuario.areas?.sobrancelhas > 0 && !respostasUsuario.areas?.cilios && !querAmbos;
+    const indicouCiliosApenas = respostasUsuario.areas?.cilios > 0 && !respostasUsuario.areas?.sobrancelhas && !querAmbos;
 
-    if ((respostasUsuario.areas?.ambos > 0 || (respostasUsuario.areas?.sobrancelhas > 0 && respostasUsuario.areas?.cilios > 0)) &&
-        recomendacaoSobrancelhas && recomendacaoCilios) {
-        return { sobrancelhas: recomendacaoSobrancelhas, cilios: recomendacaoCilios, tipo: 'combo' };
-    } else if (respostasUsuario.areas?.sobrancelhas > 0 && recomendacaoSobrancelhas) {
-        return { sobrancelhas: recomendacaoSobrancelhas, tipo: 'sobrancelhas' };
-    } else if (respostasUsuario.areas?.cilios > 0 && recomendacaoCilios) {
-        return { cilios: recomendacaoCilios, tipo: 'cilios' };
-    } else {
-        return { mensagem: "Não conseguimos uma recomendação precisa. Entre em contato conosco para uma avaliação personalizada!" };
+    if (querAmbos && recomendacaoSobrancelhas && recomendacaoCilios) {
+        return { tipo: 'combo', sobrancelhas: recomendacaoSobrancelhas, cilios: recomendacaoCilios };
+    } else if (indicouSobrancelhasApenas && recomendacaoSobrancelhas) {
+        return { tipo: 'sobrancelhas', servico: recomendacaoSobrancelhas };
+    } else if (indicouCiliosApenas && recomendacaoCilios) {
+        return { tipo: 'cilios', servico: recomendacaoCilios };
+    } else if (respostasUsuario.areas?.sobrancelhas > 0 && respostasUsuario.areas?.cilios > 0 && recomendacaoSobrancelhas && recomendacaoCilios) {
+        return { tipo: 'combo', sobrancelhas: recomendacaoSobrancelhas, cilios: recomendacaoCilios };
+    } else if (maxPontuacaoSobrancelhas >= 0 && recomendacaoSobrancelhas) { 
+         return { tipo: 'sobrancelhas', servico: recomendacaoSobrancelhas };
+    } else if (maxPontuacaoCilios >= 0 && recomendacaoCilios) { 
+        return { tipo: 'cilios', servico: recomendacaoCilios };
     }
+    return { tipo: 'generico', mensagem: "Com base nas suas respostas, não foi possível identificar uma sugestão específica. Que tal conversarmos para um atendimento personalizado?" };
 }
 
-// Função para mostrar o resultado do quiz
-function mostrarResultado() {
-    quizContainer.style.display = "none";
-    resultadoElement.style.display = "block";
-
-    const recomendacao = recomendarServicos();
-    let mensagemResultado = "";
-    let linkWhatsApp = "https://wa.me/5519999670165?text=";
-    let conteudoResultado = '';
+function mostrarResultadoQuiz() { 
+    if (!quizContainerEl || !resultadoElementEl || !servicoRecomendadoMsgEl || !whatsappLinkEl) {
+        return;
+    }
+    const recomendacao = recomendarServicosQuiz();
+    let conteudoHTML = '';
+    let textoWhatsapp = "Olá! Fiz o quiz e gostaria de mais informações";
+    let tituloResultadoPrincipal = "Seu Tratamento Ideal é:";
+    const tituloH3Resultado = resultadoElementEl.querySelector('h3');
 
     if (recomendacao.tipo === 'combo' && recomendacao.sobrancelhas && recomendacao.cilios) {
-        conteudoResultado = `
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                <h3>Combo Recomendado</h3>
-                <div style="display: flex; gap: 2rem; text-align: left;">
-                    <div>
-                        <img src="${recomendacao.sobrancelhas.imagem}" alt="${recomendacao.sobrancelhas.titulo}" style="max-width: 150px; height: auto; border-radius: 0.5rem; margin-bottom: 0.5rem;">
-                        <strong>${recomendacao.sobrancelhas.titulo}</strong>
-                    </div>
-                    <div>
-                        <img src="${recomendacao.cilios.imagem}" alt="${recomendacao.cilios.titulo}" style="max-width: 150px; height: auto; border-radius: 0.5rem; margin-bottom: 0.5rem;">
-                        <strong>${recomendacao.cilios.titulo}</strong>
-                    </div>
-                </div>
+        tituloResultadoPrincipal = "Para um Olhar Completo, Sugerimos:";
+        conteudoHTML = `
+            <strong>${respostasUsuario.expectativaGlobal === 'glamour' ? 'Para um look impactante:' : 
+                      (respostasUsuario.naturalFactorGlobal ? 'Para um resultado natural e elegante:' : 'Sua combinação ideal:')}</strong>
+            <div class="servico-combo-item">
+                <img src="${recomendacao.sobrancelhas.imagem}" alt="${recomendacao.sobrancelhas.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
+                <h4>${recomendacao.sobrancelhas.titulo}</h4>
+                <p>${recomendacao.sobrancelhas.descricao}</p>
+            </div>
+            <strong class="separador-combo">+</strong>
+            <div class="servico-combo-item">
+                <img src="${recomendacao.cilios.imagem}" alt="${recomendacao.cilios.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
+                <h4>${recomendacao.cilios.titulo}</h4>
+                <p>${recomendacao.cilios.descricao}</p>
             </div>
         `;
-        linkWhatsApp += encodeURIComponent(`Olá! Gostaria de agendar o combo de ${recomendacao.sobrancelhas.titulo} + ${recomendacao.cilios.titulo}.`);
-    } else if (recomendacao.tipo === 'sobrancelhas' && recomendacao.sobrancelhas) {
-        conteudoResultado = `
-            <h3>Sobrancelha Ideal</h3>
-            <div style="text-align: left;">
-                <img src="${recomendacao.sobrancelhas.imagem}" alt="${recomendacao.sobrancelhas.titulo}" style="max-width: 200px; height: auto; border-radius: 0.5rem; margin-bottom: 1rem;">
-                <strong>${recomendacao.sobrancelhas.titulo}</strong>
+        textoWhatsapp = `Olá! Fiz o quiz e o resultado foi o combo de ${recomendacao.sobrancelhas.titulo} e ${recomendacao.cilios.titulo}. Gostaria de agendar!`;
+    } else if ((recomendacao.tipo === 'sobrancelhas' || recomendacao.tipo === 'cilios') && recomendacao.servico) {
+        tituloResultadoPrincipal = recomendacao.tipo === 'sobrancelhas' ? "Para suas Sobrancelhas, sugerimos:" : "Para seus Cílios, sugerimos:";
+        conteudoHTML = `
+            <div class="servico-combo-item">
+                <img src="${recomendacao.servico.imagem}" alt="${recomendacao.servico.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
+                <h4>${recomendacao.servico.titulo}</h4>
+                <p>${recomendacao.servico.descricao}</p>
             </div>
         `;
-        linkWhatsApp += encodeURIComponent(`Olá! Gostaria de agendar o serviço de ${recomendacao.sobrancelhas.titulo}.`);
-    } else if (recomendacao.tipo === 'cilios' && recomendacao.cilios) {
-        conteudoResultado = `
-            <h3>Cílio Ideal</h3>
-            <div style="text-align: left;">
-                <img src="${recomendacao.cilios.imagem}" alt="${recomendacao.cilios.titulo}" style="max-width: 200px; height: auto; border-radius: 0.5rem; margin-bottom: 1rem;">
-                <strong>${recomendacao.cilios.titulo}</strong>
-            </div>
-        `;
-        linkWhatsApp += encodeURIComponent(`Olá! Gostaria de agendar o serviço de ${recomendacao.cilios.titulo}.`);
-    } else {
-        conteudoResultado = `<p>${recomendacao.mensagem}</p>`;
-        whatsappLink.style.display = "none";
+        textoWhatsapp = `Olá! Fiz o quiz e o resultado foi ${recomendacao.servico.titulo}. Gostaria de agendar!`;
+    } else { 
+        tituloResultadoPrincipal = "Resultado do Quiz"; 
+        conteudoHTML = `<p style="font-size: var(--tamanho-subtitulo);">${recomendacao.mensagem || "Converse conosco para uma recomendação personalizada!"}</p>`;
+        if(whatsappLinkEl) whatsappLinkEl.style.display = 'none'; 
     }
 
-    servicoRecomendadoMsg.innerHTML = conteudoResultado;
-    whatsappLink.href = linkWhatsApp;
-    whatsappLink.style.display = recomendacao.mensagem ? "none" : "inline-block";
+    if (tituloH3Resultado) tituloH3Resultado.textContent = tituloResultadoPrincipal;
+    if (servicoRecomendadoMsgEl) {
+        servicoRecomendadoMsgEl.className = 'servico-recomendado-msg'; 
+        if (recomendacao.tipo === 'combo') {
+            servicoRecomendadoMsgEl.classList.add('resultado-combo');
+        } else if (recomendacao.tipo === 'sobrancelhas' || recomendacao.tipo === 'cilios') {
+            servicoRecomendadoMsgEl.classList.add('resultado-unico');
+        }
+        servicoRecomendadoMsgEl.innerHTML = conteudoHTML;
+    }
+
+    if (recomendacao.tipo !== 'generico' && whatsappLinkEl) {
+        whatsappLinkEl.href = `https://wa.me/5519999670165?text=${encodeURIComponent(textoWhatsapp)}`;
+        whatsappLinkEl.style.display = 'inline-block';
+    }
+    
+    if (quizContainerEl) quizContainerEl.style.display = 'none';
+    if (resultadoElementEl) resultadoElementEl.style.display = 'flex'; 
+    
+    if(quizProgressoDivEl) {
+        quizProgressoDivEl.style.width = '100%';
+        quizProgressoDivEl.textContent = 'Concluído!';
+    }
 }
 
-// Event listener para abrir o quiz
+// --- INICIALIZAÇÃO E EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', function() {
-    const abrirQuizLink = document.getElementById('abrir-quiz-link');
-    if (abrirQuizLink) {
-        abrirQuizLink.addEventListener('click', function(event) {
+    function criarModalQuizSeNaoExistir() {
+        if (!document.getElementById('quiz-modal')) {
+            const modalHTML = `
+                <div id="quiz-modal" style="display: none;">
+                    <div id="quiz-container" style="display: flex; flex-direction: column;">
+                        <button type="button" class="quiz-fechar-botao" aria-label="Fechar Quiz">X</button>
+                        <h2>Descubra o tratamento ideal!</h2>
+                        <div id="pergunta"></div>
+                        <div id="opcoes"></div>
+                        <div id="quiz-progresso"><div style="width: 0%;">0%</div></div>
+                    </div>
+                    <div id="resultado" style="display: none;">
+                        <button type="button" class="quiz-fechar-botao" aria-label="Fechar Quiz">X</button>
+                        <h3>Seu Tratamento Ideal é:</h3>
+                        <div id="servico-recomendado-msg"></div>
+                        <a href="#" id="whatsapp-link" target="_blank" style="display: none;">Agendar pelo WhatsApp</a>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+    }
+    criarModalQuizSeNaoExistir(); 
+
+    abrirQuizLinkEl = document.getElementById('abrir-quiz-link');
+    quizModalEl = document.getElementById('quiz-modal');
+    
+    if (!quizModalEl) {
+        console.error("CRÍTICO: O elemento #quiz-modal NÃO FOI ENCONTRADO ou criado dinamicamente! O quiz não pode funcionar.");
+        if(abrirQuizLinkEl) { 
+            abrirQuizLinkEl.style.pointerEvents = "none";
+            abrirQuizLinkEl.style.opacity = "0.5";
+            abrirQuizLinkEl.title = "Quiz indisponível (erro: #quiz-modal não encontrado)";
+        }
+        return; 
+    }
+
+    quizContainerEl = document.getElementById('quiz-container');
+    resultadoElementEl = document.getElementById('resultado');
+    fecharQuizBotoesEl = quizModalEl.querySelectorAll('.quiz-fechar-botao'); 
+    perguntaEl = document.getElementById('pergunta');
+    opcoesEl = document.getElementById('opcoes');
+    quizProgressoEl = document.getElementById('quiz-progresso'); 
+    quizProgressoDivEl = quizProgressoEl ? quizProgressoEl.querySelector('div') : null; 
+    servicoRecomendadoMsgEl = document.getElementById('servico-recomendado-msg');
+    whatsappLinkEl = document.getElementById('whatsapp-link');
+
+    if (!quizProgressoDivEl && quizProgressoEl) {
+        const innerProgDiv = document.createElement('div');
+        innerProgDiv.style.width = '0%';
+        innerProgDiv.textContent = '0%';
+        quizProgressoEl.appendChild(innerProgDiv);
+        quizProgressoDivEl = innerProgDiv;
+    }
+
+    if (abrirQuizLinkEl) {
+        abrirQuizLinkEl.addEventListener('click', function(event) {
             event.preventDefault();
-            abrirQuiz();
+            abrirQuiz(); 
         });
     }
+
+    fecharQuizBotoesEl.forEach(botao => {
+        botao.addEventListener('click', fecharQuiz); 
+    });
+
+    quizModalEl.addEventListener('click', (event) => {
+        if (event.target === quizModalEl) { 
+            fecharQuiz(); 
+        }
+    });
+
+    document.addEventListener('keydown', (event) => { 
+        if (quizModalEl && quizModalEl.style.display === 'flex' && event.key === 'Escape') {
+            fecharQuiz(); 
+        }
+    });
 });
 
-// Funções para acesso externo (se necessário)
 function abrirQuizExterno() {
-    abrirQuiz();
+    if (typeof abrirQuiz === "function") abrirQuiz();
 }
 
 function fecharQuizExterno() {
-    fecharQuiz();
+    if (typeof fecharQuiz === "function") fecharQuiz();
 }
