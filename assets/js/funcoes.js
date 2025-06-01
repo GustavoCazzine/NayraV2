@@ -684,7 +684,7 @@ function recomendarServicosQuiz() {
     } else if (respostasUsuario.areas?.sobrancelhas > 0 && respostasUsuario.areas?.cilios > 0 && recomendacaoSobrancelhas && recomendacaoCilios) {
         return { tipo: 'combo', sobrancelhas: recomendacaoSobrancelhas, cilios: recomendacaoCilios };
     } else if (maxPontuacaoSobrancelhas >= 0 && recomendacaoSobrancelhas) { 
-         return { tipo: 'sobrancelhas', servico: recomendacaoSobrancelhas };
+        return { tipo: 'sobrancelhas', servico: recomendacaoSobrancelhas };
     } else if (maxPontuacaoCilios >= 0 && recomendacaoCilios) { 
         return { tipo: 'cilios', servico: recomendacaoCilios };
     }
@@ -703,9 +703,8 @@ function mostrarResultadoQuiz() {
 
     if (recomendacao.tipo === 'combo' && recomendacao.sobrancelhas && recomendacao.cilios) {
         tituloResultadoPrincipal = "Para um Olhar Completo, Sugerimos:";
+        // Removido o <strong> introdutório aqui
         conteudoHTML = `
-            <strong>${respostasUsuario.expectativaGlobal === 'glamour' ? 'Para um look impactante:' : 
-                        (respostasUsuario.naturalFactorGlobal ? 'Para um resultado natural e elegante:' : 'Sua combinação ideal:')}</strong>
             <div class="servico-combo-item">
                 <img src="${recomendacao.sobrancelhas.imagem}" alt="${recomendacao.sobrancelhas.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
                 <h4>${recomendacao.sobrancelhas.titulo}</h4>

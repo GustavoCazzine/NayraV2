@@ -969,35 +969,31 @@ section {
 /* Container geral da mensagem de resultado */
 #servico-recomendado-msg {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--espacamento-pequeno); /* GAP REDUZIDO para combos */
+    flex-direction: column; 
+    align-items: center; 
+    gap: var(--espacamento-pequeno); /* GAP REDUZIDO para combos e outros elementos */
     text-align: center;
     margin-top: var(--espacamento-pequeno);
-    width: 100%; /* Garante que o container use a largura disponível no modal */
+    width: 100%; 
 }
 
 #servico-recomendado-msg > strong:first-child {
-    display: block;
-    font-family: var(--fonte-corpo);
-    font-size: var(--tamanho-subtitulo); /* Pode ajustar este tamanho */
-    color: var(--cor-texto-titulo);
-    margin-bottom: var(--espacamento-medio); /* Espaço abaixo deste título */
-    font-weight: bold;
+   display: none; /* Esconde o strong introdutório se ele ainda estiver lá por engano */
 }
 
-#servico-recomendado-msg .servico-combo-item {
+
+#servico-recomendado-msg .servico-combo-item { 
     display: flex;
-    flex-direction: column; /* Imagem, título, descrição empilhados */
-    align-items: center;
-    width: 100%; /* Ocupa a largura do #servico-recomendado-msg */
-    max-width: 280px; /* Largura máxima para cada card de serviço no resultado */
-    margin-left: auto;  /* Centraliza se for menor que 100% do #servico-recomendado-msg */
-    margin-right: auto; /* Centraliza */
+    flex-direction: column; 
+    align-items: center; 
+    width: 100%; 
+    max-width: 280px; 
+    margin-left: auto;  
+    margin-right: auto; 
     padding: var(--espacamento-pequeno);
     border: 1px solid #f0f0f0;
     border-radius: var(--espacamento-xs);
-    background-color: var(--cor-fundo-branco); /* Para garantir contraste se o modal tiver fundo diferente */
+    background-color: var(--cor-fundo-branco); 
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
