@@ -448,6 +448,7 @@ section {
     margin-right: auto;
     margin-bottom: var(--espacamento-grande);
     text-align: center;
+    padding: 0 2rem;
 }
 
 .catalogo__menu {
@@ -671,7 +672,7 @@ section {
 
 /* ---------------------------- QUIZ ---------------------------- */
 /* ==========================================================================
-   ESTILOS PARA O LINK QUE ATIVA O QUIZ (GERALMENTE NO CATÁLOGO)
+    ESTILOS PARA O LINK QUE ATIVA O QUIZ (GERALMENTE NO CATÁLOGO)
    ========================================================================== */
 
 .catalogo__quiz { 
@@ -1106,13 +1107,14 @@ section {
 .cursos__lista {
     display: flex;
     flex-direction: column;
-    gap: var(--espacamento-medio);
-    padding: var(--espacamento-medio);
+    gap: var(--espacamento-grande);
+    padding: 0; /* Padding lateral vem do .controle_geral, vertical da <section> */
 }
 
 .curso-card-minimal {
     display: flex;
-    width: 100%;
+    width: 90%;
+    margin: auto;
     background-color: var(--cor-fundo-branco);
     border-radius: var(--espacamento-medio); /* 12px */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
@@ -1125,8 +1127,8 @@ section {
 }
 
 .curso-card-minimal:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .curso-card-minimal__conteudo {
@@ -1140,13 +1142,13 @@ section {
 .curso-card-minimal__titulo {
     font-family: var(--fonte-titulo);
     font-size: var(--tamanho-h3);
-    color: var(--cor-texto-titulo);
     margin-bottom: var(--espacamento-pequeno);
     background: var(--gradiente-vinho);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    color: transparent;
+    color: transparent; /* Fallback */
+    line-height: 1.3;
 }
 
 .curso-card-minimal__chamada {
@@ -1155,73 +1157,80 @@ section {
     color: var(--cor-vinho);
     margin-bottom: var(--espacamento-medio);
     font-weight: bold;
+    line-height: 1.5;
 }
+
 
 .curso-card-minimal__incentivo {
     font-size: var(--tamanho-texto-pequeno);
     color: var(--cor-dourado);
     font-style: italic;
-    margin-bottom: var(--espacamento-pequeno);
-    transition: transform 0.15s ease-in-out; /* Transição para o "fogo" */
+    margin-bottom: var(--espacamento-medio);
+    transition: transform 0.15s ease-in-out;
 }
 
 .curso-card-minimal__incentivo:hover {
-    transform: scale(1.01); /* Leve aumento no hover */
+    transform: scale(1.01);
 }
 
 .curso-card-minimal__botoes {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     gap: var(--espacamento-pequeno);
-    margin-top: var(--espacamento-medio);
+    margin-top: auto; 
+    padding-top: var(--espacamento-pequeno); 
 }
 
 .curso-card-minimal__cta,
 .curso-card-minimal__pdf-link {
-    padding: 0.7rem 1.2rem;
+    padding: 0.8rem 1.5rem; 
     border-radius: var(--espacamento-pequeno);
     font-weight: bold;
-    font-size: var(--tamanho-texto-base);
-    transition: all var(--transition-duration) var(--transition-timing); /* Transição geral dos botões */
+    font-size: var(--tamanho-botao); 
+    transition: all var(--transition-duration) var(--transition-timing);
     text-decoration: none;
     cursor: pointer;
-    display: inline-flex;
+    display: inline-flex; 
     align-items: center;
     justify-content: center;
     white-space: nowrap;
+    width: 100%; 
+    max-width: 280px; 
+    margin-left: auto; 
+    margin-right: auto; 
 }
-
 .curso-card-minimal__cta {
     background: var(--gradiente-vinho);
     color: var(--cor-fundo-branco);
-    box-shadow: 0 3px 6px rgba(140, 31, 31, 0.4); /* Usando valores fixos para o rgba */
+    box-shadow: 0 3px 6px rgba(140, 31, 31, 0.3); 
 }
 
 .curso-card-minimal__cta:hover {
-    background: var(--cor-vinho-escuro);
-    box-shadow: 0 4px 8px rgba(140, 31, 31, 0.5); /* Usando valores fixos para o rgba */
-    transform: translateY(-1px);
+    background: var(--cor-vinho-escuro); 
+    box-shadow: 0 4px 8px rgba(140, 31, 31, 0.4);
+    transform: translateY(-2px); 
 }
+
 
 .curso-card-minimal__pdf-link {
     background-color: transparent;
     color: var(--cor-vinho);
-    border: none;
 }
 
 .curso-card-minimal__pdf-link:hover {
     background-color: var(--cor-fundo-creme);
-    color: var(--cor-vinho);
+    color: var(--cor-vinho-escuro);
+    border-color: var(--cor-vinho-escuro);
 }
 
 .curso-card-minimal__pdf-link i {
     margin-right: var(--espacamento-pequeno);
     font-size: var(--tamanho-texto-base);
-    transition: transform var(--transition-duration) var(--transition-timing); /* Transição para o ícone */
+    transition: transform var(--transition-duration) var(--transition-timing);
 }
 
 .curso-card-minimal__pdf-link:hover i {
-    transform: rotate(15deg); /* Leve rotação no hover */
+    transform: rotate(10deg) scale(1.1); 
 }
 
 .curso-card-minimal__imagem {
@@ -1259,22 +1268,23 @@ section {
 
 /* Título da seção */
 .agendamento__titulo {
-    font-size: clamp(1.75rem, 4vw, var(--tamanho-h2));
+    font-size: clamp(1.8rem, 4.5vw, var(--tamanho-h2)); /* Ajuste fino no clamp para mobile */
     font-weight: bold;
-    color: var(--cor-texto-titulo);
+    color: var(--cor-texto-titulo); /* Usando variável padronizada */
     text-align: center;
-    margin-bottom: var(--espacamento-medio);
+    margin-bottom: var(--espacamento-grande); /* Mais espaço após o título */
     font-family: var(--fonte-titulo);
+    /* A classe 'texto-com-gradiente' já deve ser aplicada no HTML se desejado */
 }
+
 
 /* Container flexível com imagem e conteúdo */
 .agendamento__conteudo {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; /* PADRÃO MOBILE: Imagem em cima, texto embaixo */
+    align-items: center; /* Centraliza os itens quando empilhados */
     gap: var(--espacamento-grande);
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    text-align: center; /* Garante que o texto dentro do container também fique centralizado */
+    /* justify-content: center; e text-align: center; já vêm do .agendamento */
 }
 
 /* Imagem de destaque */
@@ -1289,27 +1299,28 @@ section {
 
 /* Informações e botão */
 .agendamento__info {
-    flex: 1;
-    max-width: 31.25rem; /* 500px */
+    flex: 1; /* Permite que cresça se estiver lado a lado */
+    width: 100%; /* Ocupa a largura no mobile */
+    max-width: 35rem; /* 560px - Aumentei um pouco para mais texto */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza o texto dentro do container */
-    justify-content: center; /* Centraliza verticalmente o conteúdo */
+    align-items: center; 
+    justify-content: center;
 }
 
 /* Texto explicativo */
 .agendamento__info p {
     font-size: var(--tamanho-subtitulo);
-    color: var(--cor-paragrafos);
-    line-height: 1.6;
-    margin-bottom: var(--espacamento-medio);
-    text-align: center; /* Centraliza o texto */
+    color: var(--cor-texto-corpo); /* Usando variável padronizada */
+    line-height: 1.7; /* Um pouco mais de espaçamento entre linhas */
+    margin-bottom: var(--espacamento-grande); /* Mais espaço antes do botão */
+    text-align: center; 
 }
 
 /* Botão de agendamento */
 .agendamento__link {
-    display: block; /* Faz o botão ocupar toda a largura necessária */
-    padding: 0.8rem 2rem;
+    display: inline-block; /* Melhor que block para centralizar com text-align do pai e não ocupar 100% width */
+    padding: 0.9rem 2.2rem; /* Padding um pouco maior */
     font-size: var(--tamanho-botao);
     font-weight: bold;
     text-transform: uppercase;
@@ -1318,13 +1329,14 @@ section {
     border-radius: var(--espacamento-pequeno);
     text-decoration: none;
     text-align: center;
-    margin: 0 auto; /* Centraliza o botão */
-    transition: background-color var(--transition-duration) var(--transition-timing);
+    /* margin: 0 auto; << Não necessário se o pai .agendamento__info tem text-align: center e o botão é inline-block */
+    transition: filter var(--transition-duration) ease, transform var(--transition-duration) ease; /* Melhor transição para gradientes */
 }
-
 /* Hover no botão */
 .agendamento__link:hover {
-    background-color: var(--cor-vinho-escuro); /* Usando o tom mais escuro no hover */
+    /* background-color: var(--cor-vinho-escuro); << Isso remove o gradiente */
+    filter: brightness(1.15); /* Deixa o gradiente mais claro/brilhante */
+    transform: scale(1.03); /* Leve aumento */
 }
 
 /* ---------------------------- CARROSSEL DE FEEDBACKS ---------------------------- */
