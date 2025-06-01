@@ -749,7 +749,6 @@ section {
     position: relative; /* Para o posicionamento absoluto do botão de fechar */
     display: flex; /* Usado para organizar o conteúdo interno e a barra de progresso */
     flex-direction: column;
-    gap: var(--espacamento-medio); 
     box-sizing: border-box;
 }
 
@@ -970,11 +969,94 @@ section {
 /* Container geral da mensagem de resultado */
 #servico-recomendado-msg {
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    gap: var(--espacamento-pequeno); /* Reduzido o gap principal para combos */
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espacamento-pequeno); /* GAP REDUZIDO para combos */
     text-align: center;
     margin-top: var(--espacamento-pequeno);
+    width: 100%; /* Garante que o container use a largura disponível no modal */
+}
+
+#servico-recomendado-msg > strong:first-child {
+    display: block;
+    font-family: var(--fonte-corpo);
+    font-size: var(--tamanho-subtitulo); /* Pode ajustar este tamanho */
+    color: var(--cor-texto-titulo);
+    margin-bottom: var(--espacamento-medio); /* Espaço abaixo deste título */
+    font-weight: bold;
+}
+
+#servico-recomendado-msg .servico-combo-item {
+    display: flex;
+    flex-direction: column; /* Imagem, título, descrição empilhados */
+    align-items: center;
+    width: 100%; /* Ocupa a largura do #servico-recomendado-msg */
+    max-width: 280px; /* Largura máxima para cada card de serviço no resultado */
+    margin-left: auto;  /* Centraliza se for menor que 100% do #servico-recomendado-msg */
+    margin-right: auto; /* Centraliza */
+    padding: var(--espacamento-pequeno);
+    border: 1px solid #f0f0f0;
+    border-radius: var(--espacamento-xs);
+    background-color: var(--cor-fundo-branco); /* Para garantir contraste se o modal tiver fundo diferente */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+#servico-recomendado-msg.resultado-combo .servico-combo-item {
+     margin-bottom: var(--espacamento-xs); /* Menor espaço entre os itens do combo e o '+' */
+}
+#servico-recomendado-msg.resultado-combo .servico-combo-item:last-of-type {
+     margin-bottom: 0; /* Sem margem no último item do combo */
+}
+
+#servico-recomendado-msg .servico-combo-item img {
+    max-width: 90px; /* Imagens menores no resultado do combo */
+    height: 90px;    /* Altura fixa para consistência */
+    object-fit: cover; /* Garante que a imagem preencha sem distorcer */
+    border-radius: var(--espacamento-pequeno); /* Imagem um pouco arredondada */
+    margin-bottom: var(--espacamento-xs);
+}
+
+#servico-recomendado-msg .servico-combo-item h4 {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-vinho);
+    font-size: 1.05rem; /* Tamanho do título do serviço no resultado */
+    margin-top: 0;
+    margin-bottom: var(--espacamento-xs);
+    line-height: 1.2;
+}
+
+#servico-recomendado-msg .servico-combo-item p {
+    font-size: 0.85rem; /* Descrição um pouco menor */
+    color: var(--cor-texto-corpo);
+    line-height: 1.4;
+    margin-bottom: 0; /* Sem margem extra abaixo da descrição */
+}
+
+#servico-recomendado-msg .separador-combo {
+    font-size: 1.6rem; /* Tamanho do '+' */
+    color: var(--cor-dourado);
+    font-weight: bold;
+    margin: var(--espacamento-xs) 0; /* Espaçamento vertical mínimo ao redor do '+' */
+    line-height: 1;
+}
+
+/* Classes para controlar o espaçamento geral do #servico-recomendado-msg */
+/* Estas classes são adicionadas via JS */
+#servico-recomendado-msg.resultado-combo {
+    gap: var(--espacamento-pequeno); 
+}
+#servico-recomendado-msg.resultado-unico > .servico-combo-item { /* Para resultado único */
+    max-width: 320px; /* Pode ser um pouco maior se for único */
+}
+#servico-recomendado-msg.resultado-unico > .servico-combo-item img {
+    max-width: 120px; /* Imagem um pouco maior no resultado único */
+    height: 120px;
+}
+#servico-recomendado-msg.resultado-unico > .servico-combo-item h4 {
+    font-size: 1.2rem;
+}
+#servico-recomendado-msg.resultado-unico > .servico-combo-item p {
+    font-size: 0.9rem;
 }
 
 /* Estilo para cada item de serviço individualmente, seja único ou em combo */
@@ -983,7 +1065,6 @@ section {
     flex-direction: column; 
     align-items: center; 
     width: 100%; 
-    margin-bottom: var(--espacamento-pequeno); /* Espaço abaixo de cada item de serviço */
 }
 
 /* Título do serviço dentro do card de resultado (H4) */
@@ -991,8 +1072,6 @@ section {
     font-family: var(--fonte-titulo);
     color: var(--cor-vinho);
     font-size: var(--tamanho-h3); /* Pode ser um pouco menor que o H3 principal do modal */
-    margin-top: var(--espacamento-xs);
-    margin-bottom: var(--espacamento-xs);
 }
 
 /* Descrição do serviço dentro do card de resultado */
@@ -1008,7 +1087,6 @@ section {
     max-width: 100px; /* Ajustado para consistência */
     height: auto;
     border-radius: var(--espacamento-pequeno);
-    margin-bottom: var(--espacamento-xs); 
 }
 
 /* Estilo para o "+" entre os serviços no combo */
@@ -1016,14 +1094,12 @@ section {
     font-size: 2rem; /* Tamanho do '+' */
     color: var(--cor-dourado); /* Cor do '+' */
     font-weight: bold;
-    margin: var(--espacamento-xs) 0; /* Espaçamento vertical mínimo ao redor do '+' */
     line-height: 1;
 }
 
 /* Ajuste no strong que precede o combo (ex: "Para um look impactante:") */
 #servico-recomendado-msg > strong {
     display: block; /* Para ocupar a linha toda e respeitar margem */
-    margin-bottom: var(--espacamento-medio);
     font-family: var(--fonte-corpo);
     font-size: var(--tamanho-subtitulo);
     color: var(--cor-texto-titulo);

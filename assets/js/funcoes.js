@@ -705,7 +705,7 @@ function mostrarResultadoQuiz() {
         tituloResultadoPrincipal = "Para um Olhar Completo, Sugerimos:";
         conteudoHTML = `
             <strong>${respostasUsuario.expectativaGlobal === 'glamour' ? 'Para um look impactante:' : 
-                      (respostasUsuario.naturalFactorGlobal ? 'Para um resultado natural e elegante:' : 'Sua combinação ideal:')}</strong>
+                        (respostasUsuario.naturalFactorGlobal ? 'Para um resultado natural e elegante:' : 'Sua combinação ideal:')}</strong>
             <div class="servico-combo-item">
                 <img src="${recomendacao.sobrancelhas.imagem}" alt="${recomendacao.sobrancelhas.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
                 <h4>${recomendacao.sobrancelhas.titulo}</h4>
