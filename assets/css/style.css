@@ -30,6 +30,8 @@
     /* 🎯 Cores de marca e ação */
     --cor-vinho: #8C1F1F;
     --cor-vinho-escuro: #8f1515;
+    --cor-whatsapp-verde: #25D366;
+    --cor-texto-tooltip: var(--cor-fundo-branco); /* ou #ffffff diretamente */
 
     /* Gradientes */
     --gradiente-vinho: linear-gradient(to right, var(--cor-vinho), var(--cor-vinho-escuro), var(--cor-dourado));
@@ -119,7 +121,7 @@ p {
     font-size: var(--tamanho-texto-base);
     color: var(--cor-texto-corpo); /* << Usando a variável padronizada */
     margin-bottom: var(--espacamento-medio); /* << Espaço padrão abaixo dos parágrafos */
-    text-align: left; /* << Parágrafos alinhados à esquerda por padrão (melhor leitura) */
+    text-align: center; /* << Parágrafos alinhados à esquerda por padrão (melhor leitura) */
 }
 
 p:last-child {
@@ -156,6 +158,42 @@ section {
 
 .pagina__geral section:first-of-type {
     padding-top: 0; /* Ex: A seção principal pode não precisar */
+}
+
+/* Estilos para elementos que vão animar ao rolar a página */
+.animate-on-scroll {
+    opacity: 0; /* Começa invisível */
+    transform: translateY(30px); /* Começa um pouco abaixo da sua posição final */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    /* A transição pode ser ajustada para ser mais rápida ou mais lenta */
+    will-change: opacity, transform; /* Otimização para o navegador */
+}
+
+/* Classe adicionada pelo JavaScript quando o elemento está visível */
+.animate-on-scroll.is-visible {
+  opacity: 1; /* Torna-se totalmente visível */
+  transform: translateY(0); /* Move para a posição final */
+}
+
+/* Você pode criar variações, por exemplo: */
+.animate-slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-slide-in-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.animate-zoom-in {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.animate-zoom-in.is-visible {
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* ---------------------------- CABEÇALHO ---------------------------- */
@@ -1343,64 +1381,71 @@ section {
 
 /* Estilo geral da seção de feedbacks */
 .feedbacks {
-    padding: var(--espacamento-grande) var(--espacamento-medio);
-    width: 100%;
-    max-width: 75rem; /* 1200px */
-    height: auto;
-    margin: 0 auto;
-    padding-bottom: 1rem;
+    /* Padding lateral virá do .controle_geral */
+    padding-top: var(--espacamento-vertical-secao);
+    padding-bottom: calc(var(--espacamento-vertical-secao) + 2rem); /* Mais espaço embaixo para a paginação não ficar colada */
+    width: 100%; /* Ocupa a largura do .controle_geral */
+    /* max-width: 75rem;  << Removido, .controle_geral já deve limitar */
+    /* margin: 0 auto; << Removido, .controle_geral já deve centralizar */
+    /* height: auto; << Implícito, não precisa declarar */
 }
 
 /* Título da seção */
 .feedback-section-title {
     text-align: center;
-    font-size: clamp(1.5rem, 3vw, var(--tamanho-h2)); /* Usando tamanho de h2 como máximo */
-    color: var(--cor-vinho); /* Usando a cor vinho como destaque */
+    font-size: clamp(1.8rem, 4.5vw, var(--tamanho-h2)); /* Ajustado o clamp como em outras seções */
+    color: var(--cor-vinho); 
     margin-bottom: var(--espacamento-grande);
     font-weight: bold;
     font-family: var(--fonte-titulo);
+    /* A classe 'texto-com-gradiente' pode ser aplicada no HTML se desejado */
 }
 
 /* Container do Swiper */
-.swiper {
+.swiper { /* Este é o container que o Swiper.js inicializa */
     width: 100%;
-    max-width: 75rem; /* 1200px */
-    margin: 0 auto;
-    padding: var(--espacamento-medio);
-    overflow: hidden;
+    /* max-width: 75rem; << Se .feedbacks já está contido, isso pode ser redundante ou pode definir um limite interno. */
+    /* Para mobile, 100% do .feedbacks é bom. */
+    margin: 0 auto; /* Centraliza o Swiper se ele for menor que .feedbacks (devido a um max-width nele) */
+    padding: var(--espacamento-pequeno); /* Pequeno padding interno para os slides não colarem nas bordas do swiper */
+    overflow: hidden; /* Essencial para o Swiper */
 }
 
 /* Slide centralizado */
 .swiper-slide {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Alinha o card verticalmente se o slide for mais alto */
+    box-sizing: border-box; /* Para incluir padding/border na altura/largura do slide */
 }
 
 .swiper-pagination {
-    position: relative; /* Garante que a paginação seja posicionada corretamente */
-    bottom: 0; /* Posição padrão, ajuste se necessário */
+    position: relative; 
+    bottom: auto; /* Deixa o fluxo natural controlar ou ajuste para 'initial' */
     left: 0;
     width: 100%;
-    text-align: center; /* Centraliza as bolinhas */
-    margin-top: 2rem; /* Adiciona espaço acima das bolinhas */
+    text-align: center; 
+    margin-top: var(--espacamento-grande); /* Aumentado espaço acima da paginação */
+    /* padding-bottom do .feedbacks ou .swiper-container (se usado) deve dar espaço final */
 }
 
 .swiper-pagination .swiper-pagination-bullet {
-    width: 8px; /* Tamanho das bolinhas */
-    height: 8px; /* Tamanho das bolinhas */
-    display: inline-block; /* Permite margens horizontais */
-    border-radius: 50%; /* Faz as bolinhas redondas */
-    background: var(--cor-texto-neutro); /* Cor padrão das bolinhas */
-    opacity: 0.5; /* Opacidade padrão */
-    margin: 0 0.5rem; /* Espaçamento horizontal entre as bolinhas */
-    cursor: pointer; /* Indica que é clicável */
+    width: 10px; /* Bolinhas um pouco maiores */
+    height: 10px;
+    display: inline-block; 
+    border-radius: 50%; 
+    background: var(--cor-texto-neutro); 
+    opacity: 0.6; /* Um pouco mais visível */
+    margin: 0 var(--espacamento-xs); /* Espaçamento entre bolinhas ajustado */
+    cursor: pointer; 
+    transition: opacity var(--transition-duration) ease, background-color var(--transition-duration) ease;
 }
 
 .swiper-pagination .swiper-pagination-bullet-active {
-    opacity: 1; /* Bolinha ativa fica totalmente visível */
-    background: var(--cor-vinho); /* Cor da bolinha ativa */
+    opacity: 1; 
+    background: var(--cor-vinho); 
 }
+
 
 .swiper-container {
     padding-bottom: 5rem; /* Adiciona espaço abaixo do carrossel para a paginação */
@@ -1408,16 +1453,17 @@ section {
 
 /* Card estilo rede social */
 .card-feedback {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: var(--cor-fundo-branco); /* Fundo opaco para melhor leitura */
     border-radius: var(--espacamento-medio);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: var(--espacamento-grande);
-    max-width: 31.25rem; /* 500px */
-    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra um pouco mais presente */
+    padding: var(--espacamento-medio); /* Padding interno do card */
+    max-width: 30rem; /* 480px - um pouco menor que o original para caber melhor com padding do swiper */
+    width: 90%; /* Ocupa a maior parte do slide, permitindo o padding do .swiper */
     display: flex;
     flex-direction: column;
     gap: var(--espacamento-medio);
-    font-family: var(--fonte-corpo); /* Usando fonte do corpo */
+    font-family: var(--fonte-corpo);
+    box-sizing: border-box;
 }
 
 /* Cabeçalho do card com imagem e nome */
@@ -1425,17 +1471,18 @@ section {
     display: flex;
     align-items: center;
     gap: var(--espacamento-medio);
-    flex-wrap: nowrap;
+    flex-wrap: nowrap; /* Para evitar quebra se o nome for muito longo */
 }
 
 /* Imagem do usuário */
-.card-feedback img {
-    width: 4rem; /* 64px */
-    height: 4rem;
+.card-feedback img { /* Avatar */
+    width: 3.5rem; /* 56px - um pouco menor */
+    height: 3.5rem;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--cor-vinho); /* Usando a cor vinho como destaque */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--cor-vinho); 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; /* Para não encolher se o nome for grande */
 }
 
 /* Informações do usuário */
@@ -1443,40 +1490,48 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: left; /* Nomes geralmente alinhados à esquerda */
 }
+
 
 .card-feedback .user-info strong {
     color: var(--cor-texto-titulo);
-    font-size: var(--tamanho-subtitulo);
+    font-size: var(--tamanho-texto-base); /* Nome do usuário um pouco menor */
+    font-weight: bold; /* Garantir negrito */
     text-transform: capitalize;
+    line-height: 1.3;
 }
 
-.card-feedback .user-info span {
-    color: var(--cor-texto-neutro); /* Usando cor neutra */
+.card-feedback .user-info span { /* Data ou "@usuario" */
+    color: var(--cor-texto-neutro); 
     font-size: var(--tamanho-texto-pequeno);
+    line-height: 1.3;
 }
 
 /* Comentário com aspas */
 .card-feedback .comment {
     font-size: var(--tamanho-texto-base);
-    color: var(--cor-paragrafos);
+    color: var(--cor-texto-corpo); /* CORRIGIDO: Usar variável padronizada */
     line-height: 1.6;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--espacamento-pequeno);
-    text-align: center;
+    text-align: left; /* Para melhor legibilidade de depoimentos mais longos */
     position: relative;
-    padding-left: 2rem;
-    margin-top: var(--espacamento-medio);
+    padding-left: 2.2rem; /* Espaço para a aspa */
+    margin-top: var(--espacamento-xs); /* Menor margem superior */
+}
+
+.comment p {
+    text-align: left;
 }
 
 .card-feedback .comment::before {
     content: "“";
-    font-size: 2.5rem;
+    font-size: 3rem; /* Aspa maior */
+    font-family: var(--fonte-titulo); /* Fonte da aspa consistente com títulos */
     color: var(--cor-dourado);
     position: absolute;
-    top: 0;
+    top: -0.5rem; /* Ajuste fino da posição vertical da aspa */
     left: 0;
+    line-height: 1;
 }
 
 /* Comentário interno sem margem */
@@ -1495,84 +1550,116 @@ section {
 }
 
 /* Título */
-.location h2 {
-    font-size: var(--tamanho-h2); /* Usando tamanho de h2 */
-    color: var(--cor-vinho); /* Usando a cor vinho como destaque */
+.location h2 { /* Se o título usar .texto-com-gradiente, esses estilos complementam */
+    font-size: clamp(1.8rem, 4.5vw, var(--tamanho-h2));
+    color: var(--cor-vinho); 
     font-family: var(--fonte-titulo);
-    margin-bottom: var(--espacamento-medio);
+    margin-bottom: var(--espacamento-grande); /* Mais espaço após o título */
+    font-weight: bold;
 }
 
 /* Parágrafos */
 .location p {
-    font-size: var(--tamanho-texto-base); /* Usando tamanho base para parágrafos */
-    color: var(--cor-paragrafos);
-    font-family: var(--fonte-corpo); /* Usando a fonte do corpo */
-    margin-bottom: var(--espacamento-grande);
+    font-size: var(--tamanho-texto-base); 
+    color: var(--cor-texto-corpo); /* Usando variável padronizada */
+    font-family: var(--fonte-corpo); 
+    line-height: 1.6;
+    margin-bottom: var(--espacamento-grande); /* Espaço após os parágrafos de introdução */
+    max-width: 65ch; /* Para melhor legibilidade */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Container do mapa */
 .map-container {
     margin-bottom: var(--espacamento-grande);
-    max-width: 100%;
+    width: 100%; /* Para o mapa ocupar a largura disponível */
+    max-width: 700px; /* Limite para o mapa não ficar excessivamente largo */
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--espacamento-medio); /* Aplicar o radius aqui também */
+    overflow: hidden; /* Para o border-radius funcionar no iframe */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .map-container iframe {
     width: 100%;
-    border-radius: var(--espacamento-medio); /* Usando espaçamento médio para o raio da borda */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    height: 350px; /* ALTURA DEFINIDA PARA O MAPA - ajuste conforme necessário */
+    /* Ou use aspect-ratio para responsividade: */
+    /* aspect-ratio: 16/9; */
+    /* height: auto; */
+    border: none; /* Remove a borda padrão do iframe */
+    display: block; /* Remove qualquer espaço extra abaixo do iframe */
+}
+
+/* Detalhes do endereço */
+.location-details {
+    margin-top: var(--espacamento-medio); /* Espaço acima do endereço, após o mapa */
 }
 
 /* Endereço com ícone */
 .location-address {
     font-weight: bold;
     color: var(--cor-vinho);
-    font-size: var(--tamanho-texto-base); /* Usando tamanho base para o endereço */
+    font-size: var(--tamanho-subtitulo); /* Endereço um pouco maior */
     font-family: var(--fonte-corpo);
+    line-height: 1.5;
+    margin-bottom: 0; /* Remove margem inferior se for o último elemento */
 }
 
 .location-address i {
     margin-right: var(--espacamento-pequeno);
-    color: var(--cor-vinho);
+    color: var(--cor-vinho); /* Garante a cor do ícone */
 }
 
 /* ---------------------------- RODAPÉ ---------------------------- */
-
 .site-footer {
     background-color: var(--cor-fundo-creme);
-    color: var(--cor-texto-corpo); /* Usando a cor de corpo para o texto geral */
+    color: var(--cor-texto-corpo);
     text-align: center;
-    padding: var(--espacamento-medio) var(--espacamento-medio) 0 var(--espacamento-medio); /* Usando espaçamento padrão */
+    padding: 0 var(--espacamento-lateral-mobile); 
+    box-sizing: border-box; /* Para o padding não aumentar a largura total */
+    width: 100%;
 }
 
-.site-footer a,
-.site-footer p {
-    font-family: var(--fonte-corpo); /* Usando a fonte do corpo */
-    font-size: var(--tamanho-texto-pequeno); /* Tamanho menor para o rodapé */
+/* Se você tem um .site-footer__container, ele pode ajudar a limitar a largura do conteúdo */
+.site-footer__container {
+    max-width: 1200px; /* Ou sua variável de largura máxima de conteúdo */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.site-footer p,
+.site-footer a {
+    font-family: var(--fonte-corpo);
+    font-size: var(--tamanho-texto-pequeno);
     line-height: 1.4;
 }
 
-/* Links no rodapé */
 .site-footer a {
     color: var(--cor-vinho);
     text-decoration: none;
-    font-weight: bold; /* Links um pouco mais destacados */
+    font-weight: bold;
     transition: color var(--transition-duration) var(--transition-timing);
 }
 
-/* Hover nos links */
 .site-footer a:hover {
-    color: var(--cor-vinho-escuro); /* Ligeira mudança na cor no hover */
+    color: var(--cor-vinho-escuro);
 }
 
-/* Ícones sociais */
+.footer-credits p { 
+    margin-bottom: var(--espacamento-medio); 
+}
+
 .footer-social {
     margin-top: var(--espacamento-pequeno);
+    padding-bottom: var(--espacamento-pequeno); 
 }
 
 .footer-social a {
     margin: 0 var(--espacamento-pequeno);
     color: var(--cor-vinho);
-    font-size: 1.2rem;
+    font-size: 1.3rem; 
     transition: transform var(--transition-duration) var(--transition-timing),
                 color var(--transition-duration) var(--transition-timing);
 }
@@ -1586,90 +1673,108 @@ section {
 .whatsapp-button {
     position: fixed;
     bottom: 20px;
-    right: 0px; /* Começa fora da tela */
+    right: 20px; /* << Posição final quando visível */
     z-index: 100;
     width: 60px;
     height: 60px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--cor-whatsapp-verde, #25D366); /* << Cor de fundo do botão */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra um pouco mais forte */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transform: translateX(0);
-    transition: transform 0.5s ease-in-out; /* Apenas transform para melhor desempenho */
-    will-change: transform; /* Informa ao navegador que o elemento será animado */
-    backdrop-filter: blur(2px);
-    transform: translateX(100%); /* Fica escondido inicialmente */
-
+    
+    /* Estado inicial: escondido fora da tela à direita */
+    transform: translateX(calc(100% + 30px)); /* (100% da largura + 20px do right + 10px de folga) */
+    opacity: 0;
+    visibility: hidden;
+    
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), /* Efeito "elástico" */
+                opacity 0.3s ease-out, 
+                visibility 0s linear 0.3s; /* Delay para visibility na saída */
+    will-change: transform, opacity;
+    /* backdrop-filter: blur(2px); << Mantido se você gosta do efeito, mas pode ter impacto em performance */
 }
 
 .whatsapp-button img {
-    width: 70%; /* Responsivo: ajusta a largura ao contêiner */
-    height: auto; /* Mantém a proporção da imagem */
-    max-width: 100px; /* Limita o tamanho máximo da imagem */
-    display: block; /* Remove espaçamento indesejado */
-    margin: 0 auto; /* Centraliza no contêiner, se necessário */
+    width: 100%; /* Ajustado para um bom tamanho do ícone dentro do círculo */
+    height: auto;
+    /* max-width: 100px; << Removido, desnecessário para este tamanho */
+    display: block;
 }
 
+/* Estado visível do botão */
 .whatsapp-button.visible {
-    transform: translateX(0); /* Entra na tela */
-    right: 20px; /* Começa fora da tela */
-
-
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+                opacity 0.3s ease-in 0.1s, /* Leve delay na entrada da opacidade */
+                visibility 0s linear 0s;
 }
 
+/* Estado escondido (se precisar de uma classe específica para esconder via JS) */
+/* Geralmente, remover .visible já reverterá ao estado inicial */
 .whatsapp-button.hidden {
-    transform: translateX(100%); /* Sai da tela */
+    transform: translateX(calc(100% + 30px));
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Tooltip do WhatsApp */
 .whatsapp-tooltip {
     position: absolute;
-    bottom: 70px;
-    right: 10px;
-    background-color: #25D366;
-    color: var(--cor-alternativa);
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    bottom: calc(100% + 8px); /* Posiciona acima do botão (altura do botão + 8px de espaço) */
+    /* right: 50%; */ /* Centraliza horizontalmente com o botão */
+    /* transform: translateX(50%); */ /* Ajuste para centralizar */
+    /* Ajuste fino para o posicionamento do tooltip em relação ao botão */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px); /* Começa um pouco abaixo para animação */
+
+    background-color: var(--cor-whatsapp-verde, #25D366);
+    color: var(--cor-texto-tooltip, white); /* Usando variável */
+    padding: 8px 14px; /* Padding um pouco maior */
+    border-radius: 6px; /* Raio um pouco menor */
+    font-size: 0.875rem; /* 14px */
+    font-weight: 600; /* Negrito para melhor leitura */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0.5s ease-in-out;
     white-space: nowrap;
-    will-change: opacity, transform, visibility; /* Informa ao navegador que o elemento será animado */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0s linear 0.3s;
+    will-change: opacity, transform;
+    z-index: -1; /* Para o ::after ficar atrás do tooltip mas acima do botão */
 }
 
-/* Triângulo do balão de fala */
-.whatsapp-tooltip::after {
+.whatsapp-tooltip::after { /* Triângulo/seta */
     content: '';
     position: absolute;
-    bottom: -6px; /* Posiciona o triângulo abaixo do balão */
-    right: 15px; /* Ajusta para alinhar com o texto */
+    top: 100%; /* Posiciona na base do tooltip */
+    left: 50%; /* Centraliza a seta */
+    transform: translateX(-50%);
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 6px 6px 0 6px; /* Triângulo apontando para baixo */
-    border-color: #25D366 transparent transparent transparent; /* Cor do triângulo */
+    border-width: 6px 6px 0 6px; /* Triângulo apontando para cima */
+    border-color: var(--cor-whatsapp-verde, #25D366) transparent transparent transparent;
 }
 
-/* Quando visível */
+/* Tooltip visível */
 .whatsapp-tooltip.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
-    color: white;
-    font-weight: bold;
+    transform: translateX(-50%) translateY(0); /* Sobe para a posição final */
+    transition-delay: 0s, 0s, 0s; /* Remove delay na entrada */
 }
 
-/* Animação de saída para a direita */
+/* Animação de saída (se você usar uma classe .fade-out específica) */
 .whatsapp-tooltip.fade-out {
     opacity: 0;
-    transform: translateX(50px); /* Move para a direita */
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; /* Suave ao sair */
+    transform: translateX(-50%) translateY(10px); /* Volta para baixo */
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out; 
 }
+
 
 /* Barra Lateral de Redes Sociais (Adaptada com Ícones - Tamanho Reduzido) */
 .social-bar {
@@ -1768,41 +1873,39 @@ section {
     border-radius: 8px;
 }
 
-/* ---------------------------- MEDIA QUERIES ---------------------------- */
 /* ---------------------------- MEDIA QUERIES OTIMIZADAS ---------------------------- */
 
 /* --- Breakpoint: Tablets e Acima ( >= 768px ) --- */
 @media (min-width: 768px) {
     .conteudo_principais {
         margin: 0 auto;
-        width: 80%;
+        width: 80%; 
     }
 
     /* Botão WhatsApp */
     .whatsapp-button {
         width: 70px;
         height: 70px;
-        bottom: 30px;
-        right: -110px; /* Mantém escondido */
-    }
-    .whatsapp-button.visible {
-        transform: translateX(-130px); /* Ajusta a posição visível */
-    }
-    .whatsapp-tooltip {
-        bottom: 80px;
-        right: 20px;
-        font-size: 16px;
-        padding: 10px 15px;
-    }
-    .whatsapp-tooltip::after {
-        bottom: -8px;
-        right: 20px;
-        border-width: 8px 8px 0 8px;
+        bottom: 30px; 
     }
 
-    /* Esconde a barra social lateral */
+
+
+    .whatsapp-tooltip {
+        bottom: calc(70px + 10px + 5px); /* altura_botao + espaco + altura_seta_aproximada */
+        right: 25px; /* Ajuste para alinhar com o botão maior */
+        font-size: 0.9rem; /* 14.4px, um pouco menor que 16px */
+        padding: 0.6rem 0.9rem; /* 9.6px 14.4px */
+    }
+    .whatsapp-tooltip::after {
+        bottom: -7px; /* Ajustado para nova altura do botão */
+        /* right: 20px; (Pode precisar de ajuste fino se a posição do tooltip mudar muito) */
+        border-width: 7px 7px 0 7px; /* Ajuste sutil no tamanho da seta */
+    }
+
+    /* Esconde a barra social lateral em tablets e acima (conforme seu CSS anterior) */
     .social-bar,
-    .toggle-bar { /* Esconde a barra e seu ativador */
+    .toggle-bar {
         display: none;
     }
 }
@@ -1811,7 +1914,6 @@ section {
 @media (min-width: 1024px) {
     /* Cabeçalho */
     .cabecalho {
-        justify-content: center;
         padding: var(--espacamento-medio) var(--espacamento-grande);
     }
     .cabecalho__logo {
@@ -1820,282 +1922,235 @@ section {
 
     /* Seção Principal */
     .secao-principal__fundo { height: 790px; }
-    #fundo01, #fundo02 { justify-content: center; height: 73.5%; }
-    .secao-principal__fundo__paragrafo { font-size: 100px; }
-    .textos-titulo { margin-top: 0; margin-bottom: var(--espacamento-medio); }
-    .nome.nayra { font-size: 3rem; margin-bottom: var(--espacamento-pequeno); }
-    .nome.ananias { font-size: 4rem; margin-bottom: var(--espacamento-pequeno); }
-    .secao-principal__subtitulo { font-size: 1.2rem; max-width: 90%; }
-    .linha { width: 1px; }
-    .linha-superior, .linha-inferior { height: 15px; }
-    .foto-wrapper { margin-top: var(--espacamento-medio); margin-bottom: var(--espacamento-grande); width: 150%; }
-    .foto-wrapper::after { width: 150%; }
-    .secao-principal__foto { max-width: 500px; width: auto; height: auto; object-fit: contain; }
-    .scroll-indicator { margin-top: var(--espacamento-grande); padding-bottom: var(--espacamento-grande); }
+    #fundo01, #fundo02 { height: 58%; }
+    .secao-principal__fundo__paragrafo { font-size: 60px; }
+    .textos-titulo { margin-top: var(--espacamento-pequeno); margin-bottom: var(--espacamento-medio); } /* Ajustado margin-top */
+    .nome.nayra { font-size: 3rem; margin-bottom: var(--espacamento-xs); } /* Margem menor */
+    .nome.ananias { font-size: 4rem; margin-bottom: var(--espacamento-xs); } /* Margem menor */
+    .secao-principal__subtitulo { font-size: 1.3rem; max-width: 80%; } /* Leve ajuste */
+    .linha { width: 2px; } /* Linha mais grossa */
+    .linha-superior, .linha-inferior { height: 20px; } /* Linhas maiores */
+
 
     /* Catálogo */
-    .catalogo { padding: var(--espacamento-grande) 3rem; }
+    .catalogo { padding-top: var(--espacamento-vertical-secao); padding-bottom: var(--espacamento-vertical-secao); } /* Padding lateral já vem do .controle_geral */
     .catalogo__titulo { font-size: var(--tamanho-h1); margin-bottom: calc(var(--espacamento-grande) * 1.5); }
     .catalogo__menu { margin: calc(var(--espacamento-grande) * 1.5) auto; }
-    .catalogo__botao { padding: 0.3rem 0.8rem; font-size: var(--tamanho-subtitulo); }
-    .catalogo__carrossel { padding: 1.5rem 0; }
+    .catalogo__botao { padding: 0.6rem 1.2rem; font-size: var(--tamanho-subtitulo); } /* Ajuste de padding */
+    .catalogo__carrossel { padding-top: 1.5rem; padding-bottom: 1.5rem; } /* Adicionado padding-top */
     .catalogo__card { max-width: 340px; }
     .catalogo__card img { height: 240px; }
-    .catalogo__card__titulo { font-size: var(--tamanho-h2); }
-    .catalogo__card__descricao { font-size: calc(var(--tamanho-texto-base) * 1.05); }
-    .catalogo__card__caracteristicas span { font-size: 0.75rem; padding: 0.15rem 0.8rem; }
-    .catalogo__cta a { padding: 0.7rem 1.5rem; font-size: var(--tamanho-subtitulo); }
+    .catalogo__card__titulo { font-size: var(--tamanho-h3); } /* Usando H3 para consistência */
+    .catalogo__card__descricao { font-size: calc(var(--tamanho-texto-base) * 1); } /* Simplificado */
+    .catalogo__card__caracteristicas span { font-size: 0.8rem; padding: 0.2rem 0.8rem; } /* Ajuste */
+    .catalogo__cta a { padding: 0.8rem 1.6rem; font-size: var(--tamanho-texto-base); } /* Ajuste */
     .catalogo__pdf { margin-top: calc(var(--espacamento-grande) * 1.2); }
-    .catalogo__pdf__link { padding: 0.8rem 1.4rem; font-size: var(--tamanho-subtitulo); }
-    .catalogo__pdf__link i { font-size: 1.2rem; }
+    .catalogo__pdf__link { padding: 0.9rem 1.5rem; font-size: var(--tamanho-texto-base); } /* Ajuste */
+    .catalogo__pdf__link i { font-size: 1.3rem; } /* Ajuste */
 
     /* Quiz Modal */
-    #quiz-container, #resultado { max-width: 700px; padding: 2rem; }
-    #quiz-container h2, #resultado h3 { font-size: var(--tamanho-h1); margin-bottom: var(--espacamento-medio); }
-    #pergunta { font-size: var(--tamanho-subtitulo); margin-bottom: var(--espacamento-medio); margin-top: calc(var(--espacamento-grande) * 1.5); }
-    #opcoes { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--espacamento-medio); margin-bottom: calc(var(--espacamento-grande) * 1.5); }
-    #opcoes button { padding: 12px 16px; font-size: var(--tamanho-texto-base); }
+    #quiz-container, #resultado { max-width: 700px; padding: var(--espacamento-grande); } /* Usando variável */
+    #quiz-container h2, #resultado h3 { font-size: var(--tamanho-h1); margin-bottom: var(--espacamento-grande); } /* Usando variável */
+    #pergunta { font-size: var(--tamanho-h3); margin-bottom: var(--espacamento-grande); margin-top: var(--espacamento-medio); } /* Ajuste */
+    #opcoes { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--espacamento-medio); margin-bottom: var(--espacamento-grande); } /* Minmax maior */
+    #opcoes button { padding: var(--espacamento-medio) var(--espacamento-grande); font-size: var(--tamanho-texto-base); } /* Usando variáveis */
     #servico-recomendado-msg { gap: var(--espacamento-grande); }
-    #servico-recomendado-msg > div { max-width: 500px; padding: var(--espacamento-medio); }
-    #servico-recomendado-msg h3 { font-size: var(--tamanho-h1); margin-bottom: var(--espacamento-medio); }
-    #servico-recomendado-msg strong { font-size: var(--tamanho-h2); margin-bottom: var(--espacamento-medio); }
-    #servico-recomendado-msg img { max-width: 150px; margin-bottom: var(--espacamento-medio); }
-    #whatsapp-link { padding: 12px 24px; font-size: var(--tamanho-texto-base); margin-top: var(--espacamento-medio); }
-    .quiz-fechar-botao { font-size: 2rem; top: var(--espacamento-medio); right: var(--espacamento-medio); }
-    #quiz-progresso { height: 12px; margin-top: var(--espacamento-medio); }
-    #quiz-progresso > div { font-size: 1em; line-height: 12px; }
+    #servico-recomendado-msg > div { max-width: 500px; padding: var(--espacamento-grande); } /* Usando variável */
+    #servico-recomendado-msg h3 { font-size: var(--tamanho-h2); margin-bottom: var(--espacamento-medio); } /* Ajuste */
+    #servico-recomendado-msg strong { font-size: var(--tamanho-h3); margin-bottom: var(--espacamento-medio); } /* Ajuste */
+    #servico-recomendado-msg img { max-width: 180px; margin-bottom: var(--espacamento-medio); } /* Imagem maior */
+    #whatsapp-link { padding: var(--espacamento-medio) calc(var(--espacamento-grande) * 1.2); font-size: var(--tamanho-subtitulo); } /* Ajuste */
+    .quiz-fechar-botao { font-size: 2.2rem; top: var(--espacamento-medio); right: var(--espacamento-medio); } /* Maior */
+    #quiz-progresso { height: 16px; margin-top: var(--espacamento-grande); } /* Ajuste */
+    #quiz-progresso > div { font-size: 0.9em; line-height: 16px; } /* Ajuste */
 
     /* Cursos */
-    .cursos { margin-top: 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .cursos__lista { width: 100%; max-width: none; margin: 0; padding: var(--espacamento-grande); }
-    .curso-card-minimal { max-width: 100%; flex-direction: row; align-items: center; min-height: 160px; }
-    .curso-card-minimal__conteudo { flex: 1; padding: var(--espacamento-grande); }
-    .curso-card-minimal__titulo { font-size: var(--tamanho-h2); margin-bottom: var(--espacamento-medio); }
-    .curso-card-minimal__chamada { font-size: var(--tamanho-subtitulo); margin-bottom: var(--espacamento-grande); }
-    .curso-card-minimal__incentivo { font-size: var(--tamanho-texto-base); margin-bottom: var(--espacamento-medio); }
-    .curso-card-minimal__botoes { flex-direction: row; gap: var(--espacamento-medio); margin-top: var(--espacamento-medio); }
-    .curso-card-minimal__cta, .curso-card-minimal__pdf-link { padding: 0.8rem 1.4rem; font-size: var(--tamanho-texto-base); }
-    .curso-card-minimal__pdf-link i { font-size: var(--tamanho-texto-base); }
-    .curso-card-minimal__imagem { flex: 1; height: 410px; padding: 0; margin: 0; border-radius: 0; }
-    .curso-card-minimal__imagem img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .curso-card-minimal { min-height: auto; } /* Altura baseada no conteúdo */
+    .curso-card-minimal__conteudo { padding: var(--espacamento-grande); }
+    .curso-card-minimal__titulo { font-size: var(--tamanho-h3); }
+    .curso-card-minimal__imagem { flex-basis: 40%; height: auto; min-height: 250px;} /* Imagem com base flex e min-height */
+
 
     /* Agendamento */
-    .agendamento { padding: calc(var(--espacamento-grande) * 2); text-align: left; max-width: 800px; margin: 5rem auto; }
-    .agendamento__titulo { font-size: var(--tamanho-h1); text-align: left; margin-bottom: var(--espacamento-grande); }
-    .agendamento__conteudo { flex-wrap: nowrap; justify-content: space-between; align-items: center; text-align: left; }
-    .agendamento__imagem { flex-shrink: 0; max-width: 35%; }
-    .agendamento__info { flex: 1; max-width: none; align-items: flex-start; text-align: left; }
-    .agendamento__info p { font-size: var(--tamanho-h3); text-align: left; margin-bottom: var(--espacamento-grande); }
-    .agendamento__link { display: inline-block; padding: 1rem 2.5rem; font-size: var(--tamanho-subtitulo); margin: 0; }
+    .agendamento { padding-top: var(--espacamento-vertical-secao); padding-bottom: var(--espacamento-vertical-secao); max-width: 900px; margin: var(--espacamento-xl) auto; } /* Max-width aumentado */
+    .agendamento__titulo { font-size: var(--tamanho-h1); }
+    .agendamento__info p { font-size: var(--tamanho-subtitulo); } /* Usando variável */
+    .agendamento__link { padding: var(--espacamento-medio) calc(var(--espacamento-grande) * 1.2); font-size: var(--tamanho-subtitulo); }
 
     /* Feedbacks */
-    .feedbacks { padding: var(--espacamento-grande) 3rem; }
+    .feedbacks { padding-top: var(--espacamento-vertical-secao); padding-bottom: var(--espacamento-vertical-secao); }
     .feedback-section-title { font-size: var(--tamanho-h1); margin-bottom: calc(var(--espacamento-grande) * 1.5); }
-    .swiper { max-width: 80rem; padding: var(--espacamento-grande); }
-    .card-feedback { max-width: 35rem; padding: 2rem; gap: var(--espacamento-grande); }
-    .card-feedback img { width: 5rem; height: 5rem; }
-    .card-feedback .user-info strong { font-size: var(--tamanho-h2); }
-    .card-feedback .user-info span { font-size: var(--tamanho-texto-base); }
-    .card-feedback .comment { font-size: var(--tamanho-subtitulo); padding-left: 2.5rem; }
-    .card-feedback .comment::before { font-size: 3rem; }
-    .swiper-pagination { margin-top: 3rem; }
-    .swiper-pagination .swiper-pagination-bullet { width: 10px; height: 10px; margin: 0 0.75rem; }
+    .swiper { max-width: 70rem; padding: var(--espacamento-medio); } /* Swiper um pouco menor */
+    .card-feedback { max-width: 30rem; } /* Card menor para caber mais ou ter mais "peek" */
+    .card-feedback img { width: 4rem; height: 4rem; } /* Avatar menor */
+    .card-feedback .user-info strong { font-size: var(--tamanho-subtitulo); }
+    .card-feedback .comment { font-size: var(--tamanho-texto-base); }
+    .swiper-pagination { margin-top: var(--espacamento-grande); } /* Menor */
+    .swiper-pagination .swiper-pagination-bullet { width: 10px; height: 10px; margin: 0 var(--espacamento-xs); }
+
 
     /* Localização */
-    .location { padding: var(--espacamento-grande) 3rem; }
-    .location__container { flex-direction: column; align-items: center; gap: 1rem; }
+    .location { padding-top: var(--espacamento-vertical-secao); padding-bottom: var(--espacamento-vertical-secao); }
     .location h2 { font-size: var(--tamanho-h1); }
-    .location p { font-size: var(--tamanho-subtitulo); margin-bottom: calc(var(--espacamento-grande) * 1.5); }
-    .map-container { max-width: 80%; width: 100%; margin: 0 auto calc(var(--espacamento-grande) * 1.5); }
-    .map-container iframe { min-height: 400px; }
+    .location p { font-size: var(--tamanho-subtitulo); }
+    .map-container { max-width: 70%; } /* Mapa um pouco menor */
+    .map-container iframe { min-height: 450px; } /* Altura maior */
     .location-address { font-size: var(--tamanho-subtitulo); }
-    .location-address i { font-size: var(--tamanho-subtitulo); margin-right: var(--espacamento-medio); }
+    .location-address i { font-size: var(--tamanho-subtitulo); }
 
     /* Rodapé */
-    .site-footer { padding: var(--espacamento-grande) 3rem; width: 80%; max-width: 1200px; margin: 0 auto; text-align: left; }
-    .site-footer__container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-    .footer-content { text-align: left; }
-    .site-footer a, .site-footer p { font-size: var(--tamanho-texto-base); }
-    .footer-social { margin-top: 0; display: flex; gap: var(--espacamento-pequeno); margin-right: 5rem; }
-    .footer-social a { font-size: 1.4rem; margin: 0 var(--espacamento-medio); }
+    /* Rodapé já tem layout flex a partir daqui no seu código original, então não precisa de 'width: 80%' */
+    .site-footer { padding-top: var(--espacamento-grande); padding-bottom: var(--espacamento-grande); text-align: left; }
+    .site-footer__container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: var(--max-width-geral, 1200px); margin: 0 auto; padding: 0 var(--espacamento-lateral-mobile);}
+    .site-footer a, .site-footer p { font-size: var(--tamanho-texto-pequeno); } /* Mantido pequeno */
+    .footer-social { margin-top: 0; margin-right: 0; } /* Ajustes */
+    .footer-social a { font-size: 1.5rem; margin: 0 var(--espacamento-pequeno); } /* Ajustes */
 
-    /* Botão WhatsApp */
-    .whatsapp-button { width: 80px; height: 80px; bottom: 40px; right: -120px; }
-    .whatsapp-button.visible { transform: translateX(-140px); }
-    .whatsapp-tooltip { bottom: 90px; right: 30px; font-size: 18px; padding: 12px 18px; }
-    .whatsapp-tooltip::after { bottom: -10px; right: 25px; border-width: 10px 10px 0 10px; }
+
 }
 
-/* --- Breakpoint: Desktops Grandes e Acima ( >= 1440px ) --- */
+/* --- Breakpoint: Desktops Grandes ( >= 1440px ) --- */
 @media (min-width: 1440px) {
     /* Cabeçalho */
     .cabecalho__logo { width: 8em; }
 
     /* Seção Principal */
     .secao-principal__fundo { height: 910px; }
-    #fundo01, #fundo02 { height: 75%; }
-    .nome.nayra { font-size: 3.5rem; } /* Aumentando */
-    .nome.ananias { font-size: 4.5rem; } /* Aumentando */
-    .secao-principal__subtitulo { font-size: 1.7rem; max-width: 60%; } /* Aumentando */
+    #fundo01, #fundo02 { height: 58%; }
+    .nome.nayra { font-size: 4rem; } /* Aumentando mais */
+    .nome.ananias { font-size: 5rem; } /* Aumentando mais */
+    .secao-principal__subtitulo { font-size: 1.8rem; max-width: 55%; } /* Ajuste */
     .linha { width: 3px; }
     .linha-superior, .linha-inferior { height: 25px; }
-    .secao-principal__foto { max-width: 600px; }
-    .foto-wrapper::after { width: 200%; }
+    .foto-wrapper{margin-top: 4rem;}
+
 
     /* Catálogo */
-    .catalogo__titulo { font-size: 3.3rem; } /* Aumentando */
-    .catalogo__menu { margin: calc(var(--espacamento-grande) * 1.8) auto; }
-    .catalogo__botao { font-size: 1.7rem; } /* Aumentando */
-    .catalogo__card { max-width: 400px; }
-    .catalogo__card img { height: 280px; }
-    .catalogo__card__titulo { font-size: 2.1rem; } /* Aumentando */
-    .catalogo__card__descricao { font-size: calc(var(--tamanho-texto-base) * 1.1); } /* Aumentando */
-    .catalogo__card__caracteristicas span { font-size: 0.8rem; }
-    .catalogo__cta a { font-size: 1.7rem; } /* Aumentando */
-    .catalogo__pdf { margin-top: calc(var(--espacamento-grande) * 1.5); }
-    .catalogo__pdf__link { font-size: 1.7rem; } /* Aumentando */
-    .catalogo__pdf__link i { font-size: 1.4rem; }
-
-    /* Quiz Modal */
-    #quiz-container, #resultado { max-width: 800px; padding: var(--espacamento-grande); }
-    #quiz-container h2, #resultado h3 { font-size: calc(var(--tamanho-h1) * 1.1); }
-    #pergunta { font-size: var(--tamanho-h2); }
-    #opcoes { gap: var(--espacamento-grande); }
-    #opcoes button { font-size: var(--tamanho-subtitulo); padding: 15px 20px; }
-    #servico-recomendado-msg h3 { font-size: calc(var(--tamanho-h1) * 1.1); }
-    #servico-recomendado-msg strong { font-size: var(--tamanho-h1); }
-    #servico-recomendado-msg img { max-width: 180px; }
-    #whatsapp-link { font-size: var(--tamanho-subtitulo); padding: 15px 30px; }
-    .quiz-fechar-botao { font-size: 2.2rem; }
-    #quiz-progresso { height: 14px; }
-    #quiz-progresso > div { font-size: 1.1em; line-height: 14px; }
-
-    /* Cursos */
-    .cursos__lista { max-width: 1000px; padding: calc(var(--espacamento-grande) * 1.2); }
-    .curso-card-minimal { min-height: 200px; height: 430px; }
-    .curso-card-minimal__titulo { font-size: calc(var(--tamanho-h2) * 1.1); }
-    .curso-card-minimal__cta, .curso-card-minimal__pdf-link { padding: 0.9rem 1.6rem; font-size: var(--tamanho-subtitulo); }
-    .curso-card-minimal__imagem { max-width: 400px; }
-
-    /* Agendamento */
-    .agendamento { padding: calc(var(--espacamento-grande) * 3); max-width: 1200px; }
-    .agendamento__titulo { font-size: 3.5rem; margin-bottom: calc(var(--espacamento-grande) * 1.2); }
-    .agendamento__imagem { max-width: 30%; }
-    .agendamento__info p { font-size: 2.2rem; margin-bottom: calc(var(--espacamento-grande) * 1.2); }
-    .agendamento__link { padding: 1.2rem 3rem; font-size: 1.8rem; }
-
-    /* Feedbacks */
-    .feedbacks { padding: var(--espacamento-grande) 4rem; }
-    .feedback-section-title { font-size: 3.3rem; margin-bottom: calc(var(--espacamento-grande) * 1.8); }
-    .swiper { max-width: 85rem; }
-    .card-feedback { max-width: 38rem; padding: 1.5rem; gap: calc(var(--espacamento-grande) * 0.9); }
-    .card-feedback img { width: 4.5rem; height: 4.5rem; }
-    .card-feedback .user-info strong { font-size: 2.0rem; }
-    .card-feedback .user-info span { font-size: 1.4rem; }
-    .card-feedback .comment { font-size: 1.6rem; padding-left: 2.8rem; }
-    .card-feedback .comment::before { font-size: 2.8rem; }
-    .swiper-pagination .swiper-pagination-bullet { width: 9px; height: 9px; margin: 0 0.6rem; }
-
-    /* Localização */
-    .location { padding: var(--espacamento-grande) 4rem; }
-    .location h2 { font-size: 3.0rem; margin-bottom: calc(var(--espacamento-grande) * 1); }
-    .location p { font-size: 1.5rem; margin-bottom: calc(var(--espacamento-grande) * 1.2); }
-    .map-container { max-width: 60%; margin: 0 auto calc(var(--espacamento-grande) * 1.2); }
-    .location-address { font-size: 1.8rem; }
-    .location-address i { font-size: 1.8rem; }
-
-    /* Rodapé */
-    .site-footer { padding: 48px 4rem; max-width: 1400px; }
-    .site-footer a, .site-footer p { font-size: var(--tamanho-subtitulo); }
-    .footer-social a { font-size: 1.6rem; margin: 0 var(--espacamento-grande); }
-
-    /* Botão WhatsApp */
-    .whatsapp-button { width: 85px; height: 85px; bottom: 45px; right: -125px; }
-    .whatsapp-button.visible { transform: translateX(-145px); }
-    .whatsapp-tooltip { bottom: 95px; right: 35px; font-size: 19px; padding: 13px 19px; }
-    .whatsapp-tooltip::after { bottom: -11px; right: 28px; border-width: 11px 11px 0 11px; }
-}
-
-/* --- Breakpoint: Desktops MUITO Grandes / TVs ( >= 1920px ) --- */
-/* A partir daqui, optamos por AUMENTAR os tamanhos, corrigindo a intenção "Menor" */
-@media (min-width: 1920px) {
-    /* Cabeçalho */
-    .cabecalho__logo { width: 9em; }
-
-    /* Seção Principal */
-    .secao-principal__fundo { height: 1000px; }
-    #fundo01, #fundo02 { height: 78%; }
-    .secao-principal__fundo__paragrafo { font-size: 140px; }
-    .nome.nayra { font-size: 4rem; }
-    .nome.ananias { font-size: 5rem; }
-    .secao-principal__subtitulo { font-size: 2rem; max-width: 50%; }
-    .linha { width: 4px; }
-    .linha-superior, .linha-inferior { height: 30px; }
-    .secao-principal__foto { max-width: 700px; }
-    .foto-wrapper::after { width: 250%; }
-
-    /* Catálogo */
-    .catalogo__titulo { font-size: 3.5rem; }
+    .catalogo__titulo { font-size: calc(var(--tamanho-h1) * 1.2); } /* Aumentando */
     .catalogo__menu { margin: calc(var(--espacamento-grande) * 2) auto; }
-    .catalogo__botao { font-size: 2rem; padding: 0.4rem 1rem; }
-    .catalogo__carrossel { gap: var(--espacamento-grande); }
-    .catalogo__card { max-width: 440px; }
-    .catalogo__card img { height: 300px; }
-    .catalogo__card__titulo { font-size: 2.2rem; }
-    .catalogo__card__descricao { font-size: calc(var(--tamanho-texto-base) * 1.2); }
-    .catalogo__card__caracteristicas span { font-size: 0.9rem; padding: 0.2rem 1rem; }
-    .catalogo__cta a { font-size: 1.8rem; padding: 1rem 2rem; }
-    .catalogo__pdf { margin-top: calc(var(--espacamento-grande) * 2); }
-    .catalogo__pdf__link { font-size: 1.8rem; padding: 1rem 1.8rem; }
+    .catalogo__botao { font-size: var(--tamanho-h3); padding: 0.8rem 1.5rem; } /* Aumentando */
+    .catalogo__card { max-width: 380px; } /* Aumentando */
+    .catalogo__card img { height: 260px; }
+    .catalogo__card__titulo { font-size: var(--tamanho-h2); }
+    .catalogo__card__descricao { font-size: var(--tamanho-texto-base); }
+    .catalogo__cta a { font-size: var(--tamanho-subtitulo); padding: 0.9rem 1.8rem;}
+    .catalogo__pdf__link { font-size: var(--tamanho-subtitulo); padding: 1rem 1.8rem;}
     .catalogo__pdf__link i { font-size: 1.5rem; }
 
     /* Quiz Modal */
-    #quiz-container, #resultado { max-width: 900px; padding: 3rem; }
-    #quiz-container h2, #resultado h3 { font-size: calc(var(--tamanho-h1) * 1.2); }
-    #pergunta { font-size: calc(var(--tamanho-h2) * 1.1); }
-    #opcoes button { font-size: var(--tamanho-h2); padding: 18px 24px; }
-    #servico-recomendado-msg h3 { font-size: calc(var(--tamanho-h1) * 1.2); }
-    #servico-recomendado-msg strong { font-size: calc(var(--tamanho-h1) * 1.1); }
-    #servico-recomendado-msg img { max-width: 200px; }
-    #whatsapp-link { font-size: var(--tamanho-h2); padding: 18px 36px; }
-    #quiz-fechar-botao { font-size: 2.4rem; }
-    #quiz-progresso { height: 16px; }
-    #quiz-progresso > div { font-size: 1.2em; line-height: 16px; }
+    #quiz-container, #resultado { max-width: 750px; } /* Um pouco menor que antes */
+    #quiz-container h2, #resultado h3 { font-size: calc(var(--tamanho-h1) * 1.15); }
+    #pergunta { font-size: var(--tamanho-h2); }
+    #opcoes button { font-size: var(--tamanho-texto-base); padding: var(--espacamento-medio) var(--espacamento-grande); } /* Usando variáveis */
+    #servico-recomendado-msg h3 { font-size: calc(var(--tamanho-h1) * 1.05); }
+    #servico-recomendado-msg strong { font-size: var(--tamanho-h2); }
+    #servico-recomendado-msg img { max-width: 200px; } /* Imagem maior */
+    #whatsapp-link { font-size: var(--tamanho-subtitulo); padding: var(--espacamento-grande) calc(var(--espacamento-grande) * 1.5); }
+    #quiz-progresso { height: 18px; }
+    #quiz-progresso > div { font-size: 1em; line-height: 18px; }
 
     /* Cursos */
-    .cursos__lista { max-width: 1200px; padding: calc(var(--espacamento-grande) * 1.5); }
-    .curso-card-minimal { min-height: 220px; }
-    .curso-card-minimal__titulo { font-size: calc(var(--tamanho-h2) * 1.2); }
-    .curso-card-minimal__chamada { font-size: calc(var(--tamanho-subtitulo) * 1.1); }
-    .curso-card-minimal__incentivo { font-size: calc(var(--tamanho-texto-base) * 1.1); }
-    .curso-card-minimal__cta, .curso-card-minimal__pdf-link { padding: 1rem 1.8rem; font-size: var(--tamanho-h2); }
-    .curso-card-minimal__imagem { max-width: 450px; }
+    .cursos__lista { max-width: 1100px; }
+    .curso-card-minimal { min-height: 280px; } /* Maior altura para card */
+    .curso-card-minimal__titulo { font-size: calc(var(--tamanho-h2) * 1.15); }
+    .curso-card-minimal__imagem { flex-basis: 45%; min-height: 280px; }
+
 
     /* Agendamento */
-    .agendamento { padding: calc(var(--espacamento-grande) * 3.5); max-width: 1400px; }
-    .agendamento__titulo { font-size: 3.8rem; }
-    .agendamento__info p { font-size: 2.4rem; }
-    .agendamento__link { padding: 1.4rem 3.5rem; font-size: 2rem; }
+    .agendamento { max-width: 1000px; } /* Um pouco menor */
+    .agendamento__titulo { font-size: calc(var(--tamanho-h1) * 1.2); }
+    .agendamento__info p { font-size: var(--tamanho-h3); }
+    .agendamento__link { font-size: var(--tamanho-subtitulo); }
 
     /* Feedbacks */
-    .feedbacks { padding: var(--espacamento-grande) 5rem; }
-    .feedback-section-title { font-size: 3.5rem; }
-    .swiper { max-width: 90rem; }
-    .card-feedback { max-width: 40rem; }
-    .card-feedback .user-info strong { font-size: 2.2rem; }
-    .card-feedback .comment { font-size: 1.7rem; }
-
+    .feedback-section-title { font-size: calc(var(--tamanho-h1) * 1.1); }
+    .swiper { max-width: 75rem; }
+    .card-feedback { max-width: 35rem; } /* Mantendo o tamanho */
+    .card-feedback .user-info strong { font-size: var(--tamanho-h3); }
+    .card-feedback .comment { font-size: var(--tamanho-subtitulo); }
+    
     /* Localização */
-    .location { padding: var(--espacamento-grande) 4rem; }
-    .location h2 { font-size: 3.2rem; }
-    .location p { font-size: 1.6rem; }
-    .map-container { max-width: 55%; }
-    .map-container iframe { min-height: 450px; }
-    .location-address { font-size: 2rem; }
-    .location-address i { font-size: 2rem; }
+    .location h2 { font-size: calc(var(--tamanho-h1) * 1.1); }
+    .location p { font-size: var(--tamanho-subtitulo); }
+    .map-container { max-width: 65%; }
+    .location-address { font-size: var(--tamanho-h3); }
+    .location-address i { font-size: var(--tamanho-h3); }
 
     /* Rodapé */
-    .site-footer { padding: 64px 5rem; max-width: 1800px; }
-    .site-footer a, .site-footer p { font-size: var(--tamanho-h3); } /* Aumentando um pouco */
-    .footer-social a { font-size: 2rem; }
+    .site-footer__container { max-width: var(--max-width-geral-desktop, 1360px); } /* Exemplo de var para desktop */
+    .site-footer a, .site-footer p { font-size: var(--tamanho-texto-base); }
+    .footer-social a { font-size: 1.6rem; }
+
+}
+
+/* --- Breakpoint: Desktops MUITO Grandes / TVs ( >= 1920px ) --- */
+@media (min-width: 1920px) {
+    /* Ajustes finos para telas muito grandes, geralmente aumentando um pouco mais
+       ou ajustando max-widths para não ficarem excessivamente largos. */
+
+    /* Cabeçalho */
+    .cabecalho__logo { width: 9em;}
+    /* Seção Principal */
+    .secao-principal__fundo { height: 1000px;}
+    #fundo01, #fundo02 { height: 54%;}
+    .secao-principal__fundo__paragrafo { font-size: 80px; } /* Reduzido um pouco do seu original de 140px */
+    .nome.nayra { font-size: 4.5rem; } 
+    .nome.ananias { font-size: 5.5rem; } 
+    .secao-principal__subtitulo { font-size: 2rem; max-width: 45%; } 
+    .linha { width: 4px; }
+    .linha-superior, .linha-inferior { height: 30px; }
+    .foto-wrapper{margin-top: 5rem;}
+
+    /* Catálogo */
+    .catalogo__titulo { font-size: calc(var(--tamanho-h1) * 1.3); } 
+    .catalogo__botao { font-size: var(--tamanho-h2); padding: 0.9rem 1.8rem; } 
+    .catalogo__card { max-width: 420px; } 
+    .catalogo__card img { height: 280px; }
+    .catalogo__card__titulo { font-size: calc(var(--tamanho-h2) * 1.1); }
+    .catalogo__card__descricao { font-size: var(--tamanho-subtitulo); }
+    .catalogo__cta a { font-size: var(--tamanho-h3); padding: 1rem 2rem;}
+    .catalogo__pdf__link { font-size: var(--tamanho-h3); padding: 1.1rem 2rem;}
+    .catalogo__pdf__link i { font-size: 1.6rem; }
+
+    /* Quiz Modal */
+    #quiz-container, #resultado { max-width: 800px; } /* Um pouco menor que seu original de 900px */
+    #quiz-container h2, #resultado h3 { font-size: calc(var(--tamanho-h1) * 1.25); }
+    #pergunta { font-size: calc(var(--tamanho-h2) * 1.15); }
+    #opcoes button { font-size: var(--tamanho-h3); padding: var(--espacamento-grande) calc(var(--espacamento-grande) * 1.2); }
+    #servico-recomendado-msg h3 { font-size: calc(var(--tamanho-h1) * 1.15); }
+    #servico-recomendado-msg strong { font-size: calc(var(--tamanho-h1) * 1.05); }
+    #whatsapp-link { font-size: var(--tamanho-h3); padding: var(--espacamento-grande) calc(var(--espacamento-grande) * 1.5); }
+    
+    /* Cursos */
+    .cursos__lista { max-width: 1200px; }
+    .curso-card-minimal { min-height: 300px; }
+    .curso-card-minimal__titulo { font-size: calc(var(--tamanho-h2) * 1.25); }
+    .curso-card-minimal__imagem { flex-basis: 40%; min-height: 300px; }
+
+
+    /* Agendamento */
+    .agendamento { max-width: 1100px; } /* Um pouco menor */
+    .agendamento__titulo { font-size: calc(var(--tamanho-h1) * 1.3); }
+    .agendamento__info p { font-size: var(--tamanho-h2); }
+    .agendamento__link { font-size: var(--tamanho-h3); }
+
+    /* Feedbacks */
+    .feedback-section-title { font-size: calc(var(--tamanho-h1) * 1.2); }
+    .swiper { max-width: 80rem; } /* Menor que seu original de 90rem */
+    .card-feedback { max-width: 38rem; }
+    .card-feedback .user-info strong { font-size: var(--tamanho-h2); }
+    .card-feedback .comment { font-size: var(--tamanho-subtitulo); }
+    
+    /* Localização */
+    .location h2 { font-size: calc(var(--tamanho-h1) * 1.2); }
+    .location p { font-size: var(--tamanho-h3); }
+    .map-container { max-width: 60%; }
+    .map-container iframe { min-height: 500px; }
+    .location-address { font-size: var(--tamanho-h2); }
+    .location-address i { font-size: var(--tamanho-h2); }
+
+    /* Rodapé */
+    .site-footer__container { max-width: var(--max-width-geral-tv, 1600px); }
+    .site-footer a, .site-footer p { font-size: var(--tamanho-subtitulo); } 
+    .footer-social a { font-size: 1.8rem; }
 }

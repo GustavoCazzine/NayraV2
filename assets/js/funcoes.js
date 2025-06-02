@@ -12,6 +12,35 @@ document.addEventListener("DOMContentLoaded", function () {
             behavior: 'smooth'
         });
     }
+
+    // --- LÓGICA PARA ANIMAÇÃO AO ROLAR A PÁGINA ---
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+    if (animatedElements.length > 0 && "IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observerInstance.unobserve(entry.target); // Opcional: para a animação ocorrer apenas uma vez
+                }
+            });
+        }, {
+            threshold: 0.1 // A animação começa quando 10% do elemento está visível.
+                           // Ajuste de 0.0 (assim que 1px aparece) a 1.0 (elemento 100% visível).
+            // rootMargin: "0px 0px -50px 0px" // Opcional: Faz o elemento aparecer 50px antes de entrar totalmente na tela
+        });
+
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    } else if (animatedElements.length > 0) {
+        // Fallback para navegadores sem IntersectionObserver (raro hoje em dia)
+        // Simplesmente torna todos os elementos visíveis para não quebrar o layout
+        animatedElements.forEach(element => {
+            element.classList.add('is-visible');
+        });
+    }
+    // --- FIM DA LÓGICA PARA ANIMAÇÃO AO ROLAR A PÁGINA ---
 });
 
 document.addEventListener('DOMContentLoaded', function () {
