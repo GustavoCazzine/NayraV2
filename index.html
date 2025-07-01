@@ -75,12 +75,37 @@
 </head>
 
 <body>
-
     <!-- =================================================================== -->
     <!-- ========================== CABEÇALHO ============================ -->
     <!-- =================================================================== -->
-    <header class="cabecalho" id="cabecalho_home">
-        <img src="/assets/img/logo_nayra.svg" alt="Logo do Studio Nayra Ananias" class="cabecalho__logo" width="150" height="auto" loading="lazy">
+    <header class="cabecalho" id="cabecalho">
+        <div class="cabecalho__container">
+            <a href="#" aria-label="Voltar para o início" class="cabecalho__logo-link">
+                <img src="/assets/img/logo_nayra.svg" alt="Logo do Studio Nayra Ananias" class="cabecalho__logo">
+            </a>
+
+            <nav class="cabecalho__nav" id="menu-navegacao">
+                <ul class="cabecalho__lista">
+                    <li><a href="#catalogo" class="cabecalho__link">Serviços</a></li>
+                    <li><a href="#combos" class="cabecalho__link">Combos</a></li>
+                    <li><a href="#cursos" class="cabecalho__link">Cursos</a></li>
+                    <li><a href="#feedbacks" class="cabecalho__link">Feedbacks</a></li>
+                    <li>
+                        <a href="https://wa.me/5519999670165?text=Oi%2C%20Nayra!%20Vi%20seu%20site%20e%20gostaria%20de%20agendar%20um%20horário." target="_blank" class="cabecalho__link cabecalho__link--cta">
+                            Agendar via WhatsApp
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="cabecalho__acoes">
+                <a href="#agendamento" class="cabecalho__cta">Agendar Agora</a>
+
+                <button class="cabecalho__toggle" id="menu-toggle" aria-label="Abrir menu" aria-controls="menu-navegacao" aria-expanded="false">
+                    <span class="hamburguer"></span>
+                </button>
+            </div>
+        </div>
     </header>
 
     <main class="pagina__geral">
@@ -105,15 +130,22 @@
             </div>
 
             <div class="textos-titulo animate-on-scroll">
+    
+                <h1 class="titulo-seo-escondido">
+                    Extensão de Cílios e Design de Sobrancelhas em Piracicaba - Studio Nayra Ananias
+                </h1>
+
                 <div class="linha linha-superior"></div>
                 <div class="nome-container">
                     <span class="nome nayra">Nayra</span>
                     <span class="nome ananias">Ananias</span>
                 </div>
-                <div class="linha linha-inferior"></div>
-                <h1 class="secao-principal__subtitulo">
-                    Nayra Ananias - Especialista em Extensão de Cílios e Design de Sobrancelhas em Piracicaba
-                </h1>
+
+                <h2 class="secao-principal__titulo-impacto">
+                    Realce seu olhar, transforme sua autoestima.
+                </h2>
+
+                <a href="#agendamento" class="botao-principal">Agendar Meu Horário</a>
             </div>
 
             <div class="scroll-indicator animate-on-scroll">
@@ -144,13 +176,7 @@
                     <!-- Cards do catálogo são inseridos aqui via JavaScript -->
                 </div>
 
-                <div class="catalogo__intro">
-                    <div class="catalogo__quiz">
-                        <a id="abrir-quiz-link" class="catalogo__quiz__link">
-                            Não sabe qual serviço escolher? <br /><span>Faça nosso quiz rápido.</span>
-                        </a>
-                    </div>
-                </div>
+
             </div>
         </section>
 
@@ -159,42 +185,85 @@
         <!-- =================================================================== -->
         <section class="combos animate-on-scroll" id="combos">
             <div class="controle_geral">
-                <h2 class="cursos__titulo texto-com-gradiente">Combos Exclusivos</h2>
+                <h2 class="cursos__titulo texto-com-gradiente">Pacotes de Beleza Exclusivos</h2>
                 <p class="container__conteudo__descricao">
-                    Combine nossos melhores tratamentos para realçar sua beleza ao máximo e obter resultados incríveis com um valor especial.
+                    Combine nossos tratamentos mais desejados e garanta um resultado harmonioso e completo. Uma solução prática e com valor especial para você sair do studio sentindo-se renovada.
                 </p>
+                
                 <div class="combos__container">
-                    <!-- Cards de combos são inseridos aqui -->
-                </div>
+                    </div>
             </div>
         </section>
 
         <!-- =================================================================== -->
         <!-- ======================= SEÇÃO DE CURSOS ========================= -->
         <!-- =================================================================== -->
-        <section class="cursos animate-on-scroll">
+        <section class="cursos animate-on-scroll" id="cursos">
             <div class="controle_geral">
-                <h2 class="cursos__titulo texto-com-gradiente">Formação Profissional</h2>
-                <div class="cursos__lista" id="cursos-lista">
-                    <!-- Cards de cursos são inseridos aqui via JavaScript -->
+                
+                <div class="educadora__intro">
+                    <img src="assets/img/nayra-educadora.jpg" alt="Foto de Nayra Ananias como educadora" class="educadora__foto">
+                    <div class="educadora__texto">
+                        <h2 class="cursos__titulo texto-com-gradiente">Transforme sua Paixão em Carreira</h2>
+                        <p class="container__conteudo__descricao">
+                            Com anos de experiência e centenas de procedimentos realizados, meu maior objetivo como educadora é formar profissionais de excelência. Minha metodologia é focada em prática intensiva, atenção individual e nos segredos que realmente fazem a diferença no mercado.
+                        </p>
+                    </div>
                 </div>
+
+                <div class="cursos__lista" id="cursos-lista">
+                    </div>
+
             </div>
         </section>
 
         <!-- =================================================================== -->
         <!-- ======================= SEÇÃO DE AGENDAMENTO ====================== -->
         <!-- =================================================================== -->
-        <section class="agendamento animate-on-scroll">
+        <section class="agendamento animate-on-scroll" id="agendamento">
             <div class="controle_geral">
-                <h2 class="agendamento__titulo texto-com-gradiente">Agendamentos</h2>
-                <div class="agendamento__conteudo">
-                    <div class="agendamento__imagem">
-                        <img src="assets/img/Divs/agendamentos.jpg" alt="Designer Nayra Ananias - Agendamentos" width="1200" height="1200" loading="lazy">
+                <div class="agendamento__container">
+
+                    <div class="agendamento__imagem-wrapper">
+                        <img src="assets/img/espaco-studio.jpg" alt="Espaço do Studio Nayra Ananias, um ambiente seguro e acolhedor" loading="lazy">
                     </div>
-                    <div class="agendamento__info">
-                        <p>Agende seu horário com a Nayra para realçar ainda mais sua beleza! Clique no botão abaixo para marcar seu horário diretamente no WhatsApp.</p>
-                        <a href="https://wa.me/5519999670165?text=Oi%20Nayra!%20😊%20Poderia%20me%20ajudar%20a%20agendar%20um%20horário%20disponivel?" target="_blank" class="agendamento__link">Marcar Horário</a>
+
+                    <div class="agendamento__conteudo">
+                        <h2 class="agendamento__titulo texto-com-gradiente">Pronta para sua transformação?</h2>
+                        
+                        <p class="agendamento__descricao">
+                            Estou ansiosa para te receber no meu cantinho e cuidar do seu olhar com toda a atenção que você merece. Será um prazer te atender!
+                        </p>
+
+                        <div class="agendamento__info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>
+                                    <strong>Horários de Atendimento</strong>
+                                    Seg à Sex: 9h - 18h | Sáb: 9h - 13h
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>
+                                    <strong>Localização</strong>
+                                    Rua Ingá, 62 - Paulicéia, Piracicaba
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>
+                                    <strong>Sua Segurança em 1º Lugar</strong>
+                                    Materiais 100% descartáveis ou esterilizados
+                                </span>
+                            </div>
+                        </div>
+
+                        <a href="https://wa.me/5519999670165?text=Oi%20Nayra!%20Vi%20seu%20site%20e%20gostaria%20de%20agendar%20um%20horário.%20😊" target="_blank" class="agendamento__link">
+                            Agendar Pelo WhatsApp
+                        </a>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -202,16 +271,19 @@
         <!-- =================================================================== -->
         <!-- ======================= SEÇÃO DE FEEDBACKS ====================== -->
         <!-- =================================================================== -->
-        <section class="feedbacks animate-on-scroll">
+        <section class="feedbacks animate-on-scroll" id="feedbacks">
             <div class="controle_geral">
                 <div class="feedbacks__container">
-                    <h2 class="feedback-section-title texto-com-gradiente">Feedbacks de Clientes</h2>
+                    <h2 class="feedback-section-title texto-com-gradiente">A Confiança das Minhas Clientes</h2>
                 </div>
-                <div class="swiper">
-                    <div class="swiper-wrapper" id="swiper-wrapper">
-                        <!-- Slides de feedback são inseridos aqui via JavaScript -->
-                    </div>
-                    <div class="swiper-pagination"></div>
+
+                <div class="scroller" data-speed="slow">
+                    <ul class="tag-list scroller__inner" id="feedbacks-list">
+                        </ul>
+                </div>
+                
+                <div class="novos-feedbacks__chamada">
+                    <p>Amou o resultado? <a href="[SEU LINK DO GOOGLE MEU NEGÓCIO AQUI]" target="_blank">Deixe sua avaliação também!</a></p>
                 </div>
             </div>
         </section>
@@ -225,7 +297,7 @@
                     <h2 class="texto-com-gradiente">Nos Encontre</h2>
                     <p>Estamos ansiosos para te receber! Nossa localização é de fácil acesso:</p>
                     <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.474790079448!2d-47.653346490492666!3d-22.747754779281248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c630fa19568361%3A0x6a5e1cb9bd05b369!2sR.%20Ing%C3%A1%2C%2062%20-%20Paulic%C3%A9ia%2C%20Piracicaba%20-%20SP%2C%2013401-543!5e0!3m2!1spt-BR!2sbr!4v1748469857506!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.4749232856843!2d-47.653341123222795!3d-22.747749832209383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c630fa19568361%3A0x6a5e1cb9bd05b369!2sR.%20Ing%C3%A1%2C%2062%20-%20Paulic%C3%A9ia%2C%20Piracicaba%20-%20SP%2C%2013401-543!5e0!3m2!1spt-BR!2sbr!4v1751403360721!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div class="location-details">
                         <p class="location-address">

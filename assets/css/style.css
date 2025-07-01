@@ -120,10 +120,6 @@ a {
     transition: color var(--transition-rapida);
 }
 
-a:hover {
-    color: var(--cor-vinho-escuro);
-}
-
 /* --- Hierarquia de Títulos & Parágrafos --- */
 /* NOTA: Regras duplicadas para h1-h6 foram unificadas. As propriedades da última declaração foram mantidas. */
 h1, h2, h3, h4, h5, h6 {
@@ -179,7 +175,7 @@ h1 + p, h2 + p, h3 + p {
 }
 
 section {
-    padding: var(--espacamento-secao) 0;
+    padding: var(--espacamento-vertical-secao-secao) 0;
 }
 
 .pagina__geral section:first-of-type {
@@ -216,24 +212,123 @@ section {
 /* =================================================================== */
 /* ======================== SEÇÕES DO SITE =========================== */
 /* =================================================================== */
+/* =================================================================== */
+/* === CSS FINAL DO CABEÇALHO v2.3 (VERSÃO SEM OVERLAY)              === */
+/* =================================================================== */
 
-/* ---------------------------- CABEÇALHO ---------------------------- */
+/* --- 1. ESTILOS BASE DO CABEÇALHO (PARA TODAS AS TELAS) --- */
 .cabecalho {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
     width: 100%;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
+    z-index: 1000;
     background-color: transparent;
-    padding: var(--espacamento-medio) var(--espacamento-lateral-mobile);
+    padding: 0 var(--espacamento-medio) 0 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+
+.cabecalho--scrolled {
+    background-color: var(--cor-fundo-creme);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: var(--espacamento-pequeno) 0;
+}
+
+.cabecalho__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--espacamento-lateral-mobile);
 }
 
 .cabecalho__logo {
-    width: 5.5em;
+    width: 120px;
     height: auto;
+    transition: width 0.3s ease;
+}
+
+.cabecalho--scrolled .cabecalho__logo {
+    width: 100px;
+}
+
+.cabecalho__nav, .cabecalho__cta {
+    display: none;
+}
+
+.cabecalho__acoes {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-medio);
+}
+
+
+/* --- 2. ESTILOS PARA TELAS MOBILE (max-width: 1023px) --- */
+@media (max-width: 1023px) {
+
+    /* --- O Menu Deslizante --- */
+    .cabecalho__nav {
+        display: flex;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 85%;
+        max-width: 400px;
+        height: 100vh;
+        background-color: var(--cor-fundo-creme);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 2000; /* Menu fica acima de todo o conteúdo */
+        transform: translateX(100%);
+        visibility: hidden;
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.4s;
+    }
+
+    /* Estado do menu quando o body tem a classe .menu-aberto */
+    .menu-aberto .cabecalho__nav {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    /* --- Lista e Links dentro do Menu Mobile --- */
+    .cabecalho__lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; text-align: center; gap: var(--espacamento-grande); }
+    .cabecalho__link { font-family: var(--fonte-titulo); font-size: 1.8rem; color: var(--cor-texto-titulo); padding: 0.5rem 1rem; text-decoration: none; }
+    .cabecalho__link--cta { background: var(--gradiente-vinho); color: var(--cor-fundo-branco); padding: 0.8rem 2.5rem; border-radius: 50px; font-family: var(--fonte-corpo); font-size: 1.2rem; font-weight: bold; text-transform: uppercase; display: inline-block; }
+
+    /* --- Botão Hamburguer e Animação para "X" --- */
+    .cabecalho__toggle {
+        display: flex; flex-direction: column; justify-content: space-around; width: 28px; height: 24px; background: transparent; border: none; cursor: pointer; padding: 0;
+        z-index: 2100; /* Botão fica acima de tudo */
+    }
+    .menu-aberto .cabecalho__toggle {
+        position: fixed; right: var(--espacamento-lateral-mobile);
+    }
+    .cabecalho__toggle .hamburguer { width: 100%; height: 3px; background-color: var(--cor-vinho-escuro); border-radius: 2px; display: block; position: relative; transition: all 0.25s ease-in-out; }
+    .cabecalho__toggle .hamburguer::before, .cabecalho__toggle .hamburguer::after { content: ''; position: absolute; width: 100%; height: 3px; background-color: var(--cor-vinho-escuro); border-radius: 2px; transition: all 0.25s ease-in-out; }
+    .cabecalho__toggle .hamburguer::before { transform: translateY(-8px); }
+    .cabecalho__toggle .hamburguer::after { transform: translateY(8px); }
+    .menu-aberto .hamburguer { background-color: transparent; }
+    .menu-aberto .hamburguer::before { transform: rotate(45deg); }
+    .menu-aberto .hamburguer::after { transform: rotate(-45deg); }
+}
+
+/* --- 3. ESTILOS PARA DESKTOP (min-width: 1024px) --- */
+@media (min-width: 1024px) {
+    .cabecalho__toggle { display: none !important; }
+    .cabecalho__nav, .cabecalho__cta { display: block; }
+    .cabecalho__nav { margin: 0 auto; }
+    .cabecalho__lista { list-style: none; padding: 0; margin: 0; display: flex; align-items: center; gap: var(--espacamento-grande); }
+    .cabecalho__link { font-family: var(--fonte-corpo); font-size: var(--tamanho-texto-base); font-weight: bold; color: var(--cor-texto-titulo); text-decoration: none; padding: 0.5rem 0; position: relative; transition: color var(--transition-rapida); }
+    .cabecalho__link--cta { display: none; }
+    .cabecalho__link:not(.cabecalho__link--cta)::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--gradiente-vinho); transition: width var(--transition-rapida); }
+    .cabecalho__link:hover:not(.cabecalho__link--cta) { color: var(--cor-vinho); }
+    .cabecalho__link:hover:not(.cabecalho__link--cta)::after { width: 100%; }
+    .cabecalho__cta { display: inline-block; background: var(--gradiente-vinho); color: var(--cor-fundo-branco); padding: 0.7rem 1.5rem; border-radius: var(--espacamento-pequeno); font-family: var(--fonte-corpo); font-weight: bold; transition: transform 0.2s ease, filter 0.2s ease; text-decoration: none; }
+    .cabecalho__cta:hover { transform: scale(1.05); filter: brightness(1.1); }
 }
 
 /* ---------------------------- SEÇÃO PRINCIPAL (HERO) ---------------------------- */
@@ -372,7 +467,7 @@ section {
     font-size: var(--tamanho-subtitulo);
     font-weight: 400;
     color: var(--cor-texto-titulo);
-    margin-top: var(--espacamento-medio);
+    margin: var(--espacamento-pequeno) var(--espacamento-grande);
 }
 
 .linha {
@@ -388,18 +483,13 @@ section {
     transform: translateY(calc(-100% - 5px));
 }
 
-.linha-inferior {
-    height: 20px;
-    bottom: -25px;
-}
-
 .scroll-indicator {
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 3;
     color: var(--cor-vinho-escuro);
-    margin-top: var(--espacamento-xl);
+    margin-top: var(--espacamento-pequeno);
     padding-bottom: var(--espacamento-grande);
 }
 
@@ -434,18 +524,53 @@ section {
     100% { opacity: 0; transform: translate(-50%, 0px); }
 }
 
-.texto-com-gradiente {
-    background: var(--gradiente-vinho);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: bold;
-    font-size: var(--tamanho-h1);
-}
-
 .palavras_destaques {
     color: var(--cor-vinho-escuro);
     font-weight: bold;
+}
+
+/* =================================================================== */
+/* ====== CSS PARA OS NOVOS ELEMENTOS DE TEXTO E BOTÃO DO HERO ======= */
+/* =================================================================== */
+
+/* Classe para esconder o H1 de SEO corretamente */
+.titulo-seo-escondido {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
+}
+
+/* Estilo do novo título visível (H2) */
+.secao-principal__titulo-impacto {
+    font-family: var(--fonte-corpo);
+    font-size: var(--tamanho-subtitulo);
+    font-weight: 400;
+    color: var(--cor-texto-titulo);
+    margin-top: var(--espacamento-medio);
+    margin-bottom: var(--espacamento-grande);
+    max-width: 90%;
+    text-align: center;
+}
+
+/* Estilo do novo botão de ação */
+.botao-principal {
+    display: inline-block;
+    background: var(--gradiente-vinho);
+    color: var(--cor-fundo-branco);
+    font-family: var(--fonte-corpo);
+    font-size: var(--tamanho-botao);
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(140, 31, 31, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.botao-principal:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(140, 31, 31, 0.4);
+    color: var(--cor-fundo-branco);
 }
 
 /* ---------------------------- SEÇÃO CATÁLOGO ---------------------------- */
@@ -640,103 +765,47 @@ section {
     transform: scale(1.03);
 }
 
-.catalogo__pdf {
-    margin-top: var(--espacamento-grande);
-    text-align: center;
-}
-
-.catalogo__pdf .container__conteudo__descricao {
+.container__conteudo__descricao {
     margin-bottom: var(--espacamento-xs);
 }
 
-.catalogo__pdf__link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--espacamento-pequeno);
-    padding: 0.1rem 1.6rem;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: var(--tamanho-botao);
-    transition: all var(--transition-duration) ease;
-    text-decoration: none;
-}
 
-.catalogo__pdf__link:hover {
-    opacity: 0.85;
-    transform: scale(1.03);
-}
+/* =================================================================== */
+/* ============= CSS COMPLETO DA SEÇÃO DE COMBOS (FINAL) ============= */
+/* =================================================================== */
 
-.catalogo__pdf__link i {
-    font-size: 1.2rem;
-}
-
-.catalogo__quiz {
-    margin-top: var(--espacamento-medio);
-    text-align: center;
-}
-
-.catalogo__quiz__link {
-    font-family: var(--fonte-destaque);
-    font-size: var(--tamanho-subtitulo);
-    color: var(--cor-texto-corpo);
-    text-decoration: none;
-    padding: var(--espacamento-medio);
-    border-radius: var(--espacamento-pequeno);
-    transition: color var(--transition-duration) ease-in-out, border-color var(--transition-duration) ease-in-out;
-    display: inline-block;
-    border: 1px dashed transparent;
-}
-
-.catalogo__quiz__link:hover,
-.catalogo__quiz__link:focus {
-    color: var(--cor-vinho-escuro);
-    border-color: var(--cor-dourado);
-}
-
-.catalogo__quiz__link span {
-    font-weight: bold;
-    color: var(--cor-vinho);
-    text-decoration: underline;
-    text-decoration-color: var(--cor-dourado);
-    text-decoration-thickness: 2px;
-    transition: color var(--transition-duration) ease-in-out, text-decoration-color var(--transition-duration) ease-in-out;
-}
-
-.catalogo__quiz__link:hover span,
-.catalogo__quiz__link:focus span {
-    color: var(--cor-vinho-escuro);
-    text-decoration-color: var(--cor-vinho-escuro);
-}
-
-/* ---------------------------- SEÇÃO DE COMBOS ---------------------------- */
 .combos {
-    background-color: var(--cor-fundo-branco);
-    padding: var(--espacamento-secao) var(--espacamento-lateral-mobile);
+    background-color: var(--cor-fundo-branco); /* Ou a cor de fundo que preferir para a seção */
+    padding: var(--espacamento-secao) 0;
+}
+
+.combos .container__conteudo__descricao {
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .combos__container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Cria colunas responsivas: 1 no mobile, 2 em tablets, etc. */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--espacamento-grande);
     margin-top: var(--espacamento-grande);
-    align-items: stretch;
-}
-
-.combos .container__conteudo__descricao {
-    padding: var(--espacamento-lateral-mobile);
+    align-items: stretch; /* Garante que os cards na mesma linha tenham a mesma altura */
+    padding: 0 var(--espacamento-lateral-mobile);
 }
 
 .combo-card {
-    background-color: var(--cor-fundo-creme);
+    background-color: var(--cor-fundo-branco);
     border: 1px solid #eee;
-    border-radius: var(--espacamento-pequeno);
-    padding: var(--espacamento-grande);
+    border-radius: var(--espacamento-medio);
     display: flex;
     flex-direction: column;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
+    height: 100%; 
 }
 
 .combo-card:hover {
@@ -744,30 +813,28 @@ section {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-.combo-card.destaque {
-    background-color: var(--cor-fundo-branco);
-    border: 2px solid var(--cor-dourado);
+.combo-card__imagem {
+    width: 100%;
+    height: 220px; /* Altura fixa para a imagem */
+    overflow: hidden;
+}
+
+.combo-card__imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+    transition: transform 0.4s ease;
+}
+
+.combo-card:hover .combo-card__imagem img {
     transform: scale(1.05);
 }
 
-.combo-card__badge {
-    position: absolute;
-    top: 18px;
-    right: -45px;
-    background: var(--gradiente-vinho);
-    color: var(--cor-fundo-branco);
-    padding: 5px 40px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    transform: rotate(45deg);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.combo-card__icon {
-    font-size: 2rem;
-    color: var(--cor-vinho);
-    margin-bottom: var(--espacamento-medio);
+.combo-card__conteudo {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Faz este bloco ocupar o espaço disponível */
 }
 
 .combo-card__title {
@@ -775,20 +842,21 @@ section {
     font-size: var(--tamanho-h3);
     color: var(--cor-texto-titulo);
     margin-bottom: var(--espacamento-pequeno);
+    min-height: 2.5em; /* Evita que o layout quebre com títulos de 1 ou 2 linhas */
 }
 
 .combo-card__description {
     color: var(--cor-texto-corpo);
     font-size: var(--tamanho-texto-base);
     line-height: 1.6;
-    margin-bottom: var(--espacamento-grande);
-    flex-grow: 1;
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* Ocupa espaço para alinhar os botões */
 }
 
 .combo-card__servicos {
     list-style: none;
     padding: 0;
-    margin: 0 0 var(--espacamento-grande) 0;
+    margin: 0 0 1.5rem 0;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -818,389 +886,430 @@ section {
     font-weight: bold;
     text-transform: uppercase;
     transition: filter 0.3s ease, transform 0.3s ease;
-    margin-top: auto;
+    margin-top: auto; /* Empurra o botão para o final do card */
 }
 
 .combo-card__cta:hover {
     filter: brightness(1.15);
     transform: scale(1.03);
+    color: var(--cor-fundo-branco); /* Garante que a cor não mude */
 }
 
-.combo-card.destaque .combo-card__cta {
-    background: var(--cor-dourado);
-    color: var(--cor-vinho-escuro);
+/* Estilos do card em destaque */
+.combo-card.destaque {
+    border: 2px solid var(--cor-dourado);
+    transform: scale(1.03);
+    background-color: var(--cor-fundo-creme);
 }
 
-/* ---------------------------- SEÇÃO DE CURSOS ---------------------------- */
-.cursos__titulo {
-    font-family: var(--fonte-titulo);
-    font-size: var(--tamanho-h2);
-    margin-bottom: var(--espacamento-grande);
-    margin-top: var(--espacamento-grande);
+.combo-card.destaque:hover {
+    transform: scale(1.05) translateY(-5px);
+}
+
+.combo-card__badge {
+    position: absolute;
+    top: 15px;
+    right: -40px;
+    background: var(--gradiente-vinho);
+    color: var(--cor-fundo-branco);
+    padding: 5px 40px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+/* =================================================================== */
+/* ============= CSS COMPLETO DA SEÇÃO DE CURSOS (FINAL) ============= */
+/* =================================================================== */
+
+.cursos {
+    background-color: var(--cor-fundo-branco);
+    padding: var(--espacamento-secao) 0;
+}
+
+/* --- NOVO: Bloco "Sobre a Educadora" --- */
+.educadora__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
     text-align: center;
+    margin-bottom: 4rem;
 }
 
+.educadora__foto {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--cor-dourado);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.educadora__texto .cursos__titulo {
+    margin-bottom: 1rem;
+}
+
+.educadora__texto .container__conteudo__descricao {
+    max-width: 65ch;
+    margin: 0 auto;
+}
+
+/* --- O Card de Curso Expansível --- */
 .cursos__lista {
     display: flex;
     flex-direction: column;
-    gap: var(--espacamento-grande);
-    padding: 0;
+    gap: 1.5rem;
+    max-width: 800px; /* Limita a largura dos cards */
+    margin: 0 auto;
+    padding: 0 var(--espacamento-lateral-mobile);
 }
 
-.curso-card-minimal {
-    display: flex;
-    width: 90%;
-    margin: auto;
+.curso-card {
     background-color: var(--cor-fundo-branco);
+    border: 1px solid #eee;
     border-radius: var(--espacamento-medio);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-    border: 1px solid #e7d4ea;
-    align-items: stretch;
-    min-height: 150px;
-    transition: transform var(--transition-duration) var(--transition-timing),
-                box-shadow var(--transition-duration) var(--transition-timing);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
 }
 
-.curso-card-minimal:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+.curso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
 
-.curso-card-minimal__conteudo {
-    flex: 2;
-    padding: var(--espacamento-medio);
+.curso-card__preview {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.curso-card-minimal__titulo {
-    font-family: var(--fonte-titulo);
-    font-size: var(--tamanho-h3);
-    margin-bottom: var(--espacamento-pequeno);
-    background: var(--gradiente-vinho);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    line-height: 1.3;
-}
-
-.curso-card-minimal__chamada {
-    font-family: var(--fonte-corpo);
-    font-size: var(--tamanho-texto-base);
-    color: var(--cor-texto-neutro);
-    margin-bottom: var(--espacamento-medio);
-    font-weight: bold;
-    line-height: 1.5;
-}
-
-.curso-card-minimal__incentivo {
-    font-size: var(--tamanho-texto-pequeno);
-    color: var(--cor-dourado);
-    font-style: italic;
-    margin-bottom: var(--espacamento-medio);
-    transition: transform 0.15s ease-in-out;
-}
-
-.curso-card-minimal__incentivo:hover {
-    transform: scale(1.01);
-}
-
-.curso-card-minimal__botoes {
-    display: flex;
-    flex-direction: column; 
-    gap: var(--espacamento-pequeno);
-    margin-top: auto; 
-    padding-top: var(--espacamento-pequeno); 
-}
-
-.curso-card-minimal__cta,
-.curso-card-minimal__pdf-link {
-    padding: 0.8rem 1.5rem; 
-    border-radius: var(--espacamento-pequeno);
-    font-weight: bold;
-    font-size: var(--tamanho-botao); 
-    transition: all var(--transition-duration) var(--transition-timing);
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-flex; 
     align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    width: 100%; 
-    max-width: 280px; 
-    margin-left: auto; 
-    margin-right: auto; 
+    gap: 1.5rem;
+    padding: 1.5rem;
 }
 
-.curso-card-minimal__cta {
-    background: var(--gradiente-vinho);
-    color: var(--cor-fundo-branco);
-    box-shadow: 0 3px 6px rgba(140, 31, 31, 0.3); 
+.curso-card__imagem {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--espacamento-pequeno);
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
-.curso-card-minimal__cta:hover {
-    background: var(--cor-vinho-escuro); 
-    box-shadow: 0 4px 8px rgba(140, 31, 31, 0.4);
-    transform: translateY(-2px); 
-}
-
-.curso-card-minimal__pdf-link {
-    background-color: transparent;
+.curso-card__info h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.5rem;
     color: var(--cor-vinho);
+    margin: 0 0 0.5rem 0;
+    text-align: left;
 }
 
-.curso-card-minimal__pdf-link:hover {
-    background-color: var(--cor-fundo-creme);
-    color: var(--cor-vinho-escuro);
-    border-color: var(--cor-vinho-escuro);
+.curso-card__info p {
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
+    text-align: left;
+    color: var(--cor-texto-corpo);
 }
 
-.curso-card-minimal__pdf-link i {
-    margin-right: var(--espacamento-pequeno);
-    font-size: var(--tamanho-texto-base);
-    transition: transform var(--transition-duration) var(--transition-timing);
+.curso-card__toggle-btn {
+    background: transparent;
+    border: 1px solid var(--cor-dourado);
+    color: var(--cor-dourado);
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.curso-card__toggle-btn:hover {
+    background-color: var(--cor-dourado);
+    color: white;
 }
 
-.curso-card-minimal__pdf-link:hover i {
-    transform: rotate(10deg) scale(1.1); 
-}
-
-.curso-card-minimal__imagem {
-    flex: 1;
-    max-width: 40%;
+/* --- A Área Escondida que se Expande --- */
+.curso-card__detalhes {
+    /* Começa com altura 0 e escondido */
+    max-height: 0;
     overflow: hidden;
-    border-radius: 0 var(--espacamento-medio) var(--espacamento-medio) 0;
-    display: flex;
-    align-items: stretch;
-    position: relative;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+    padding: 0 1.5rem; /* Padding vertical é 0 por padrão */
 }
 
-.curso-card-minimal__imagem img {
+/* Quando o card tem a classe .expandido, a mágica acontece */
+.curso-card.expandido .curso-card__detalhes {
+    max-height: 1000px; /* Um valor alto para permitir a expansão total */
+    padding: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+.detalhes__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.detalhes__grid h4 {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-vinho-escuro);
+    margin: 0 0 0.5rem 0;
+    text-align: left;
+}
+
+.detalhes__grid ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.detalhes__grid li {
+    margin-bottom: 0.5rem;
+    color: var(--cor-texto-neutro);
+}
+.detalhes__grid li .fa-check { /* Se você usar Font Awesome */
+    color: var(--cor-dourado);
+    margin-right: 0.5rem;
+}
+
+.detalhes__cta-final {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+
+/* --- Responsividade do Card --- */
+@media (max-width: 500px) {
+    .curso-card__preview {
+        flex-direction: column;
+        text-align: center;
+    }
+    .curso-card__info h3, .curso-card__info p {
+        text-align: center;
+    }
+}
+
+/* =================================================================== */
+/* ============= CSS COMPLETO DA SEÇÃO DE AGENDAMENTO (FINAL) ======== */
+/* =================================================================== */
+
+.agendamento {
+    padding: var(--espacamento-secao) 0;
+    background-color: var(--cor-fundo-creme);
+}
+
+.agendamento__container {
+    display: grid;
+    grid-template-columns: 1fr; /* Uma coluna no mobile */
+    align-items: center;
+    gap: 2rem;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 var(--espacamento-lateral-mobile);
+}
+
+/* --- A Imagem --- */
+.agendamento__imagem-wrapper {
+    width: 100%;
+    border-radius: var(--espacamento-medio);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.agendamento__imagem-wrapper img {
     width: 100%;
     height: 100%;
+    max-height: 500px;
     object-fit: cover;
-    object-position:  center;
-    transition: opacity var(--transition-duration) var(--transition-timing);
+    display: block;
 }
 
-.curso-card-minimal__imagem:hover img {
-    opacity: 0.9;
-}
-
-/* ---------------------------- SEÇÃO DE AGENDAMENTO ---------------------------- */
-.agendamento {
-    margin: var(--espacamento-grande) auto;
-    padding: var(--espacamento-grande);
-    max-width: 75rem;
-    background-color: var(--cor-alternativa);
-    border-radius: var(--espacamento-pequeno);
-    text-align: center;
+/* --- O Conteúdo de Texto --- */
+.agendamento__conteudo {
+    background-color: var(--cor-fundo-branco);
+    padding: 2.5rem;
+    border-radius: var(--espacamento-medio);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .agendamento__titulo {
-    font-size: clamp(1.8rem, 4.5vw, var(--tamanho-h2));
-    font-weight: bold;
-    color: var(--cor-texto-titulo);
-    text-align: center;
-    margin-bottom: var(--espacamento-grande);
-    font-family: var(--fonte-titulo);
+    text-align: left;
+    margin-bottom: 1rem;
 }
 
-.agendamento__conteudo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--espacamento-grande);
-}
-
-.agendamento__imagem img {
-    max-width: 100%;
-    height: 300px;
-    border-radius: var(--espacamento-pequeno);
-    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-    object-fit: cover;
-    object-position: right center;
-}
-
-.agendamento__info {
-    flex: 1;
-    width: 100%;
-    max-width: 35rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center;
-}
-
-.agendamento__info p {
-    font-size: var(--tamanho-subtitulo);
+.agendamento__descricao {
+    text-align: left;
+    font-size: 1.1rem;
     color: var(--cor-texto-corpo);
-    line-height: 1.7;
-    margin-bottom: var(--espacamento-grande);
-    text-align: center; 
+    margin-bottom: 2rem;
 }
 
+/* --- NOVO: Bloco de Informações de Confiança --- */
+.agendamento__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.info-item i {
+    font-size: 1.5rem;
+    color: var(--cor-vinho);
+    width: 30px; /* Alinha os ícones */
+    text-align: center;
+}
+
+.info-item span {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-item strong {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-texto-titulo);
+    font-size: 1.1rem;
+}
+
+/* --- O Botão de Agendamento --- */
 .agendamento__link {
     display: inline-block;
-    padding: 0.9rem 2.2rem;
-    font-size: var(--tamanho-botao);
+    width: 100%; /* Ocupa a largura toda */
+    text-align: center;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     text-transform: uppercase;
     background: var(--gradiente-vinho);
     color: var(--cor-fundo-branco);
     border-radius: var(--espacamento-pequeno);
     text-decoration: none;
-    text-align: center;
-    transition: filter var(--transition-duration) ease, transform var(--transition-duration) ease;
+    transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 .agendamento__link:hover {
     filter: brightness(1.15);
-    transform: scale(1.03);
+    transform: scale(1.02);
+    color: var(--cor-fundo-branco);
 }
 
-/* ---------------------------- CARROSSEL DE FEEDBACKS ---------------------------- */
+
+/* --- Responsividade para Telas Maiores --- */
+@media (min-width: 768px) {
+    .agendamento__container {
+        grid-template-columns: 1fr 1fr; /* Duas colunas */
+        gap: 0; /* Removemos o gap para controlar a sobreposição */
+    }
+
+    .agendamento__conteudo {
+        /* Efeito de sobreposição sutil */
+        margin-left: -4rem; 
+        z-index: 2; /* Garante que o texto fique na frente da imagem */
+    }
+
+    .agendamento__titulo, .agendamento__descricao {
+        text-align: center;
+    }
+}
+
+/* =================================================================== */
+/* ============= CSS DO CARROSSEL DE FEEDBACKS INFINITO ============== */
+/* =================================================================== */
+
 .feedbacks {
-    padding-top: var(--espacamento-vertical-secao);
-    padding-bottom: calc(var(--espacamento-vertical-secao) + 2rem);
-    width: 100%;
+    padding: var(--espacamento-secao) 0;
 }
 
 .feedback-section-title {
     text-align: center;
     font-size: clamp(1.8rem, 4.5vw, var(--tamanho-h2));
-    color: var(--cor-vinho); 
-    margin-bottom: var(--espacamento-grande);
-    font-weight: bold;
-    font-family: var(--fonte-titulo);
+    margin-bottom: 2rem;
 }
 
-.swiper {
-    width: 100%;
-    margin: 0 auto;
-    padding: var(--espacamento-pequeno);
+/* --- O Container Principal do "Letreiro" --- */
+.scroller {
+    max-width: 100%; /* Ocupa a largura total disponível */
     overflow: hidden;
+    /* Efeito de degradê nas laterais para suavizar a entrada e saída dos cards */
+    -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+    mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
 }
 
-.swiper-slide {
+.scroller__inner {
+    padding-block: 1rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
+    flex-wrap: nowrap;
+    gap: 1.5rem; /* Espaço entre os cards */
 }
 
-.swiper-pagination {
-    position: relative; 
-    bottom: auto;
-    left: 0;
-    width: 100%;
-    text-align: center; 
-    margin-top: var(--espacamento-grande);
+/* Animação de rolagem */
+@keyframes scroll {
+    to {
+        transform: translate(calc(-50% - 0.75rem)); /* Move metade da largura total */
+    }
 }
 
-.swiper-pagination .swiper-pagination-bullet {
-    width: 10px;
-    height: 10px;
-    display: inline-block; 
-    border-radius: 50%; 
-    background: var(--cor-texto-neutro); 
-    opacity: 0.6;
-    margin: 0 var(--espacamento-xs);
-    cursor: pointer; 
-    transition: opacity var(--transition-duration) ease, background-color var(--transition-duration) ease;
+/* Aplicação da animação */
+.scroller[data-animated="true"] .scroller__inner {
+    width: max-content; /* Faz o container interno ser largo o suficiente */
+    flex-wrap: nowrap;
+    animation: scroll 40s linear infinite; /* Ajuste o tempo (40s) para mais rápido ou mais lento */
 }
 
-.swiper-pagination .swiper-pagination-bullet-active {
-    opacity: 1; 
-    background: var(--cor-vinho); 
+/* Pausa a animação ao passar o mouse */
+.scroller:hover .scroller__inner {
+    animation-play-state: paused;
 }
 
-.swiper-container {
-    padding-bottom: 5rem;
+/* Estilo do Card de Feedback (adaptado do seu) */
+.tag-list li {
+    list-style: none; /* Garante que não haja bolinhas de lista */
 }
 
 .card-feedback {
     background-color: var(--cor-fundo-branco);
     border-radius: var(--espacamento-medio);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    padding: var(--espacamento-medio);
-    max-width: 30rem;
-    width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    padding: 1.5rem;
+    width: 350px; /* Largura fixa para cada card */
+    max-width: 350px;
     display: flex;
     flex-direction: column;
-    gap: var(--espacamento-medio);
-    font-family: var(--fonte-corpo);
-    box-sizing: border-box;
+    gap: 1rem;
+    transition: transform 0.2s ease;
 }
 
-.card-feedback .header {
-    display: flex;
-    align-items: center;
-    gap: var(--espacamento-medio);
-    flex-wrap: nowrap;
+.card-feedback:hover {
+    transform: scale(1.03);
 }
 
-.card-feedback img {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--cor-vinho); 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
+/* O resto dos seus estilos de .card-feedback, header, user-info, etc. se encaixam aqui perfeitamente */
+.card-feedback__header {
+    display: flex; align-items: center; gap: 1rem;
 }
-
-.card-feedback .user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
+.card-feedback__header img {
+    width: 3.5rem; height: 3.5rem; border-radius: 50%; object-fit: cover;
+    border: 2px solid var(--cor-dourado);
 }
+.user-info { display: flex; flex-direction: column; text-align: left; }
+.user-info strong { color: var(--cor-texto-titulo); font-size: 1.1rem; font-weight: bold; }
+.rating-source { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.25rem; }
+.estrelas { color: #FFC700; font-size: 0.9rem; }
+.source i { font-size: 1.1rem; color: #aaa; }
+.frase-destaque { font-family: var(--fonte-titulo); font-size: 1.1rem; font-weight: bold; color: var(--cor-texto-titulo); line-height: 1.4; text-align: left; }
+.texto-completo { font-size: 0.95rem; color: var(--cor-texto-corpo); line-height: 1.6; text-align: left; padding-top: 1rem; margin-top: 1rem; border-top: 1px dashed #eee; }
 
-.card-feedback .user-info strong {
-    color: var(--cor-texto-titulo);
-    font-size: var(--tamanho-texto-base);
-    font-weight: bold;
-    text-transform: capitalize;
-    line-height: 1.3;
+/* Convite para novos feedbacks */
+.novos-feedbacks__chamada {
+    text-align: center; margin-top: 3rem; font-family: var(--fonte-corpo); font-size: 1.1rem; color: var(--cor-texto-neutro);
 }
-
-.card-feedback .user-info span {
-    color: var(--cor-texto-neutro); 
-    font-size: var(--tamanho-texto-pequeno);
-    line-height: 1.3;
-}
-
-.card-feedback .comment {
-    font-size: var(--tamanho-texto-base);
-    color: var(--cor-texto-corpo);
-    line-height: 1.6;
-    text-align: left;
-    position: relative;
-    padding-left: 2.2rem;
-    margin-top: var(--espacamento-xs);
-}
-
-.comment p {
-    text-align: left;
-}
-
-.card-feedback .comment::before {
-    content: "“";
-    font-size: 3rem;
-    font-family: var(--fonte-titulo);
-    color: var(--cor-dourado);
-    position: absolute;
-    top: -0.5rem;
-    left: 0;
-    line-height: 1;
-}
-
-.card-feedback .comment p {
-    margin: 0;
+.novos-feedbacks__chamada a {
+    color: var(--cor-vinho); font-weight: bold; text-decoration: underline; text-decoration-color: var(--cor-dourado);
 }
 
 /* ---------------------------- SEÇÃO DE LOCALIZAÇÃO ---------------------------- */
@@ -1461,9 +1570,21 @@ section {
     .textos-titulo { margin-top: var(--espacamento-pequeno); margin-bottom: var(--espacamento-medio); }
     .nome.nayra { font-size: 2.5rem; }
     .nome.ananias { font-size: 3.5rem; }
-    .secao-principal__subtitulo { font-size: 1.1rem; max-width: 80%; }
+    /* .secao-principal__subtitulo { font-size: 1.1rem; max-width: 80%; }  <-- REMOVIDO pois a classe mudou */
     .linha { width: 2px; }
     .linha-superior, .linha-inferior { height: 20px; }
+    
+    /* NOVO: Ajustes para os novos textos e botão */
+    .secao-principal__titulo-impacto {
+        font-size: 1.3rem; /* Um pouco maior para mais destaque */
+        max-width: 40ch;
+    }
+    .botao-principal {
+        font-size: calc(var(--tamanho-botao) * 1.1);
+        padding: 1rem 2.8rem;
+    }
+    /* FIM DAS NOVAS REGRAS */
+
 
     /* Títulos de Seção (Ajuste Global) */
     .catalogo__titulo,
@@ -1482,8 +1603,6 @@ section {
     .catalogo__card { max-width: 310px; }
     .catalogo__card img { height: 210px; }
     .catalogo__card__titulo { font-size: 1.8rem; }
-    .catalogo__pdf { margin-top: var(--espacamento-grande); }
-    .catalogo__pdf__link { font-size: var(--tamanho-texto-base); }
 
     /* Quiz Modal */
     #pergunta { font-size: 1.3rem; }
@@ -1530,10 +1649,18 @@ section {
     #fundo01, #fundo02 { height: 58%; }
     .nome.nayra { font-size: 3.5rem; }
     .nome.ananias { font-size: 4.5rem; }
-    .secao-principal__subtitulo { font-size: 1.5rem; max-width: 55%; }
+    /* .secao-principal__subtitulo { font-size: 1.5rem; max-width: 55%; } <-- REMOVIDO */
     .linha { width: 3px; }
     .linha-superior, .linha-inferior { height: 25px; }
     .foto-wrapper{ margin-top: 4rem; }
+
+    /* NOVO: Ajustes para os novos textos */
+    .secao-principal__titulo-impacto {
+        font-size: 1.5rem;
+        max-width: 45ch;
+    }
+    /* FIM DAS NOVAS REGRAS */
+
 
     /* Títulos de Seção (Ajuste Global) */
     .catalogo__titulo,
@@ -1570,7 +1697,14 @@ section {
     .secao-principal__fundo__paragrafo { font-size: 65px; }
     .nome.nayra { font-size: 4rem; }
     .nome.ananias { font-size: 5rem; }
-    .secao-principal__subtitulo { font-size: 1.8rem; }
+    /* .secao-principal__subtitulo { font-size: 1.8rem; } <-- REMOVIDO */
+
+    /* NOVO: Ajustes para os novos textos */
+    .secao-principal__titulo-impacto {
+        font-size: 1.8rem;
+    }
+    /* FIM DAS NOVAS REGRAS */
+
 
     /* Catálogo */
     .catalogo__card { max-width: 340px; }

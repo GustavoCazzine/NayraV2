@@ -61,59 +61,132 @@ const servicosCilios = [
 
 // Dados para a seção Feedbacks
 const slidesFeedbacks = [
-    { nome: "Ana Souza", texto: "Amei o atendimento! Profissional maravilhosa e ambiente acolhedor.", imagem: "assets/img/Feedbacks/Cliente01.avif" },
-    { nome: "Bianca Lima", texto: "Meu cílios ficaram perfeitos, exatamente como eu queria!", imagem: "assets/img/Feedbacks/Cliente02.avif" },
-    { nome: "Camila Torres", texto: "Nunca recebi tantos elogios pelas minhas sobrancelhas. Recomendo de olhos fechados!", imagem: "assets/img/Feedbacks/Cliente03.avif" },
-    { nome: "Débora Martins", texto: "O resultado superou minhas expectativas. Atendimento atencioso do início ao fim.", imagem: "assets/img/Feedbacks/Cliente04.avif" },
-    { nome: "Fernanda Alves", texto: "Ambiente impecável e técnica incrível. Me senti muito segura durante todo o procedimento.", imagem: "assets/img/Feedbacks/Cliente05.avif" },
-    { nome: "Gabriela Rocha", texto: "Saí renovada! O cuidado e o carinho fazem toda a diferença. Voltarei sempre!", imagem: "assets/img/Feedbacks/Cliente06.avif" },
-    { nome: "Helena Dias", texto: "Profissional detalhista e dedicada. Meus cílios ficaram lindos e super naturais.", imagem: "assets/img/Feedbacks/Cliente07.avif" },
-    { nome: "Isabela Ferreira", texto: "Experiência maravilhosa! Atendimento humanizado e resultado impecável.", imagem: "assets/img/Feedbacks/Cliente08.avif" }
+    { 
+        nome: "Ana Souza", 
+        texto: "Amei o atendimento! Profissional maravilhosa e ambiente acolhedor. Me senti super segura e o resultado ficou incrível!", 
+        imagem: "assets/img/Feedbacks/Cliente01.avif",
+        rating: 5, // << NOVO: Avaliação em estrelas
+        source: "google", // << NOVO: Fonte (google, instagram, whatsapp)
+        destaque: "Profissional maravilhosa e ambiente acolhedor." // << NOVO: A melhor frase
+    },
+    { 
+        nome: "Bianca Lima", 
+        texto: "Meu cílios ficaram perfeitos, exatamente como eu queria! A durabilidade é ótima e o trabalho super delicado.", 
+        imagem: "assets/img/Feedbacks/Cliente02.avif",
+        rating: 5,
+        source: "instagram",
+        destaque: "Meu cílios ficaram perfeitos!"
+    },
+    { 
+        nome: "Camila Torres", 
+        texto: "Nunca recebi tantos elogios pelas minhas sobrancelhas. A Nayra tem a mão muito leve e um senso de visagismo incrível. Recomendo de olhos fechados!", 
+        imagem: "assets/img/Feedbacks/Cliente03.avif",
+        rating: 5,
+        source: "whatsapp",
+        destaque: "Nunca recebi tantos elogios pelas minhas sobrancelhas."
+    }
 ];
 
 // Dados para a seção Cursos
+const combos = [
+    {
+        nome: "Combo Olhar de Impacto",
+        imagem: "assets/img/combos/combo-impacto.jpg", // Substitua pelo caminho real da sua imagem
+        descricao: "A combinação perfeita para quem busca um visual marcante e sofisticado, com cílios volumosos e sobrancelhas impecavelmente desenhadas.",
+        servicos: ["Volume Brasileiro", "Design com Henna"],
+        destaque: true // true para o combo que terá o selo "Mais Pedido"
+    },
+    {
+        nome: "Combo Beleza Natural",
+        imagem: "assets/img/combos/combo-natural.jpg", // Substitua pelo caminho real da sua imagem
+        descricao: "Ideal para realçar sua beleza de forma sutil e elegante. Conquiste cílios naturalmente curvados e sobrancelhas harmoniosas.",
+        servicos: ["Lash Lifting", "Design Personalizado"],
+        destaque: false
+    },
+    {
+        nome: "Combo Pronta para Festa",
+        imagem: "assets/img/combos/combo-festa.jpg", // Substitua pelo caminho real da sua imagem
+        descricao: "O pacote completo para você brilhar em qualquer evento. Um olhar poderoso com cílios alongados e sobrancelhas perfeitamente alinhadas.",
+        servicos: ["Extensão Fox Eyes", "Brow Lamination"],
+        destaque: false
+    }
+];
+
 const cursos = [
-    { titulo: "Desperte seu Olhar de Artista com Extensão de Cílios", beneficio: "Inicie sua carreira Lash com o curso para iniciantes!", imagem: "assets/img/cursos/cilios.jpg", mensagemWhats: "Olá! Quero me inscrever no curso de Lash Iniciante." },
-    { titulo: "By Perfect Lash: Volume Brasileiro que Conquista", beneficio: "Domine a técnica mais desejada e eleve seu nível!", imagem: "assets/img/cursos/lash.jpg", mensagemWhats: "Olá! Quero saber sobre o curso By Perfect Lash." },
-    { titulo: "Sobrancelhas Perfeitas: Design, Henna e Geometria", beneficio: "Transforme olhares com designs simétricos e lucrativos!", imagem: "assets/img/cursos/sobrancelhas.png", mensagemWhats: "Olá! Tenho interesse no curso de Sobrancelhas." }
+    { 
+        titulo: "Extensão de Cílios - Iniciante", 
+        chamada: "Desperte seu Olhar de Artista com Extensão de Cílios.",
+        imagem: "assets/img/cursos/curso-cilios-iniciante.jpg",
+        conteudo: {
+            "para_quem": "Para iniciantes que desejam ingressar no mercado de cílios com uma base sólida, mesmo sem nenhuma experiência prévia.",
+            "aprendizado": ["História e fundamentos da extensão", "Biossegurança e saúde ocular", "Materiais e ferramentas", "Técnica de Fio a Fio Clássico", "Mapeamento e visagismo do olhar", "Manutenção e remoção segura"],
+            "incluso": ["Apostila completa", "Certificado profissional", "Kit inicial com materiais de alta qualidade", "Aula prática em modelo real", "Suporte contínuo pós-curso"],
+            "duracao": "2 dias intensivos (16 horas)"
+        }
+    },
+    { 
+        titulo: "Especialização em Volume Brasileiro", 
+        chamada: "By Perfect Lash: Domine a técnica que conquista.",
+        imagem: "assets/img/cursos/curso-volume-brasileiro.jpg",
+        conteudo: {
+            "para_quem": "Para lash designers já certificadas na técnica clássica que buscam se diferenciar, aumentar seu portfólio e faturamento.",
+            "aprendizado": ["O que são os fios em formato 'Y'", "Diferença entre Volume Brasileiro e Russo", "Técnica de acoplagem para volume", "Como criar o famoso 'efeito delineado'", "Manutenção e durabilidade da técnica", "Dicas de precificação e marketing"],
+            "incluso": ["Apostila de especialização", "Certificado de especialista", "Material completo para uso em aula", "Acesso a Grupo VIP de Alunas"],
+            "duracao": "1 dia de imersão (8 horas)"
+        }
+    },
+    { 
+        titulo: "Design de Sobrancelhas com Henna", 
+        chamada: "Sobrancelhas Perfeitas: Design, Henna e Geometria.",
+        imagem: "assets/img/cursos/curso-sobrancelhas-henna.jpg",
+        conteudo: {
+            "para_quem": "Para iniciantes ou profissionais que desejam se tornar especialistas em sobrancelhas.",
+            "aprendizado": ["Mapeamento facial com paquímetro e linha", "Visagismo aplicado ao design", "Epilação correta com pinça", "Colorimetria e preparação da henna", "Aplicação com efeito ombré e sem marcações", "Finalização e dicas de fotografia"],
+            "incluso": ["Apostila técnica ilustrada", "Certificado de Designer Profissional", "Todo o material para uso em aula", "Lista com os melhores fornecedores"],
+            "duracao": "2 dias (16 horas)"
+        }
+    }
 ];
-
-// Dados para o Quiz
-const listaSobrancelhasQuiz = [
-    { id: 'design_sobrancelha', titulo: "Design de Sobrancelha", descricao: "Trabalhamos com o formato natural...", caracteristicas: ["Formato natural", "Desenho único", "Pode ser natural ou marcado"], imagem: 'assets/img/servicos/sobrancelhas/Personalizado.png' },
-    { id: 'design_com_henna', titulo: "Design com Henna", descricao: "Ideal para quem tem falhas...", caracteristicas: ["Preenchimento de falhas", "Natural", "Levemente marcado"], imagem: 'assets/img/servicos/sobrancelhas/Henna.png' },
-    { id: 'brow_lamination', titulo: "Brow Lamination", descricao: "Alinhamento dos fios por até 8 semanas...", caracteristicas: ["Alinhamento duradouro", "Preenche falhas", "Volume"], imagem: 'assets/img/servicos/sobrancelhas/BrowLamination.png' },
-    { id: 'nanobrows', titulo: "NanoBrows", descricao: "Evolução da micropigmentação...", caracteristicas: ["Fios realistas", "Indolor", "Volume", "Correção do formato"], imagem: 'assets/img/servicos/sobrancelhas/NanoBrow.png' }
-];
-const listaCiliosQuiz = [
-    { id: 'lash_lifting', titulo: "Lash Lifting", descricao: "Curvamento dos fios naturais...", caracteristicas: ["Curvamento natural", "Pode tingir", "Hidrata os fios"], imagem: 'assets/img/servicos/cilios/LashLifting.png' },
-    { id: 'volume_brasileiro', titulo: "Volume Brasileiro", descricao: "Fios em formato de Y...", caracteristicas: ["Volume", "Preenche 80% a 100% dos fios"], imagem: 'assets/img/servicos/cilios/VolumeBrasileiro.png' },
-    { id: 'volume_moana', titulo: "Volume Moana", descricao: "Volume encantador e natural...", caracteristicas: ["Volume", "Naturalidade", "Elegância"], imagem: 'assets/img/servicos/cilios/VolumeMoana.png' },
-    { id: 'volume_jasmine', titulo: "Volume Jasmine", descricao: "Volume e olhar encantador...", caracteristicas: ["Volume", "Elegância", "Sofisticação"], imagem: 'assets/img/servicos/cilios/VolumeJasmine.png' },
-    { id: 'extensoes_pro', titulo: "Extensões Pro", descricao: "Maior preenchimento e durabilidade...", caracteristicas: ["Preenchimento", "Durabilidade", "Sem manutenção"], imagem: 'assets/img/servicos/cilios/Pro.png' },
-    { id: 'fox_eyes', titulo: "Efeito Fox Eyes", descricao: "Alonga e levanta os cílios...", caracteristicas: ["Alongamento", "Lifting", "Sofisticado"], imagem: 'assets/img/servicos/cilios/FoxEyses.png' },
-    { id: 'volume_shine', titulo: "Volume Shine", descricao: "Volume luminoso e radiante...", caracteristicas: ["Volume", "Luminoso", "Radiante"], imagem: 'assets/img/servicos/cilios/VolumeShine.png' }
-];
-const quizPerguntas = [
-    { pergunta: "Qual área você deseja realçar principalmente?", tipo: "unica", opcoes: ["Cílios", "Sobrancelhas", "Ambos"], pontuacao: { "Cílios": { areas: { cilios: 1 } }, "Sobrancelhas": { areas: { sobrancelhas: 1 } }, "Ambos": { areas: { sobrancelhas: 1, cilios: 1, ambos: 1 } } } },
-    { pergunta: "Qual o efeito de cílios que você mais deseja?", tipo: "unica", opcoes: ["Cílios curvados e alongados naturalmente", "Cílios com volume e preenchimento", "Um olhar mais exótico e marcante"], pontuacao: { "Cílios curvados e alongados naturalmente": { lash_lifting: 1, volume_moana: 0.7 }, "Cílios com volume e preenchimento": { volume_brasileiro: 0.8, volume_jasmine: 0.9, volume_shine: 0.8 }, "Um olhar mais exótico e marcante": { fox_eyes: 1, extensoes_pro: 0.6 } }, condicao: (respostas) => respostas.areas?.cilios > 0 || respostas.areas?.ambos > 0 },
-    { pergunta: "Com que frequência você prefere fazer a manutenção dos cílios?", tipo: "unica", opcoes: ["Prefiro um procedimento sem manutenção", "Estou disposta a fazer manutenção regular", "Prefiro algo de curta duração para eventos"], pontuacao: { "Prefiro um procedimento sem manutenção": { extensoes_pro: 1 }, "Estou disposta a fazer manutenção regular": { volume_brasileiro: 0.7, volume_moana: 0.6, volume_jasmine: 0.7, volume_shine: 0.6, lash_lifting: 0.6, fox_eyes: 0.6 }, "Prefiro algo de curta duração para eventos": { lash_lifting: 0.5} }, condicao: (respostas) => respostas.areas?.cilios > 0 || respostas.areas?.ambos > 0 },
-    { pergunta: "Qual estilo de cílios você acha mais atraente?", tipo: "unica", opcoes: ["Cílios discretos e elegantes", "Cílios mais chamativos e volumosos", "Um estilo que levante o olhar"], pontuacao: { "Cílios discretos e elegantes": { volume_moana: 0.8, lash_lifting: 0.7 }, "Cílios mais chamativos e volumosos": { volume_brasileiro: 0.7, volume_jasmine: 0.9, volume_shine: 0.8, extensoes_pro: 0.7 }, "Um estilo que levante o olhar": { fox_eyes: 1 } }, condicao: (respostas) => respostas.areas?.cilios > 0 && !respostas.areas?.ambos },
-    { pergunta: "Você tem alguma sensibilidade nos olhos ou prefere evitar produtos químicos fortes?", tipo: "unica", opcoes: ["Sim, tenho sensibilidade", "Não tenho problemas com isso"], pontuacao: { "Sim, tenho sensibilidade": { lash_lifting: 0.7 }, "Não tenho problemas com isso": { } }, condicao: (respostas) => respostas.areas?.cilios > 0 && !respostas.areas?.ambos },
-    { pergunta: "Qual a sua prioridade ao escolher um procedimento para cílios?", tipo: "unica", opcoes: ["Realçar a beleza natural", "Transformar o olhar", "Praticidade e durabilidade"], pontuacao: { "Realçar a beleza natural": { lash_lifting: 0.9, volume_moana: 0.7 }, "Transformar o olhar": { volume_brasileiro: 0.7, volume_jasmine: 0.7, volume_shine: 0.7, fox_eyes: 0.6 }, "Praticidade e durabilidade": { extensoes_pro: 0.9 } }, condicao: (respostas) => respostas.areas?.cilios > 0 && !respostas.areas?.ambos },
-    { pergunta: "Qual o formato de sobrancelha que você mais te agrada?", tipo: "unica", opcoes: ["Natural, seguindo o formato original", "Mais definido e marcado", "Mais volumoso e cheio"], pontuacao: { "Natural, seguindo o formato original": { design_sobrancelha: 1, brow_lamination: 0.7, nanobrows: 0.5 }, "Mais definido e marcado": { design_com_henna: 0.9, nanobrows: 0.8 }, "Mais volumoso e cheio": { brow_lamination: 0.9, nanobrows: 0.6 } }, condicao: (respostas) => respostas.areas?.sobrancelhas > 0 || respostas.areas?.ambos > 0 },
-    { pergunta: "Você busca um procedimento de longa duração para as sobrancelhas?", tipo: "unica", opcoes: ["Sim, quero algo que dure", "Não, prefiro opções temporárias"], pontuacao: { "Sim, quero algo que dure": { nanobrows: 1, brow_lamination: 0.5 }, "Não, prefiro opções temporárias": { design_sobrancelha: 0.6, design_com_henna: 0.7 } }, condicao: (respostas) => respostas.areas?.sobrancelhas > 0 || respostas.areas?.ambos > 0 },
-    { pergunta: "Qual a sua maior preocupação com suas sobrancelhas?", tipo: "unica", opcoes: ["Falhas e assimetrias", "Pouca definição e cor", "Fios desalinhados e sem forma"], pontuacao: { "Falhas e assimetrias": { nanobrows: 0.9, design_com_henna: 0.7 }, "Pouca definição e cor": { design_com_henna: 0.8, design_sobrancelha: 0.7 }, "Fios desalinhados e sem forma": { brow_lamination: 1 } }, condicao: (respostas) => respostas.areas?.sobrancelhas > 0 && !respostas.areas?.ambos },
-    { pergunta: "Qual estilo de sobrancelha você considera ideal para você?", tipo: "unica", opcoes: ["Sobrancelhas delicadas e sutis", "Sobrancelhas expressivas e marcantes"], pontuacao: { "Sobrancelhas delicadas e sutis": { design_sobrancelha: 0.8, brow_lamination: 0.6, nanobrows: 0.5 }, "Sobrancelhas expressivas e marcantes": { design_com_henna: 0.9, nanobrows: 0.7 } }, condicao: (respostas) => respostas.areas?.sobrancelhas > 0 && !respostas.areas?.ambos },
-    { pergunta: "O que é mais importante para você em um serviço de sobrancelhas?", tipo: "unica", opcoes: ["Realçar a beleza natural do rosto", "Corrigir imperfeições e definir o olhar", "Praticidade e facilidade no dia a dia"], pontuacao: { "Realçar a beleza natural do rosto": { design_sobrancelha: 0.9 }, "Corrigir imperfeições e definir o olhar": { nanobrows: 0.8, design_com_henna: 0.7 }, "Praticidade e facilidade no dia a dia": { brow_lamination: 0.8 } }, condicao: (respostas) => respostas.areas?.sobrancelhas > 0 && !respostas.areas?.ambos },
-    { pergunta: "Considerando um look completo, você prefere um visual mais natural ou mais produzido/transformador?", tipo: "unica", opcoes: ["Natural e elegante", "Produzido e impactante"], pontuacao: { "Natural e elegante": { naturalFactorGlobal: 1 }, "Produzido e impactante": { transformadorFactorGlobal: 1 } }, condicao: (respostas) => respostas.areas?.ambos > 0 },
-    { pergunta: "Você busca procedimentos que economizem tempo na sua rotina de beleza diária?", tipo: "unica", opcoes: ["Sim, quero praticidade!", "Não me importo tanto com o tempo da rotina"], pontuacao: { "Sim, quero praticidade!": { praticidadeGlobal: 1 }, "Não me importo tanto com o tempo da rotina": { } }, condicao: (respostas) => respostas.areas?.ambos > 0 }
-];
-
 
 /* =================================================================== */
 /* ======================== FUNÇÕES DO SITE ========================== */
 /* =================================================================== */
+function inicializarCabecalhoResponsivo() {
+    const cabecalho = document.getElementById('cabecalho');
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuLinks = document.querySelectorAll('.cabecalho__link');
+
+    // Se algum elemento essencial não existir, a função para.
+    if (!cabecalho || !menuToggle) return;
+
+    // Função para abrir e fechar o menu
+    function toggleMenu() {
+        document.body.classList.toggle('menu-aberto');
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+    }
+
+    // Fecha o menu se um link for clicado
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (document.body.classList.contains('menu-aberto')) {
+                toggleMenu();
+            }
+        });
+    });
+    
+    // Adiciona os event listeners
+    menuToggle.addEventListener('click', toggleMenu);
+    
+    // Lógica de scroll (não precisa de mudança)
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            cabecalho.classList.add('cabecalho--scrolled');
+        } else {
+            cabecalho.classList.remove('cabecalho--scrolled');
+        }
+    });
+}
 
 // ---------------------------- CATÁLOGO DE SERVIÇOS ----------------------------
 function mostrarServicos(tipo) {
@@ -191,273 +264,177 @@ function aplicarSnapHighlight() {
 
 // ---------------------------- SEÇÃO DE CURSOS ----------------------------
 function renderizarCursos() {
-    const lista = document.getElementById("cursos-lista");
-    if (!lista) return;
+    const container = document.getElementById('cursos-lista');
+    if (!container) return;
+    
+    container.innerHTML = ''; // Limpa o container
 
     cursos.forEach(curso => {
-        const card = document.createElement("div");
-        card.className = "curso-card-minimal";
-        card.innerHTML = `
-            <div class="curso-card-minimal__conteudo">
-                <h3 class="curso-card-minimal__titulo texto-com-gradiente">${curso.titulo}</h3>
-                <p class="curso-card-minimal__chamada">${curso.beneficio}</p>
-                <p class="curso-card-minimal__incentivo">🔥 Vagas Limitadas! Transforme sua paixão agora!</p>
-                <div class="curso-card-minimal__botoes">
-                    <a href="https://wa.me/5519999670165?text=${encodeURIComponent(curso.mensagemWhats)}" target="_blank" class="curso-card-minimal__cta">Quero me inscrever!</a>
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'curso-card';
+
+        cardDiv.innerHTML = `
+            <div class="curso-card__preview">
+                <img src="${curso.imagem}" alt="Imagem do curso ${curso.titulo}" class="curso-card__imagem">
+                <div class="curso-card__info">
+                    <h3>${curso.titulo}</h3>
+                    <p>${curso.chamada}</p>
+                    <button class="curso-card__toggle-btn">Ver Detalhes</button>
                 </div>
             </div>
-            <div class="curso-card-minimal__imagem">
-                <img src="${curso.imagem}" alt="${curso.titulo}">
-            </div>
-        `;
-        lista.appendChild(card);
-    });
-}
 
-// ---------------------------- CARROSSEL DE FEEDBACKS ----------------------------
-function inicializarCarrosselFeedbacks() {
-    const wrapper = document.getElementById('swiper-wrapper');
-    if (!wrapper) return;
-
-    slidesFeedbacks.forEach(slide => {
-        const div = document.createElement('div');
-        div.className = 'swiper-slide';
-        div.innerHTML = `
-            <div class="card-feedback">
-                <div class="header">
-                    <img src="${slide.imagem}" alt="${slide.nome}">
-                    <div class="user-info">
-                        <strong>@${slide.nome}</strong>
+            <div class="curso-card__detalhes">
+                <div class="detalhes__grid">
+                    <div>
+                        <h4>Para Quem é Este Curso?</h4>
+                        <p>${curso.conteudo.para_quem}</p>
+                    </div>
+                    <div>
+                        <h4>O que Você Vai Aprender:</h4>
+                        <ul>
+                            ${curso.conteudo.aprendizado.map(item => `<li><i class="fas fa-check"></i> ${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>O que Está Incluso:</h4>
+                        <ul>
+                            ${curso.conteudo.incluso.map(item => `<li><i class="fas fa-check"></i> ${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Duração:</h4>
+                        <p><strong>${curso.conteudo.duracao}</strong></p>
                     </div>
                 </div>
-                <div class="comment">
-                    <p>"${slide.texto}"</p>
+                <div class="detalhes__cta-final">
+                     <a href="https://wa.me/5519999670165?text=Oi, Nayra! Tenho interesse no curso de ${encodeURIComponent(curso.titulo)}." class="botao-principal" target="_blank">Quero me Inscrever</a>
                 </div>
             </div>
         `;
-        wrapper.appendChild(div);
+        container.appendChild(cardDiv);
     });
 
-    new Swiper('.swiper', {
-        slidesPerView: 1,
-        spaceBetween: 40,
-        loop: true,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 'auto',
-                spaceBetween: 30,
-                centeredSlides: true,
-            },
-            1024: {
-                slidesPerView: 'auto',
-                spaceBetween: 40,
-                centeredSlides: true,
-            }
-        }
-    });
 }
 
-// ---------------------------- LÓGICA DO QUIZ ----------------------------
-let perguntaAtualIndex = 0;
-const respostasUsuario = { areas: {} }; 
-const pontuacaoSobrancelhas = {};
-const pontuacaoCilios = {};
-
-function inicializarPontuacoesQuiz() {
-    listaSobrancelhasQuiz.forEach(servico => pontuacaoSobrancelhas[servico.id] = 0);
-    listaCiliosQuiz.forEach(servico => pontuacaoCilios[servico.id] = 0);
-}
-
-function abrirQuiz() { 
-    const quizModalEl = document.getElementById('quiz-modal');
-    if (!quizModalEl) return; 
-
-    quizModalEl.style.display = 'flex';
-    perguntaAtualIndex = 0;
-    Object.keys(respostasUsuario).forEach(key => { 
-        if (key !== 'areas') delete respostasUsuario[key]; 
-    });
-    respostasUsuario.areas = {}; 
-    inicializarPontuacoesQuiz();
-
-    document.getElementById('quiz-container').style.display = 'flex'; 
-    document.getElementById('resultado').style.display = 'none'; 
+// 3. NOVA FUNÇÃO PARA A INTERATIVIDADE DE EXPANSÃO
+function inicializarCardsDeCursoExpansiveis() {
+    const todosOsBotoes = document.querySelectorAll('.curso-card__toggle-btn');
     
-    const quizProgressoDivEl = document.querySelector('#quiz-progresso > div');
-    if (quizProgressoDivEl) { 
-        quizProgressoDivEl.style.width = '0%';
-        quizProgressoDivEl.textContent = '0%';
-    }
-    mostrarProximaPerguntaQuiz(); 
-}
+    todosOsBotoes.forEach(botao => {
+        botao.addEventListener('click', () => {
+            const card = botao.closest('.curso-card');
+            card.classList.toggle('expandido');
 
-function fecharQuiz() { 
-    const quizModalEl = document.getElementById('quiz-modal');
-    if (quizModalEl) {
-        quizModalEl.style.display = 'none';
-    }
-}
-
-function atualizarBarraProgressoQuiz() {
-    const quizProgressoDivEl = document.querySelector('#quiz-progresso > div');
-    if (!quizProgressoDivEl) return;
-
-    let totalDePerguntasNoCaminho = quizPerguntas.filter(q => !q.condicao || q.condicao(respostasUsuario)).length;
-    let perguntasRespondidasEVisiveis = 0;
-    for (let i = 0; i < perguntaAtualIndex; i++) { 
-        if (!quizPerguntas[i].condicao || quizPerguntas[i].condicao(respostasUsuario)) {
-            perguntasRespondidasEVisiveis++;
-        }
-    }
-    const progresso = totalDePerguntasNoCaminho > 0 ? (perguntasRespondidasEVisiveis / totalDePerguntasNoCaminho) * 100 : 0;
-    quizProgressoDivEl.style.width = `${Math.min(progresso, 100)}%`;
-    quizProgressoDivEl.textContent = `${Math.round(Math.min(progresso, 100))}%`;
-}
-
-function mostrarProximaPerguntaQuiz() {
-    atualizarBarraProgressoQuiz(); 
-    while (perguntaAtualIndex < quizPerguntas.length && quizPerguntas[perguntaAtualIndex].condicao && !quizPerguntas[perguntaAtualIndex].condicao(respostasUsuario)) {
-        perguntaAtualIndex++;
-    }
-
-    if (perguntaAtualIndex >= quizPerguntas.length) {
-        mostrarResultadoQuiz();
-        return;
-    }
-    
-    const perguntaAtual = quizPerguntas[perguntaAtualIndex];
-    document.getElementById('pergunta').textContent = perguntaAtual.pergunta;
-    const opcoesEl = document.getElementById('opcoes');
-    opcoesEl.innerHTML = ""; 
-
-    perguntaAtual.opcoes.forEach(opcaoTexto => {
-        const botaoOpcao = document.createElement("button");
-        botaoOpcao.type = "button"; 
-        botaoOpcao.textContent = opcaoTexto;
-        botaoOpcao.addEventListener("click", () => selecionarRespostaQuiz(opcaoTexto, perguntaAtual.pontuacao, botaoOpcao));
-        opcoesEl.appendChild(botaoOpcao);
-    });
-}
-
-function selecionarRespostaQuiz(opcaoSelecionada, pontuacoesOpcao, botaoClicado) {
-    respostasUsuario[`q${perguntaAtualIndex}`] = opcaoSelecionada;
-    if (pontuacoesOpcao && pontuacoesOpcao[opcaoSelecionada]) {
-        const scores = pontuacoesOpcao[opcaoSelecionada];
-        Object.keys(scores).forEach(key => {
-            if (key === 'areas') { 
-                Object.assign(respostasUsuario.areas, scores.areas);
-            } else { 
-                if (listaSobrancelhasQuiz.some(s => s.id === key)) {
-                    pontuacaoSobrancelhas[key] = (pontuacaoSobrancelhas[key] || 0) + scores[key];
-                } else if (listaCiliosQuiz.some(s => s.id === key)) {
-                    pontuacaoCilios[key] = (pontuacaoCilios[key] || 0) + scores[key];
-                } else {
-                    respostasUsuario[key] = scores[key]; 
-                }
+            // Muda o texto do botão
+            if (card.classList.contains('expandido')) {
+                botao.textContent = 'Fechar Detalhes';
+            } else {
+                botao.textContent = 'Ver Detalhes';
             }
         });
-    }
-    document.querySelectorAll('#opcoes button').forEach(b => b.classList.remove('selecionado'));
-    botaoClicado.classList.add('selecionado');
-    setTimeout(() => {
-        perguntaAtualIndex++; 
-        mostrarProximaPerguntaQuiz(); 
-    }, 300); 
-}
-    
-function recomendarServicosQuiz() {
-    let recomendacaoSobrancelhas = Object.keys(pontuacaoSobrancelhas).reduce((a, b) => pontuacaoSobrancelhas[a] > pontuacaoSobrancelhas[b] ? a : b);
-    let recomendacaoCilios = Object.keys(pontuacaoCilios).reduce((a, b) => pontuacaoCilios[a] > pontuacaoCilios[b] ? a : b);
-
-    const querAmbos = respostasUsuario.areas?.ambos > 0;
-    const indicouSobrancelhasApenas = respostasUsuario.areas?.sobrancelhas > 0 && !respostasUsuario.areas?.cilios && !querAmbos;
-    const indicouCiliosApenas = respostasUsuario.areas?.cilios > 0 && !respostasUsuario.areas?.sobrancelhas && !querAmbos;
-
-    if (querAmbos) {
-        return { tipo: 'combo', sobrancelhas: listaSobrancelhasQuiz.find(s => s.id === recomendacaoSobrancelhas), cilios: listaCiliosQuiz.find(s => s.id === recomendacaoCilios) };
-    } else if (indicouSobrancelhasApenas) {
-        return { tipo: 'sobrancelhas', servico: listaSobrancelhasQuiz.find(s => s.id === recomendacaoSobrancelhas) };
-    } else if (indicouCiliosApenas) {
-        return { tipo: 'cilios', servico: listaCiliosQuiz.find(s => s.id === recomendacaoCilios) };
-    }
-    return { tipo: 'generico', mensagem: "Com base nas suas respostas, não foi possível identificar uma sugestão específica. Que tal conversarmos para um atendimento personalizado?" };
+    });
 }
 
-function mostrarResultadoQuiz() { 
-    const recomendacao = recomendarServicosQuiz();
-    const resultadoElementEl = document.getElementById('resultado');
-    const servicoRecomendadoMsgEl = document.getElementById('servico-recomendado-msg');
-    const whatsappLinkEl = document.getElementById('whatsapp-link');
-    const tituloH3Resultado = resultadoElementEl.querySelector('h3');
-    let conteudoHTML = '';
-    let textoWhatsapp = "Olá! Fiz o quiz e gostaria de mais informações";
-    let tituloResultadoPrincipal = "Seu Tratamento Ideal é:";
 
-    if (recomendacao.tipo === 'combo' && recomendacao.sobrancelhas && recomendacao.cilios) {
-        tituloResultadoPrincipal = "Para um Olhar Completo, Sugerimos:";
-        conteudoHTML = `
-            <div class="servico-combo-item">
-                <img src="${recomendacao.sobrancelhas.imagem}" alt="${recomendacao.sobrancelhas.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
-                <h4>${recomendacao.sobrancelhas.titulo}</h4>
-                <p>${recomendacao.sobrancelhas.descricao}</p>
-            </div>
-            <strong class="separador-combo">+</strong>
-            <div class="servico-combo-item">
-                <img src="${recomendacao.cilios.imagem}" alt="${recomendacao.cilios.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
-                <h4>${recomendacao.cilios.titulo}</h4>
-                <p>${recomendacao.cilios.descricao}</p>
+function inicializarCarrosselInfinito() {
+    // 1. Seleciona o container principal
+    const scroller = document.querySelector(".scroller");
+    if (!scroller) return;
+
+    // 2. Adiciona o atributo para o CSS ativar a animação
+    scroller.setAttribute("data-animated", true);
+
+    // 3. Pega a lista de feedbacks
+    const scrollerInner = scroller.querySelector(".scroller__inner");
+    const scrollerContent = Array.from(scrollerInner.children);
+
+    // 4. A MÁGICA: Duplica cada item e adiciona ao final para o loop ser perfeito
+    scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true);
+        // Adiciona um atributo para esconder a duplicata de leitores de tela (acessibilidade)
+        duplicatedItem.setAttribute("aria-hidden", true);
+        scrollerInner.appendChild(duplicatedItem);
+    });
+}
+
+
+function popularFeedbacks() {
+    const list = document.getElementById('feedbacks-list');
+    if (!list) return;
+
+    list.innerHTML = ''; // Limpa a lista
+
+    slidesFeedbacks.forEach(slide => {
+        const listItem = document.createElement('li'); // Agora criamos um <li>
+        
+        // Lógica das estrelas e fonte (mantida da versão anterior)
+        let estrelasHTML = Array(slide.rating).fill('<i class="fas fa-star"></i>').join('');
+        let sourceIcon = '';
+        if (slide.source === 'google') sourceIcon = '<i class="fab fa-google"></i>';
+        if (slide.source === 'instagram') sourceIcon = '<i class="fab fa-instagram"></i>';
+        if (slide.source === 'whatsapp') sourceIcon = '<i class="fab fa-whatsapp"></i>';
+
+        listItem.innerHTML = `
+            <div class="card-feedback">
+                <div class="card-feedback__header">
+                    <img src="${slide.imagem}" alt="Foto da cliente ${slide.nome}">
+                    <div class="user-info">
+                        <strong>${slide.nome}</strong>
+                        <div class="rating-source">
+                            <div class="estrelas">${estrelasHTML}</div>
+                            <div class="source">${sourceIcon}</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="frase-destaque">"${slide.destaque}"</p>
+                    <p class="texto-completo">${slide.texto}</p>
+                </div>
             </div>
         `;
-        textoWhatsapp = `Olá! Fiz o quiz e o resultado foi o combo de ${recomendacao.sobrancelhas.titulo} e ${recomendacao.cilios.titulo}. Gostaria de agendar!`;
-    } else if ((recomendacao.tipo === 'sobrancelhas' || recomendacao.tipo === 'cilios') && recomendacao.servico) {
-        tituloResultadoPrincipal = recomendacao.tipo === 'sobrancelhas' ? "Para suas Sobrancelhas, sugerimos:" : "Para seus Cílios, sugerimos:";
-        conteudoHTML = `
-            <div class="servico-combo-item">
-                <img src="${recomendacao.servico.imagem}" alt="${recomendacao.servico.titulo}" onerror="this.src='assets/img/placeholder-imagem.png';">
-                <h4>${recomendacao.servico.titulo}</h4>
-                <p>${recomendacao.servico.descricao}</p>
+        list.appendChild(listItem);
+    });
+
+    // Depois que todos os cards foram adicionados, inicializa a animação
+    inicializarCarrosselInfinito();
+}
+
+function renderizarCombos() {
+    const container = document.querySelector('.combos__container');
+    if (!container) return; // Para o código se o container não for encontrado
+    
+    container.innerHTML = ''; // Limpa o container antes de adicionar os novos cards
+
+    combos.forEach(combo => {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'combo-card';
+        if (combo.destaque) {
+            cardDiv.classList.add('destaque');
+        }
+
+        // Monta o HTML do card, agora sem a seção de preços
+        cardDiv.innerHTML = `
+            ${combo.destaque ? '<div class="combo-card__badge">Mais Pedido</div>' : ''}
+            
+            <div class="combo-card__imagem">
+                <img src="${combo.imagem}" alt="Imagem do ${combo.nome}">
+            </div>
+
+            <div class="combo-card__conteudo">
+                <h3 class="combo-card__title">${combo.nome}</h3>
+                
+                <p class="combo-card__description">${combo.descricao}</p>
+
+                <ul class="combo-card__servicos">
+                    ${combo.servicos.map(servico => `<li><i class="fas fa-check"></i> ${servico}</li>`).join('')}
+                </ul>
+
+                <a href="https://wa.me/5519999670165?text=Oi, Nayra! Tenho interesse no ${encodeURIComponent(combo.nome)} e gostaria de saber mais." class="combo-card__cta" target="_blank">Quero esse Combo</a>
             </div>
         `;
-        textoWhatsapp = `Olá! Fiz o quiz e o resultado foi ${recomendacao.servico.titulo}. Gostaria de agendar!`;
-    } else { 
-        tituloResultadoPrincipal = "Resultado do Quiz"; 
-        conteudoHTML = `<p style="font-size: var(--tamanho-subtitulo);">${recomendacao.mensagem || "Converse conosco para uma recomendação personalizada!"}</p>`;
-        if(whatsappLinkEl) whatsappLinkEl.style.display = 'none'; 
-    }
 
-    if (tituloH3Resultado) tituloH3Resultado.textContent = tituloResultadoPrincipal;
-    if (servicoRecomendadoMsgEl) {
-        servicoRecomendadoMsgEl.className = 'servico-recomendado-msg'; 
-        if (recomendacao.tipo === 'combo') servicoRecomendadoMsgEl.classList.add('resultado-combo');
-        else if (recomendacao.tipo !== 'generico') servicoRecomendadoMsgEl.classList.add('resultado-unico');
-        servicoRecomendadoMsgEl.innerHTML = conteudoHTML;
-    }
-
-    if (recomendacao.tipo !== 'generico' && whatsappLinkEl) {
-        whatsappLinkEl.href = `https://wa.me/5519999670165?text=${encodeURIComponent(textoWhatsapp)}`;
-        whatsappLinkEl.style.display = 'inline-block';
-    }
-    
-    document.getElementById('quiz-container').style.display = 'none';
-    resultadoElementEl.style.display = 'flex'; 
-    
-    const quizProgressoDivEl = document.querySelector('#quiz-progresso > div');
-    if(quizProgressoDivEl) {
-        quizProgressoDivEl.style.width = '100%';
-        quizProgressoDivEl.textContent = 'Concluído!';
-    }
+        container.appendChild(cardDiv);
+    });
 }
 
 // ---------------------------- COMPONENTES DE UI GERAL ----------------------------
@@ -516,100 +493,34 @@ function inicializarBotaoWhatsApp() {
 }
 
 
-function inicializarQuizModal() {
-    function criarModalQuizSeNaoExistir() {
-        if (document.getElementById('quiz-modal')) return;
-        const modalHTML = `
-            <div id="quiz-modal" style="display: none;">
-                <div id="quiz-container" style="display: flex; flex-direction: column;">
-                    <button type="button" class="quiz-fechar-botao" aria-label="Fechar Quiz">X</button>
-                    <h2>Descubra o tratamento ideal!</h2>
-                    <div id="pergunta"></div>
-                    <div id="opcoes"></div>
-                    <div id="quiz-progresso"><div>0%</div></div>
-                </div>
-                <div id="resultado" style="display: none;">
-                    <button type="button" class="quiz-fechar-botao" aria-label="Fechar Quiz">X</button>
-                    <h3>Seu Tratamento Ideal é:</h3>
-                    <div id="servico-recomendado-msg"></div>
-                    <a href="#" id="whatsapp-link" target="_blank" style="display: none;">Agendar pelo WhatsApp</a>
-                </div>
-            </div>`;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-    }
-    criarModalQuizSeNaoExistir(); 
-
-    const abrirQuizLinkEl = document.getElementById('abrir-quiz-link');
-    const quizModalEl = document.getElementById('quiz-modal');
-    if (!quizModalEl) return;
-
-    if (abrirQuizLinkEl) {
-        abrirQuizLinkEl.addEventListener('click', (e) => {
-            e.preventDefault();
-            abrirQuiz(); 
-        });
-    }
-
-    quizModalEl.querySelectorAll('.quiz-fechar-botao').forEach(botao => {
-        botao.addEventListener('click', fecharQuiz); 
-    });
-
-    quizModalEl.addEventListener('click', (e) => {
-        if (e.target === quizModalEl) fecharQuiz(); 
-    });
-
-    document.addEventListener('keydown', (e) => { 
-        if (quizModalEl.style.display === 'flex' && e.key === 'Escape') fecharQuiz(); 
-    });
-}
-
-function inicializarCarrosselComArraste() {
-    const container = document.getElementById("catalogo-carrossel");
-    if (!container) return;
-
-    // Lógica de scroll inicial para centralizar o primeiro card
-    setTimeout(() => {
-        const primeiroCard = container.querySelector(".catalogo__card");
-        if (primeiroCard) {
-            const scrollPosition = primeiroCard.offsetLeft - (container.offsetWidth / 2) + (primeiroCard.offsetWidth / 2);
-            container.scrollTo({ left: scrollPosition, behavior: "smooth" });
-        }
-        setTimeout(aplicarSnapHighlight, 50);
-    }, 100);
-
-    // Lógica para arrastar com o mouse
-    let isDown = false, startX, scrollLeft;
-    container.addEventListener('mousedown', (e) => {
-        isDown = true;
-        container.classList.add('active');
-        startX = e.pageX - container.offsetLeft;
-        scrollLeft = container.scrollLeft;
-    });
-    container.addEventListener('mouseleave', () => { isDown = false; container.classList.remove('active'); });
-    container.addEventListener('mouseup', () => { isDown = false; container.classList.remove('active'); });
-    container.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - container.offsetLeft;
-        const walk = (x - startX) * 2;
-        container.scrollLeft = scrollLeft - walk;
-    });
-}
 
 
 /* =================================================================== */
-/* ================== INICIALIZAÇÃO PRINCIPAL ======================== */
+/* ================== INICIALIZAÇÃO PRINCIPAL             ============ */
 /* =================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Renderização de conteúdo dinâmico
-    mostrarServicos("sobrancelhas");
-    renderizarCursos();
-    inicializarCarrosselFeedbacks();
-
-    // Inicialização de componentes de UI
+    // Inicializadores Gerais
+    inicializarCabecalhoResponsivo();
     inicializarAnimacoesDeScroll();
     inicializarBotaoWhatsApp();
-    inicializarQuizModal();
-    inicializarCarrosselComArraste();
+    
+    // Inicializadores de Seção (verificam se a seção existe antes de rodar)
+    if (document.getElementById('catalogo-carrossel')) {
+        mostrarServicos("sobrancelhas");
+    }
+
+    if (document.querySelector('.combos__container')) {
+        renderizarCombos();
+    }
+    
+    // CORREÇÃO: Chamando as funções dos CURSOS na ordem certa
+    if (document.getElementById('cursos-lista')) {
+        renderizarCursos(); // 1. Renderiza os cards
+        inicializarCardsDeCursoExpansiveis(); // 2. Adiciona a interatividade de expandir
+    }
+    
+    if (document.getElementById('feedbacks-list')) {
+        popularFeedbacks();
+    }
 });
