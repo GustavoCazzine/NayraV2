@@ -74,7 +74,7 @@
     --espacamento-grande: clamp(2rem, 4vw, 3rem);
     --espacamento-xl: clamp(3.5rem, 7vw, 5rem);
     --espacamento-lateral-mobile: 1.5rem;
-    --espacamento-vertical-secao: clamp(4rem, 8vw, 6rem);
+    --espacamento-secao: clamp(4rem, 8vw, 6rem);
 }
 
 /* ---------------------------- RESET & ESTILOS BASE ---------------------------- */
@@ -175,7 +175,7 @@ h1 + p, h2 + p, h3 + p {
 }
 
 section {
-    padding: var(--espacamento-vertical-secao-secao) 0;
+    padding: var(--espacamento-secao) 0;
 }
 
 .pagina__geral section:first-of-type {
@@ -1107,22 +1107,6 @@ section {
     padding: 0 var(--espacamento-lateral-mobile);
 }
 
-/* --- A Imagem --- */
-.agendamento__imagem-wrapper {
-    width: 100%;
-    border-radius: var(--espacamento-medio);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-.agendamento__imagem-wrapper img {
-    width: 100%;
-    height: 100%;
-    max-height: 500px;
-    object-fit: cover;
-    display: block;
-}
-
 /* --- O Conteúdo de Texto --- */
 .agendamento__conteudo {
     background-color: var(--cor-fundo-branco);
@@ -1236,8 +1220,8 @@ section {
     max-width: 100%; /* Ocupa a largura total disponível */
     overflow: hidden;
     /* Efeito de degradê nas laterais para suavizar a entrada e saída dos cards */
-    -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-    mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+    -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 10%, transparent);
+    mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
 }
 
 .scroller__inner {
@@ -1258,12 +1242,7 @@ section {
 .scroller[data-animated="true"] .scroller__inner {
     width: max-content; /* Faz o container interno ser largo o suficiente */
     flex-wrap: nowrap;
-    animation: scroll 40s linear infinite; /* Ajuste o tempo (40s) para mais rápido ou mais lento */
-}
-
-/* Pausa a animação ao passar o mouse */
-.scroller:hover .scroller__inner {
-    animation-play-state: paused;
+    animation: scroll 25s linear infinite; /* Ajuste o tempo (40s) para mais rápido ou mais lento */
 }
 
 /* Estilo do Card de Feedback (adaptado do seu) */
@@ -1284,10 +1263,6 @@ section {
     transition: transform 0.2s ease;
 }
 
-.card-feedback:hover {
-    transform: scale(1.03);
-}
-
 /* O resto dos seus estilos de .card-feedback, header, user-info, etc. se encaixam aqui perfeitamente */
 .card-feedback__header {
     display: flex; align-items: center; gap: 1rem;
@@ -1306,7 +1281,7 @@ section {
 
 /* Convite para novos feedbacks */
 .novos-feedbacks__chamada {
-    text-align: center; margin-top: 3rem; font-family: var(--fonte-corpo); font-size: 1.1rem; color: var(--cor-texto-neutro);
+    text-align: center; margin-top: .5rem; font-family: var(--fonte-corpo); font-size: 1.1rem; color: var(--cor-texto-neutro);
 }
 .novos-feedbacks__chamada a {
     color: var(--cor-vinho); font-weight: bold; text-decoration: underline; text-decoration-color: var(--cor-dourado);

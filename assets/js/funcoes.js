@@ -91,21 +91,21 @@ const slidesFeedbacks = [
 const combos = [
     {
         nome: "Combo Olhar de Impacto",
-        imagem: "assets/img/combos/combo-impacto.jpg", // Substitua pelo caminho real da sua imagem
+        imagem: "assets/img/combos/Henna.png", // Substitua pelo caminho real da sua imagem
         descricao: "A combinação perfeita para quem busca um visual marcante e sofisticado, com cílios volumosos e sobrancelhas impecavelmente desenhadas.",
         servicos: ["Volume Brasileiro", "Design com Henna"],
         destaque: true // true para o combo que terá o selo "Mais Pedido"
     },
     {
         nome: "Combo Beleza Natural",
-        imagem: "assets/img/combos/combo-natural.jpg", // Substitua pelo caminho real da sua imagem
+        imagem: "assets/img/combos/LashLifting.jpg", // Substitua pelo caminho real da sua imagem
         descricao: "Ideal para realçar sua beleza de forma sutil e elegante. Conquiste cílios naturalmente curvados e sobrancelhas harmoniosas.",
         servicos: ["Lash Lifting", "Design Personalizado"],
         destaque: false
     },
     {
         nome: "Combo Pronta para Festa",
-        imagem: "assets/img/combos/combo-festa.jpg", // Substitua pelo caminho real da sua imagem
+        imagem: "assets/img/combos/VolumeBrasileiro.png", // Substitua pelo caminho real da sua imagem
         descricao: "O pacote completo para você brilhar em qualquer evento. Um olhar poderoso com cílios alongados e sobrancelhas perfeitamente alinhadas.",
         servicos: ["Extensão Fox Eyes", "Brow Lamination"],
         destaque: false
@@ -116,7 +116,7 @@ const cursos = [
     { 
         titulo: "Extensão de Cílios - Iniciante", 
         chamada: "Desperte seu Olhar de Artista com Extensão de Cílios.",
-        imagem: "assets/img/cursos/curso-cilios-iniciante.jpg",
+        imagem: "assets/img/cursos/lash.jpg",
         conteudo: {
             "para_quem": "Para iniciantes que desejam ingressar no mercado de cílios com uma base sólida, mesmo sem nenhuma experiência prévia.",
             "aprendizado": ["História e fundamentos da extensão", "Biossegurança e saúde ocular", "Materiais e ferramentas", "Técnica de Fio a Fio Clássico", "Mapeamento e visagismo do olhar", "Manutenção e remoção segura"],
@@ -127,7 +127,7 @@ const cursos = [
     { 
         titulo: "Especialização em Volume Brasileiro", 
         chamada: "By Perfect Lash: Domine a técnica que conquista.",
-        imagem: "assets/img/cursos/curso-volume-brasileiro.jpg",
+        imagem: "assets/img/cursos/cilios.jpg",
         conteudo: {
             "para_quem": "Para lash designers já certificadas na técnica clássica que buscam se diferenciar, aumentar seu portfólio e faturamento.",
             "aprendizado": ["O que são os fios em formato 'Y'", "Diferença entre Volume Brasileiro e Russo", "Técnica de acoplagem para volume", "Como criar o famoso 'efeito delineado'", "Manutenção e durabilidade da técnica", "Dicas de precificação e marketing"],
@@ -138,7 +138,7 @@ const cursos = [
     { 
         titulo: "Design de Sobrancelhas com Henna", 
         chamada: "Sobrancelhas Perfeitas: Design, Henna e Geometria.",
-        imagem: "assets/img/cursos/curso-sobrancelhas-henna.jpg",
+        imagem: "assets/img/cursos/sobrancelhas.png",
         conteudo: {
             "para_quem": "Para iniciantes ou profissionais que desejam se tornar especialistas em sobrancelhas.",
             "aprendizado": ["Mapeamento facial com paquímetro e linha", "Visagismo aplicado ao design", "Epilação correta com pinça", "Colorimetria e preparação da henna", "Aplicação com efeito ombré e sem marcações", "Finalização e dicas de fotografia"],
