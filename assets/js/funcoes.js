@@ -91,14 +91,14 @@ const slidesFeedbacks = [
 const combos = [
     {
         nome: "Combo Impacto Laminado",
-        imagem: "assets/img/combos/Combo3", // Atualize com o caminho real da imagem
+        imagem: "assets/img/combos/Combo1.jpg", // Atualize com o caminho real da imagem
         descricao: "Cílios volumosos com acabamento impecável e sobrancelhas perfeitamente alinhadas com a técnica de Brow Lamination.",
         servicos: ["Volume Brasileiro", "Brow Lamination"],
         destaque: true
     },
     {
         nome: "Combo Moana Perfeito",
-        imagem: "assets/img/combos/VolumeMoana_Henna.png", // Atualize com o caminho real da imagem
+        imagem: "assets/img/combos/Combo2.jpg", // Atualize com o caminho real da imagem
         descricao: "Um olhar marcante com o charme natural do Volume Moana e sobrancelhas desenhadas com precisão usando henna.",
         servicos: ["Volume Moana", "Design com Henna"],
         destaque: false
@@ -256,6 +256,42 @@ function aplicarSnapHighlight() {
     window.requestAnimationFrame(destacarCardCentral);
 }
 
+function inicializarDragToScroll(containerSelector) {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        container.classList.add('active');
+        // Posição inicial do clique = Posição do mouse na página - deslocamento do container
+        startX = e.pageX - container.offsetLeft;
+        // Posição inicial do scroll
+        scrollLeft = container.scrollLeft;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isDown = false;
+        container.classList.remove('active');
+    });
+
+    container.addEventListener('mouseup', () => {
+        isDown = false;
+        container.classList.remove('active');
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        if (!isDown) return; // Para a função se o mouse não estiver pressionado
+        e.preventDefault(); // Impede ações padrão (como selecionar texto)
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 2.5; // O * 2.5 faz o scroll ser mais rápido e responsivo
+        container.scrollLeft = scrollLeft - walk;
+    });
+}
+
 // ---------------------------- SEÇÃO DE CURSOS ----------------------------
 function renderizarCursos() {
     const container = document.getElementById('cursos-lista');
@@ -301,7 +337,7 @@ function renderizarCursos() {
                     </div>
                 </div>
                 <div class="detalhes__cta-final">
-                     <a href="https://wa.me/5519999670165?text=Oi, Nayra! Tenho interesse no curso de ${encodeURIComponent(curso.titulo)}." class="botao-principal" target="_blank">Quero me Inscrever</a>
+                        <a href="https://wa.me/5519999670165?text=Oi, Nayra! Tenho interesse no curso de ${encodeURIComponent(curso.titulo)}." class="botao-principal" target="_blank">Quero me Inscrever</a>
                 </div>
             </div>
         `;
@@ -503,6 +539,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('catalogo-carrossel')) {
         mostrarServicos("sobrancelhas");
     }
+
+    inicializarDragToScroll('.catalogo__carrossel');
+
 
     if (document.querySelector('.combos__container')) {
         renderizarCombos();

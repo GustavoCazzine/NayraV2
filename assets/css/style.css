@@ -224,7 +224,7 @@ section {
     width: 100%;
     z-index: 1000;
     background-color: transparent;
-    padding: 0 var(--espacamento-medio) 0 0;
+    padding: 0 var(--espacamento-lateral-mobile) 0 0;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
 
@@ -769,6 +769,20 @@ section {
     margin-bottom: var(--espacamento-xs);
 }
 
+/* =================================================================== */
+/* ============== CSS PARA O EFEITO DE ARRASTAR O CARROSSEL ========== */
+/* =================================================================== */
+
+.catalogo__carrossel {
+    cursor: grab; /* Cursor de mão aberta por padrão */
+    user-select: none; /* Impede a seleção de texto ao arrastar */
+}
+
+.catalogo__carrossel.active {
+    cursor: grabbing; /* Cursor de mão fechada ao clicar */
+    cursor: -webkit-grabbing;
+}
+
 
 /* =================================================================== */
 /* ============= CSS COMPLETO DA SEÇÃO DE COMBOS (FINAL) ============= */
@@ -922,15 +936,17 @@ section {
 }
 
 /* =================================================================== */
-/* ============= CSS COMPLETO DA SEÇÃO DE CURSOS (FINAL) ============= */
+/* ============= CSS REFINADO DA SEÇÃO DE CURSOS (v2.0) ============== */
 /* =================================================================== */
 
 .cursos {
-    background-color: var(--cor-fundo-branco);
+    background-color: #fcfaf7; /* Um tom de creme um pouco diferente para destacar a seção */
     padding: var(--espacamento-secao) 0;
+    border-top: 1px solid #f0e9e0;
+    border-bottom: 1px solid #f0e9e0;
 }
 
-/* --- NOVO: Bloco "Sobre a Educadora" --- */
+/* --- Bloco "Sobre a Educadora" --- */
 .educadora__intro {
     display: flex;
     flex-direction: column;
@@ -938,6 +954,7 @@ section {
     gap: 2rem;
     text-align: center;
     margin-bottom: 4rem;
+    padding: 0 var(--espacamento-lateral-mobile);
 }
 
 .educadora__foto {
@@ -946,7 +963,7 @@ section {
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--cor-dourado);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
 }
 
 .educadora__texto .cursos__titulo {
@@ -956,31 +973,36 @@ section {
 .educadora__texto .container__conteudo__descricao {
     max-width: 65ch;
     margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
-/* --- O Card de Curso Expansível --- */
+/* --- Lista de Cursos --- */
 .cursos__lista {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    max-width: 800px; /* Limita a largura dos cards */
+    max-width: 800px;
     margin: 0 auto;
     padding: 0 var(--espacamento-lateral-mobile);
 }
 
+/* --- Card de Curso (Estilo Principal Refinado) --- */
 .curso-card {
     background-color: var(--cor-fundo-branco);
-    border: 1px solid #eee;
-    border-radius: var(--espacamento-medio);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
+    border: 1px solid #F0EFEF; /* Borda mais sutil */
+    border-radius: 24px; /* Bordas mais arredondadas */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.04), 0 8px 25px rgba(0,0,0,0.04); /* Sombra mais suave */
+    transition: all 0.3s ease-in-out;
 }
 
 .curso-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07), 0 12px 40px rgba(0,0,0,0.07);
+    border-color: #EAE3D9;
 }
 
+/* --- Parte Visível do Card (Preview) --- */
 .curso-card__preview {
     display: flex;
     align-items: center;
@@ -989,93 +1011,129 @@ section {
 }
 
 .curso-card__imagem {
-    width: 120px;
-    height: 120px;
-    border-radius: var(--espacamento-pequeno);
+    width: 100px;
+    height: 100px;
+    border-radius: 16px; /* Bordas mais suaves na imagem também */
     object-fit: cover;
     flex-shrink: 0;
 }
 
+.curso-card__info {
+    width: 100%;
+}
+
 .curso-card__info h3 {
     font-family: var(--fonte-titulo);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--cor-vinho);
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.25rem 0;
     text-align: left;
 }
 
 .curso-card__info p {
     font-size: 1rem;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.25rem 0;
     text-align: left;
     color: var(--cor-texto-corpo);
 }
 
+
+/* --- BOTÕES: Hierarquia Visual (A Grande Melhoria) --- */
+.card-botoes-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas mínimas */
+    gap: 0.75rem;
+}
+
+/* Botão Secundário: "Ver Detalhes" */
 .curso-card__toggle-btn {
-    background: transparent;
-    border: 1px solid var(--cor-dourado);
-    color: var(--cor-dourado);
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
     font-weight: bold;
-    padding: 0.5rem 1rem;
+    text-align: center;
+    background-color: var(--cor-fundo-branco);
+    color: var(--cor-texto-neutro);
+    border: 1px solid #DCDCDC; /* Borda cinza clara */
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 .curso-card__toggle-btn:hover {
-    background-color: var(--cor-dourado);
+    border-color: var(--cor-vinho);
+    color: var(--cor-vinho);
+    background-color: #fdf5f5;
+}
+
+/* Botão Principal: "Tirar Dúvidas" */
+.botao-whatsapp-curso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem; /* Levemente maior para mais destaque */
+    font-family: var(--fonte-corpo);
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: var(--gradiente-vinho);
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+.botao-whatsapp-curso:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.15);
     color: white;
 }
-
-/* --- A Área Escondida que se Expande --- */
-.curso-card__detalhes {
-    /* Começa com altura 0 e escondido */
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
-    padding: 0 1.5rem; /* Padding vertical é 0 por padrão */
+.botao-whatsapp-curso i {
+    font-size: 1rem;
 }
 
-/* Quando o card tem a classe .expandido, a mágica acontece */
+
+/* --- Área Expansível dos Detalhes --- */
+.curso-card__detalhes {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 0 1.5rem;
+}
+
 .curso-card.expandido .curso-card__detalhes {
-    max-height: 1000px; /* Um valor alto para permitir a expansão total */
-    padding: 1.5rem;
-    border-top: 1px solid #eee;
+    max-height: 1200px; /* Aumentado para garantir espaço */
+    padding: 2rem 1.5rem;
+    border-top: 1px solid #f0e9e0;
 }
 
 .detalhes__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .detalhes__grid h4 {
     font-family: var(--fonte-titulo);
     color: var(--cor-vinho-escuro);
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
     text-align: left;
+    border-left: 3px solid var(--cor-dourado);
+    padding-left: 0.75rem;
 }
 
 .detalhes__grid ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
+    list-style: none; padding: 0; margin: 0; text-align: left;
 }
-
 .detalhes__grid li {
-    margin-bottom: 0.5rem;
-    color: var(--cor-texto-neutro);
+    margin-bottom: 0.6rem; color: var(--cor-texto-neutro); line-height: 1.5;
 }
-.detalhes__grid li .fa-check { /* Se você usar Font Awesome */
-    color: var(--cor-dourado);
-    margin-right: 0.5rem;
-}
+.detalhes__grid li .fa-check { color: var(--cor-dourado); margin-right: 0.5rem; }
 
 .detalhes__cta-final {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     text-align: center;
 }
-
 
 /* --- Responsividade do Card --- */
 @media (max-width: 500px) {
@@ -1086,86 +1144,91 @@ section {
     .curso-card__info h3, .curso-card__info p {
         text-align: center;
     }
+    .card-botoes-container {
+        justify-content: center;
+    }
 }
 
 /* =================================================================== */
-/* ============= CSS COMPLETO DA SEÇÃO DE AGENDAMENTO (FINAL) ======== */
+/* === CSS COMPLETO E REFEITO DA SEÇÃO DE AGENDAMENTO (v3.0) ========= */
 /* =================================================================== */
 
+/* --- 1. Estilos Gerais da Seção --- */
 .agendamento {
     padding: var(--espacamento-secao) 0;
     background-color: var(--cor-fundo-creme);
 }
 
-.agendamento__container {
-    display: grid;
-    grid-template-columns: 1fr; /* Uma coluna no mobile */
-    align-items: center;
-    gap: 2rem;
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 0 var(--espacamento-lateral-mobile);
+.agendamento__titulo-secao {
+    text-align: center;
+    margin-bottom: 2.5rem;
 }
 
-/* --- O Conteúdo de Texto --- */
+/* --- 2. O Card Principal (que será centralizado) --- */
+.agendamento__card-container {
+    max-width: 500px; /* Largura máxima no mobile */
+    margin: 0 auto; /* Garante a centralização */
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* --- 3. Layout Mobile (Vertical) --- */
+.agendamento__imagem-wrapper img {
+    display: block;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
 .agendamento__conteudo {
     background-color: var(--cor-fundo-branco);
-    padding: 2.5rem;
-    border-radius: var(--espacamento-medio);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.agendamento__titulo {
-    text-align: left;
-    margin-bottom: 1rem;
+    padding: 2rem;
 }
 
 .agendamento__descricao {
-    text-align: left;
     font-size: 1.1rem;
     color: var(--cor-texto-corpo);
     margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
-/* --- NOVO: Bloco de Informações de Confiança --- */
 .agendamento__info {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-    text-align: left;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
 }
 
 .info-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
 }
 
 .info-item i {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--cor-vinho);
-    width: 30px; /* Alinha os ícones */
-    text-align: center;
+    margin-top: 0.2rem;
 }
 
 .info-item span {
-    display: flex;
-    flex-direction: column;
+    font-size: 1rem;
+    color: var(--cor-texto-neutro);
 }
 
 .info-item strong {
-    font-family: var(--fonte-titulo);
+    font-family: var(--fonte-corpo);
+    font-weight: bold;
     color: var(--cor-texto-titulo);
-    font-size: 1.1rem;
+    display: block; /* Garante que a quebra de linha funcione bem */
+    margin-bottom: 0.2rem;
 }
 
-/* --- O Botão de Agendamento --- */
 .agendamento__link {
-    display: inline-block;
-    width: 100%; /* Ocupa a largura toda */
+    display: block; /* Ocupa a largura toda */
     text-align: center;
-    padding: 1rem 2rem;
+    padding: 1rem;
     font-size: 1.1rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -1173,31 +1236,63 @@ section {
     color: var(--cor-fundo-branco);
     border-radius: var(--espacamento-pequeno);
     text-decoration: none;
-    transition: filter 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
 }
-
 .agendamento__link:hover {
     filter: brightness(1.15);
-    transform: scale(1.02);
+    transform: scale(1.03);
     color: var(--cor-fundo-branco);
 }
 
 
-/* --- Responsividade para Telas Maiores --- */
-@media (min-width: 768px) {
-    .agendamento__container {
-        grid-template-columns: 1fr 1fr; /* Duas colunas */
-        gap: 0; /* Removemos o gap para controlar a sobreposição */
+/* =================================================================== */
+/* --- BREAKPOINT ESTRATÉGICO: A Mágica da Sobreposição Acontece Aqui --- */
+/* =================================================================== */
+@media (min-width: 900px) {
+
+    /* Aumenta a largura do card para aproveitar o espaço */
+    .agendamento__card-container {
+        max-width: 980px;
+        /* Usamos Grid para controle total da sobreposição */
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Duas colunas de tamanho igual */
+        align-items: center;
     }
 
+    /* A imagem agora ocupa a primeira coluna */
+    .agendamento__imagem-wrapper {
+        height: 100%; /* Ocupa toda a altura do card */
+    }
+    .agendamento__imagem-wrapper img {
+        height: 100%;
+        min-height: 550px; /* Garante uma altura mínima bonita */
+    }
+
+    /* O conteúdo de texto ocupa a segunda coluna */
     .agendamento__conteudo {
-        /* Efeito de sobreposição sutil */
-        margin-left: -4rem; 
-        z-index: 2; /* Garante que o texto fique na frente da imagem */
+        /* Removemos o fundo para o efeito de texto flutuante */
+        background-color: transparent;
+        box-shadow: none;
+        
+        /* Adicionamos o "cartão de texto" que irá sobrepor a imagem */
+        background-color: var(--cor-fundo-branco);
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        padding: 2.5rem;
+        
+        /* Efeito de sobreposição: puxa o cartão para a esquerda */
+        margin-left: -5rem;
     }
+}
 
-    .agendamento__titulo, .agendamento__descricao {
-        text-align: center;
+
+/* --- BREAKPOINT ESTRATÉGICO: Refinamento para Telas Muito Grandes --- */
+@media (min-width: 1200px) {
+    .agendamento__card-container {
+        max-width: 1100px; /* Aumenta ainda mais a largura */
+    }
+    .agendamento__conteudo {
+        padding: 3rem; /* Aumenta o espaçamento interno do texto */
     }
 }
 
