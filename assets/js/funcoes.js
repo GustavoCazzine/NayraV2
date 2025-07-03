@@ -90,27 +90,21 @@ const slidesFeedbacks = [
 // Dados para a seção Cursos
 const combos = [
     {
-        nome: "Combo Olhar de Impacto",
-        imagem: "assets/img/combos/Henna.png", // Substitua pelo caminho real da sua imagem
-        descricao: "A combinação perfeita para quem busca um visual marcante e sofisticado, com cílios volumosos e sobrancelhas impecavelmente desenhadas.",
-        servicos: ["Volume Brasileiro", "Design com Henna"],
-        destaque: true // true para o combo que terá o selo "Mais Pedido"
+        nome: "Combo Impacto Laminado",
+        imagem: "assets/img/combos/Combo3", // Atualize com o caminho real da imagem
+        descricao: "Cílios volumosos com acabamento impecável e sobrancelhas perfeitamente alinhadas com a técnica de Brow Lamination.",
+        servicos: ["Volume Brasileiro", "Brow Lamination"],
+        destaque: true
     },
     {
-        nome: "Combo Beleza Natural",
-        imagem: "assets/img/combos/LashLifting.jpg", // Substitua pelo caminho real da sua imagem
-        descricao: "Ideal para realçar sua beleza de forma sutil e elegante. Conquiste cílios naturalmente curvados e sobrancelhas harmoniosas.",
-        servicos: ["Lash Lifting", "Design Personalizado"],
-        destaque: false
-    },
-    {
-        nome: "Combo Pronta para Festa",
-        imagem: "assets/img/combos/VolumeBrasileiro.png", // Substitua pelo caminho real da sua imagem
-        descricao: "O pacote completo para você brilhar em qualquer evento. Um olhar poderoso com cílios alongados e sobrancelhas perfeitamente alinhadas.",
-        servicos: ["Extensão Fox Eyes", "Brow Lamination"],
+        nome: "Combo Moana Perfeito",
+        imagem: "assets/img/combos/VolumeMoana_Henna.png", // Atualize com o caminho real da imagem
+        descricao: "Um olhar marcante com o charme natural do Volume Moana e sobrancelhas desenhadas com precisão usando henna.",
+        servicos: ["Volume Moana", "Design com Henna"],
         destaque: false
     }
 ];
+
 
 const cursos = [
     { 
