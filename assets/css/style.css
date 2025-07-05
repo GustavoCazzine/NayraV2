@@ -250,6 +250,10 @@ section {
     transition: width 0.3s ease;
 }
 
+.cabecalho--scrolled{
+    padding: 0 var(--espacamento-lateral-mobile);
+}
+
 .cabecalho--scrolled .cabecalho__logo {
     width: 100px;
 }
@@ -940,7 +944,7 @@ section {
 /* =================================================================== */
 
 .cursos {
-    background-color: #fcfaf7; /* Um tom de creme um pouco diferente para destacar a seção */
+    background-color: #fcfaf7;
     padding: var(--espacamento-secao) 0;
     border-top: 1px solid #f0e9e0;
     border-bottom: 1px solid #f0e9e0;
@@ -958,12 +962,12 @@ section {
 }
 
 .educadora__foto {
-    width: 250px;
+    width: 180px;
     height: 180px;
-    border-radius: 8%;
+    border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--cor-dourado);
-    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
 .educadora__texto .cursos__titulo {
@@ -990,9 +994,9 @@ section {
 /* --- Card de Curso (Estilo Principal Refinado) --- */
 .curso-card {
     background-color: var(--cor-fundo-branco);
-    border: 1px solid #F0EFEF; /* Borda mais sutil */
-    border-radius: 24px; /* Bordas mais arredondadas */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.04), 0 8px 25px rgba(0,0,0,0.04); /* Sombra mais suave */
+    border: 1px solid #F0EFEF;
+    border-radius: 24px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.04), 0 8px 25px rgba(0,0,0,0.04);
     transition: all 0.3s ease-in-out;
 }
 
@@ -1005,24 +1009,28 @@ section {
 /* --- Parte Visível do Card (Preview) --- */
 .curso-card__preview {
     display: flex;
+    flex-direction: column; /* Começa como coluna para mobile (mobile-first) */
     align-items: center;
+    text-align: center;
     gap: 1.5rem;
-    padding: .5rem;
-
+    padding: 1.5rem;
 }
 
+/* CORREÇÃO PRINCIPAL APLICADA AQUI */
 .curso-card__imagem {
-    width: 100%;
-    height: 200px;
-    border-radius: 16px; /* Bordas mais suaves na imagem também */
+    width: 100%; /* Tamanho maior para o mobile */
+    height: 150px;
+    border-radius: 16px;
     object-fit: cover;
-    flex-shrink: 0;
+    flex-shrink: 0; /* IMPEDE que a imagem seja esmagada */
 }
 
 .curso-card__info {
-    padding: 1.5rem;
-
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza no mobile */
+    flex-grow: 1; /* Permite que o texto ocupe o espaço */
 }
 
 .curso-card__info h3 {
@@ -1030,23 +1038,28 @@ section {
     font-size: 1.6rem;
     color: var(--cor-vinho);
     margin: 0 0 0.25rem 0;
-    text-align: left;
+    text-align: center; /* Centraliza no mobile */
 }
 
 .curso-card__info p {
     font-size: 1rem;
     margin: 0 0 1.25rem 0;
-    text-align: left;
+    text-align: center; /* Centraliza no mobile */
     color: var(--cor-texto-corpo);
 }
 
 
-/* --- BOTÕES: Hierarquia Visual (A Grande Melhoria) --- */
+/* =================================================================== */
+/* ============= CSS PARA OS BOTÕES DUPLOS DOS CURSOS ================ */
+/* =================================================================== */
+
+/* Container que alinha os dois botões lado a lado */
 .card-botoes-container {
     display: flex;
     align-items: center;
     flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas mínimas */
     gap: 0.75rem;
+    margin-top: 1rem;
 }
 
 /* Botão Secundário: "Ver Detalhes" */
@@ -1057,7 +1070,7 @@ section {
     text-align: center;
     background-color: var(--cor-fundo-branco);
     color: var(--cor-texto-neutro);
-    border: 1px solid #DCDCDC; /* Borda cinza clara */
+    border: 1px solid #DCDCDC;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1068,7 +1081,7 @@ section {
     background-color: #fdf5f5;
 }
 
-/* Botão Principal: "Tirar Dúvidas" */
+/* Botão Principal: "Falar com Nayra" */
 .botao-whatsapp-curso {
     display: flex;
     align-items: center;
@@ -1105,52 +1118,19 @@ section {
 }
 
 .curso-card.expandido .curso-card__detalhes {
-    max-height: 1200px; /* Aumentado para garantir espaço */
+    max-height: 1200px;
     padding: 2rem 1.5rem;
     border-top: 1px solid #f0e9e0;
 }
 
-.detalhes__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-}
-
-.detalhes__grid h4 {
-    font-family: var(--fonte-titulo);
-    color: var(--cor-vinho-escuro);
-    margin: 0 0 0.75rem 0;
-    text-align: left;
-    border-left: 3px solid var(--cor-dourado);
-    padding-left: 0.75rem;
-}
-
-.detalhes__grid ul {
-    list-style: none; padding: 0; margin: 0; text-align: left;
-}
-.detalhes__grid li {
-    margin-bottom: 0.6rem; color: var(--cor-texto-neutro); line-height: 1.5;
-}
+/* ... (as regras de .detalhes__grid, h4, ul, li, etc. permanecem as mesmas) ... */
+.detalhes__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.detalhes__grid h4 { font-family: var(--fonte-titulo); color: var(--cor-vinho-escuro); margin: 0 0 0.75rem 0; text-align: left; border-left: 3px solid var(--cor-dourado); padding-left: 0.75rem; }
+.detalhes__grid ul { list-style: none; padding: 0; margin: 0; text-align: left; }
+.detalhes__grid li { margin-bottom: 0.6rem; color: var(--cor-texto-neutro); line-height: 1.5; }
 .detalhes__grid li .fa-check { color: var(--cor-dourado); margin-right: 0.5rem; }
+.detalhes__cta-final { margin-top: 2.5rem; text-align: center; }
 
-.detalhes__cta-final {
-    margin-top: 2.5rem;
-    text-align: center;
-}
-
-/* --- Responsividade do Card --- */
-@media (max-width: 500px) {
-    .curso-card__preview {
-        flex-direction: column;
-        text-align: center;
-    }
-    .curso-card__info h3, .curso-card__info p {
-        text-align: center;
-    }
-    .card-botoes-container {
-        justify-content: center;
-    }
-}
 
 /* =================================================================== */
 /* === CSS COMPLETO E REFEITO DA SEÇÃO DE AGENDAMENTO (v3.0) ========= */
@@ -1187,6 +1167,7 @@ section {
 .agendamento__conteudo {
     background-color: var(--cor-fundo-branco);
     padding: 2rem;
+    border-radius: 8px;
 }
 
 .agendamento__descricao {
@@ -1247,58 +1228,6 @@ section {
     color: var(--cor-fundo-branco);
 }
 
-
-/* =================================================================== */
-/* --- BREAKPOINT ESTRATÉGICO: A Mágica da Sobreposição Acontece Aqui --- */
-/* =================================================================== */
-@media (min-width: 900px) {
-
-    /* Aumenta a largura do card para aproveitar o espaço */
-    .agendamento__card-container {
-        max-width: 980px;
-        /* Usamos Grid para controle total da sobreposição */
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Duas colunas de tamanho igual */
-        align-items: center;
-    }
-
-    /* A imagem agora ocupa a primeira coluna */
-    .agendamento__imagem-wrapper {
-        height: 100%; /* Ocupa toda a altura do card */
-    }
-    .agendamento__imagem-wrapper img {
-        height: 100%;
-        min-height: 550px; /* Garante uma altura mínima bonita */
-    }
-
-    /* O conteúdo de texto ocupa a segunda coluna */
-    .agendamento__conteudo {
-        /* Removemos o fundo para o efeito de texto flutuante */
-        background-color: transparent;
-        box-shadow: none;
-        
-        /* Adicionamos o "cartão de texto" que irá sobrepor a imagem */
-        background-color: var(--cor-fundo-branco);
-        border-radius: 24px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        padding: 2.5rem;
-        
-        /* Efeito de sobreposição: puxa o cartão para a esquerda */
-        margin-left: -5rem;
-    }
-}
-
-
-/* --- BREAKPOINT ESTRATÉGICO: Refinamento para Telas Muito Grandes --- */
-@media (min-width: 1200px) {
-    .agendamento__card-container {
-        max-width: 1100px; /* Aumenta ainda mais a largura */
-    }
-    .agendamento__conteudo {
-        padding: 3rem; /* Aumenta o espaçamento interno do texto */
-    }
-}
-
 /* =================================================================== */
 /* ============= CSS DO CARROSSEL DE FEEDBACKS INFINITO ============== */
 /* =================================================================== */
@@ -1340,7 +1269,7 @@ section {
 .scroller[data-animated="true"] .scroller__inner {
     width: max-content; /* Faz o container interno ser largo o suficiente */
     flex-wrap: nowrap;
-    animation: scroll 25s linear infinite; /* Ajuste o tempo (40s) para mais rápido ou mais lento */
+    animation: scroll 60s linear infinite; /* Ajuste o tempo (40s) para mais rápido ou mais lento */
 }
 
 /* Estilo do Card de Feedback (adaptado do seu) */
@@ -1596,192 +1525,144 @@ section {
 }
 
 /* =================================================================== */
-/* ================== MEDIA QUERIES UNIFICADAS E FINAIS ============== */
+/* ================== MEDIA QUERIES (VERSÃO FINAL OTIMIZADA) ========= */
 /* =================================================================== */
 
-/* --- Breakpoint: Tablets e Acima ( >= 768px ) --- */
-@media (min-width: 768px) {
-    .conteudo_principais {
-        margin: 0 auto;
-        width: 80%;
+/* --- Breakpoint: Tablets (Retrato) e Celulares Maiores (>= 600px) --- */
+@media (min-width: 600px) {
+    /* --- SEÇÃO CURSOS: Correção do layout que quebrava --- */
+    .curso-card__preview {
+        flex-direction: row; /* Volta para o layout lado a lado */
+        text-align: left;
     }
+    .curso-card__imagem {
+        width: 120px; /* Tamanho fixo e menor para a imagem */
+        height: 120px;
+    }
+    .curso-card__info {
+        align-items: flex-start; /* Alinha o conteúdo à esquerda */
+    }
+    .curso-card__info h3, .curso-card__info p {
+        text-align: left; /* Alinha os textos à esquerda */
+    }
+    .card-botoes-container {
+        justify-content: flex-start; /* Alinha os botões à esquerda */
+    }
+    .detalhes__grid {
+        grid-template-columns: 1fr 1fr; /* Detalhes em duas colunas */
+    }
+}
 
+
+/* --- Breakpoint: Tablets (Paisagem) e Acima (>= 900px) --- */
+@media (min-width: 900px) {
+    /* --- GERAL --- */
     .whatsapp-button {
         width: 70px;
         height: 70px;
         bottom: 30px;
+        right: 30px;
     }
 
-    .whatsapp-tooltip {
-        bottom: calc(70px + 10px + 5px);
-        right: 25px;
-        font-size: 0.9rem;
-        padding: 0.6rem 0.9rem;
+    /* --- SEÇÃO DE COMBOS --- */
+    .combos__container {
+        /* Garante no máximo 3 colunas em telas de tablet */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    .whatsapp-tooltip::after {
-        bottom: -7px;
-        border-width: 7px 7px 0 7px;
+    /* --- SEÇÃO DE AGENDAMENTO: Ativa o layout de sobreposição corrigido --- */
+    .agendamento__card-container {
+        max-width: 980px;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        align-items: center;
     }
-
-    .social-bar,
-    .toggle-bar {
-        display: none;
+    .agendamento__imagem-wrapper {
+        grid-column: 1 / 8;
+        grid-row: 1;
+        height: 100%;
+    }
+    .agendamento__imagem-wrapper img {
+        height: 100%;
+        min-height: 580px;
+    }
+    .agendamento__conteudo {
+        grid-column: 7 / 13;
+        grid-row: 1;
+        z-index: 2;
+        padding: 2.5rem;
     }
 }
 
-/* --- Breakpoint: Laptops / Desktops Pequenos ( >= 1024px ) --- */
-@media (min-width: 1024px) {
-    /* Cabeçalho */
-    .cabecalho { padding: var(--espacamento-medio) var(--espacamento-grande); }
-    .cabecalho__logo { width: 6.5em; }
 
-    /* Seção Principal */
+/* --- Breakpoint: Desktops Pequenos e Acima (>= 1024px) --- */
+@media (min-width: 1024px) {
+    /* --- SEÇÃO HERO --- */
     .secao-principal__fundo { height: 790px; }
-    #fundo01, #fundo02 { height: 58%; }
     .secao-principal__fundo__paragrafo { font-size: 48px; }
-    .textos-titulo { margin-top: var(--espacamento-pequeno); margin-bottom: var(--espacamento-medio); }
+    .textos-titulo { margin-top: 1rem; }
     .nome.nayra { font-size: 2.5rem; }
     .nome.ananias { font-size: 3.5rem; }
-    /* .secao-principal__subtitulo { font-size: 1.1rem; max-width: 80%; }  <-- REMOVIDO pois a classe mudou */
-    .linha { width: 2px; }
-    .linha-superior, .linha-inferior { height: 20px; }
+    .secao-principal__titulo-impacto { font-size: 1.4rem; max-width: 40ch; }
+    .botao-principal { font-size: calc(var(--tamanho-botao) * 1.1); padding: 1rem 2.8rem; }
     
-    /* NOVO: Ajustes para os novos textos e botão */
-    .secao-principal__titulo-impacto {
-        font-size: 1.3rem; /* Um pouco maior para mais destaque */
-        max-width: 40ch;
+    /* --- CATÁLOGO --- */
+    .catalogo__carrossel {
+        /* Desativa o padding negativo e centraliza a seção */
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0.5rem 0 2.5rem 0;
     }
-    .botao-principal {
-        font-size: calc(var(--tamanho-botao) * 1.1);
-        padding: 1rem 2.8rem;
+    .carrossel__trilha {
+        justify-content: center; /* Centraliza os cards quando não há scroll */
     }
-    /* FIM DAS NOVAS REGRAS */
 
-
-    /* Títulos de Seção (Ajuste Global) */
-    .catalogo__titulo,
-    .cursos__titulo,
-    .agendamento__titulo,
-    .feedback-section-title,
-    .location h2,
-    #quiz-container h2, 
-    #resultado h3 {
-        font-size: var(--tamanho-h2);
-    }
+    /* --- CURSOS --- */
+    .curso-card__imagem { width: 140px; height: 140px; }
+    .curso-card__info h3 { font-size: 1.8rem; }
+    .detalhes__grid h4 { font-size: 1.2rem; }
     
-    /* Catálogo */
-    .catalogo__menu { margin: var(--espacamento-grande) auto; }
-    .catalogo__botao { font-size: 1rem; padding: 0.7rem 1.4rem; }
-    .catalogo__card { max-width: 310px; }
-    .catalogo__card img { height: 210px; }
-    .catalogo__card__titulo { font-size: 1.8rem; }
+    /* --- FEEDBACKS --- */
+    .card-feedback { width: 380px; }
+    .scroller[data-animated="true"] .scroller__inner { animation-duration: 60s; } /* Mais lento no desktop */
+    
+    /* --- LOCALIZAÇÃO --- */
+    .map-container { max-width: 100%; } /* Ocupa a largura total do controle_geral */
 
-    /* Quiz Modal */
-    #pergunta { font-size: 1.3rem; }
-    #opcoes { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    #servico-recomendado-msg h3 { font-size: var(--tamanho-h3); }
-    #servico-recomendado-msg strong { font-size: 1.4rem; }
-
-    /* Cursos */
-    .curso-card-minimal { max-width: 800px; min-height: auto; }
-    .curso-card-minimal__conteudo { padding: var(--espacamento-grande); }
-    .curso-card-minimal__titulo { font-size: var(--tamanho-h3); }
-    .curso-card-minimal__imagem { flex-basis: 40%; min-height: 250px;}
-
-    /* Agendamento */
-    .agendamento { max-width: 900px; margin: var(--espacamento-xl) auto; }
-    .agendamento__info p { font-size: var(--tamanho-subtitulo); }
-    .agendamento__link { font-size: var(--tamanho-subtitulo); }
-
-    /* Feedbacks */
-    .swiper { max-width: 70rem; }
-    .card-feedback { max-width: 26rem; }
-    .card-feedback img { width: 4rem; height: 4rem; }
-    .card-feedback .user-info strong { font-size: var(--tamanho-subtitulo); }
-
-    /* Localização */
-    .map-container { max-width: 70%; }
-    .map-container iframe { min-height: 400px; }
-    .location-address { font-size: var(--tamanho-subtitulo); }
-    .location-address i { font-size: var(--tamanho-subtitulo); }
-
-    /* Rodapé */
-    .site-footer { text-align: left; }
+    /* --- RODAPÉ --- */
     .site-footer__container { display: flex; justify-content: space-between; align-items: center; }
-    .footer-social { margin-top: 0; margin-right: 0; }
 }
 
-/* --- Breakpoint: Desktops Grandes ( >= 1440px ) --- */
-@media (min-width: 1440px) {
-    /* Cabeçalho */
-    .cabecalho__logo { width: 8em; }
+/* --- Breakpoint: Desktops Grandes (>= 1200px) --- */
+@media (min-width: 1200px) {
+    /* --- SEÇÃO HERO --- */
+    .secao-principal__foto { max-width: 250px; }
+    .nome.nayra { font-size: 3rem; }
+    .nome.ananias { font-size: 4rem; }
+    .secao-principal__titulo-impacto { font-size: 1.5rem; }
 
-    /* Seção Principal */
+    /* --- SEÇÃO DE AGENDAMENTO --- */
+    .agendamento__card-container { max-width: 1100px; }
+    .agendamento__conteudo { padding: 3.5rem; }
+}
+
+
+/* --- Breakpoint: Desktops MUITO Grandes / TVs (>= 1600px) --- */
+@media (min-width: 1600px) {
+    /* --- SEÇÃO HERO --- */
     .secao-principal__fundo { height: 910px; }
-    #fundo01, #fundo02 { height: 58%; }
-    .nome.nayra { font-size: 3.5rem; }
-    .nome.ananias { font-size: 4.5rem; }
-    /* .secao-principal__subtitulo { font-size: 1.5rem; max-width: 55%; } <-- REMOVIDO */
-    .linha { width: 3px; }
-    .linha-superior, .linha-inferior { height: 25px; }
-    .foto-wrapper{ margin-top: 4rem; }
-
-    /* NOVO: Ajustes para os novos textos */
-    .secao-principal__titulo-impacto {
-        font-size: 1.5rem;
-        max-width: 45ch;
-    }
-    /* FIM DAS NOVAS REGRAS */
-
-
-    /* Títulos de Seção (Ajuste Global) */
-    .catalogo__titulo,
-    .cursos__titulo,
-    .agendamento__titulo,
-    .feedback-section-title,
-    .location h2,
-    #quiz-container h2, 
-    #resultado h3 {
-        font-size: calc(var(--tamanho-h2) * 1.1);
-    }
-
-    /* Catálogo */
-    .catalogo__botao { font-size: 1.1rem; }
-    .catalogo__card { max-width: 330px; }
-    .catalogo__card__titulo { font-size: 2rem; }
-    
-    /* Cursos */
-    .curso-card-minimal { min-height: 280px; }
-    .curso-card-minimal__titulo { font-size: calc(var(--tamanho-h3) * 1.1); }
-    .curso-card-minimal__imagem { flex-basis: 45%; min-height: 280px; }
-    
-    /* Agendamento */
-    .agendamento__info p { font-size: var(--tamanho-subtitulo); }
-    
-    /* Feedbacks */
-    .card-feedback { max-width: 30rem; }
-    .card-feedback .user-info strong { font-size: var(--tamanho-subtitulo); }
-}
-
-/* --- Breakpoint: Desktops MUITO Grandes / TVs ( >= 1920px ) --- */
-@media (min-width: 1920px) {
-    /* Seção Principal */
     .secao-principal__fundo__paragrafo { font-size: 65px; }
-    .nome.nayra { font-size: 4rem; }
+    .secao-principal__foto { max-width: 300px; }
+    .nome.nayra { font-size: 3.5rem; }
     .nome.ananias { font-size: 5rem; }
-    /* .secao-principal__subtitulo { font-size: 1.8rem; } <-- REMOVIDO */
+    .secao-principal__titulo-impacto { font-size: 1.8rem; }
 
-    /* NOVO: Ajustes para os novos textos */
-    .secao-principal__titulo-impacto {
-        font-size: 1.8rem;
-    }
-    /* FIM DAS NOVAS REGRAS */
-
-
-    /* Catálogo */
-    .catalogo__card { max-width: 340px; }
-    .catalogo__card__titulo { font-size: 2.2rem; }
-
-    /* Os demais títulos e cards herdam do breakpoint anterior para não crescerem mais. */
+    /* --- SEÇÃO DE AGENDAMENTO --- */
+    .agendamento__card-container { max-width: 1200px; }
+    .agendamento__imagem-wrapper img { min-height: 620px; }
+    .agendamento__conteudo { padding: 4rem; }
 }

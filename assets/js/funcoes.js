@@ -1,89 +1,153 @@
 /* =================================================================== */
-/* ============= JAVASCRIPT COMPLETO E ORGANIZADO ==================== */
-/* =================================================================== */
-/* Autor: Nayra Ananias
-/* Versão: 1.0
-/* Descrição: Script principal para funcionalidades do site.
-/* =================================================================== */
-
-
-/* =================================================================== */
 /* ======================= DADOS DO SITE ============================= */
 /* =================================================================== */
 // Dados para a seção Catálogo
 const servicosSobrancelhas = [
     {
         titulo: "Brow Lamination",
-        descricao: "Alinhamento e fixação dos fios para sobrancelhas mais cheias, alinhadas e com efeito natural.",
-        caracteristicas: ["+ Volume", "Fios alinhados", "Natural"],
-        imagem: "assets/img/servicos/sobrancelhas/BrowLamination.png"
+        descricao: "Técnica de alinhamento que deixa os fios mais encorpados e verticais, proporcionando sobrancelhas mais cheias e com um efeito 'selvagem' super moderno.",
+        caracteristicas: ["+ Volume", "Fios Alinhados", "Efeito Lifting"],
+        imagem: "assets/img/servicos/sobrancelhas/BrowLamination.avif"
     },
     {
         titulo: "Nanobrows",
-        descricao: "Técnica avançada de micropigmentação fio a fio para um resultado hiper-realista e delicado.",
-        caracteristicas: ["Fio a fio", "Realista", "Duradouro"],
-        imagem: "assets/img/servicos/sobrancelhas/NanoBrow.png"
+        descricao: "A evolução da micropigmentação. Fios ultrafinos e delicados desenhados para um resultado hiper-realista, corrigindo falhas com máxima naturalidade.",
+        caracteristicas: ["Fio a Fio", "Hiper-realista", "Longa Duração"],
+        imagem: "assets/img/servicos/sobrancelhas/Nanobrows.avif"
     },
     {
-        titulo: "Design personalizado",
-        descricao: "Modelagem exclusiva para valorizar o formato do seu rosto, respeitando sua identidade.",
-        caracteristicas: ["Exclusivo", "Harmonia", "Preciso"],
-        imagem: "assets/img/servicos/sobrancelhas/Personalizado.png"
+        titulo: "Design com Henna",
+        descricao: "Modelagem profissional combinada com a aplicação de henna para colorir, preencher falhas e dar mais definição e corpo às suas sobrancelhas.",
+        caracteristicas: ["Preenchimento", "Definição", "Cor Temporária"],
+        imagem: "assets/img/servicos/sobrancelhas/DesignHenna.avif"
     },
     {
-        titulo: "Designer com henna",
-        descricao: "Coloração temporária para realçar e preencher as sobrancelhas, com design sob medida.",
-        caracteristicas: ["Definido", "Colorido", "Preenchido"],
-        imagem: "assets/img/servicos/sobrancelhas/Henna.png"
+        titulo: "Design Personalizado",
+        descricao: "Estudo de visagismo e mapeamento facial para criar um formato de sobrancelha exclusivo, que harmoniza e valoriza os traços do seu rosto.",
+        caracteristicas: ["Exclusivo", "Harmonioso", "Visagismo"],
+        imagem: "assets/img/servicos/sobrancelhas/DesignPers.avif"
     }
 ];
 
 const servicosCilios = [
     {
-        titulo: "Volume Brasileiro",
-        descricao: "Técnica de volume que utiliza leques abertos para um efeito cheio e sofisticado, ideal para quem busca destaque.",
-        caracteristicas: ["Super volume", "Impacto", "Destaque"],
-        imagem: "assets/img/servicos/cilios/VolumeBrasileiro.png"
-    },
-    {
         titulo: "Lash Lifting",
-        descricao: "Procedimento que curva e levanta os cílios naturais, proporcionando um olhar mais aberto e natural sem extensões.",
-        caracteristicas: ["Curvado", "Natural", "Sem extensão"],
-        imagem: "assets/img/servicos/cilios/LashLifting.png"
+        descricao: "Tratamento que curva e hidrata seus cílios naturais desde a raiz, proporcionando um efeito de 'rímel' duradouro e um olhar mais aberto.",
+        caracteristicas: ["Curvatura", "Natural", "Sem Extensões"],
+        imagem: "assets/img/servicos/cilios/LashLifting.avif"
     },
     {
-        titulo: "Fox Eyes",
-        descricao: "Técnica que alonga e levanta o canto externo dos olhos, criando um efeito de olhar alongado e sensual.",
-        caracteristicas: ["Olhar felino", "Lifting", "Sensual"],
-        imagem: "assets/img/servicos/cilios/FoxEyses.png"
+        titulo: "Volume Moana",
+        descricao: "Uma técnica que combina fios leves e texturizados para criar um volume encantador e natural, com um acabamento desconectado e elegante.",
+        caracteristicas: ["Volume", "Naturalidade", "Elegância"],
+        imagem: "assets/img/servicos/cilios/VolumeMoana.avif"
+    },
+    {
+        titulo: "Efeito Fox Eyes",
+        descricao: "Técnica de extensão que alonga e levanta o canto externo dos olhos, criando o famoso efeito de olhar 'puxadinho', sensual e amendoado.",
+        caracteristicas: ["Olhar Felino", "Lifting", "Sensual"],
+        imagem: "assets/img/servicos/cilios/FoxEyses.avif"
+    },
+    {
+        titulo: "Volume Brasileiro",
+        descricao: "Técnica que utiliza fios em formato de 'Y' para um efeito de volume cruzado, preenchido e com uma textura única e marcante.",
+        caracteristicas: ["Volume Cruzado", "Preenchimento", "Destaque"],
+        imagem: "assets/img/servicos/cilios/VolumeBrasileiro.avif"
+    },
+    {
+        titulo: "Volume Jasmine",
+        descricao: "Um volume marcante e sofisticado, com fios mais alongados no canto externo para criar um olhar misterioso e encantador, cheio de personalidade.",
+        caracteristicas: ["Volume", "Alongado", "Sofisticação"],
+        imagem: "assets/img/servicos/cilios/VolumeJasmine.avif"
     }
 ];
 
 // Dados para a seção Feedbacks
 const slidesFeedbacks = [
+    // Feedback 1
     { 
-        nome: "Ana Souza", 
-        texto: "Amei o atendimento! Profissional maravilhosa e ambiente acolhedor. Me senti super segura e o resultado ficou incrível!", 
-        imagem: "assets/img/Feedbacks/Cliente01.avif",
-        rating: 5, // << NOVO: Avaliação em estrelas
-        source: "google", // << NOVO: Fonte (google, instagram, whatsapp)
-        destaque: "Profissional maravilhosa e ambiente acolhedor." // << NOVO: A melhor frase
-    },
-    { 
-        nome: "Bianca Lima", 
-        texto: "Meu cílios ficaram perfeitos, exatamente como eu queria! A durabilidade é ótima e o trabalho super delicado.", 
-        imagem: "assets/img/Feedbacks/Cliente02.avif",
+        nome: "brubsg2",
+        texto: "Nunca fui ao studio, mas acompanhando aqui vejo seu empenho ❤️ continue!",
+        imagem: "assets/img/feedbacks/Cliente01.avif", 
         rating: 5,
         source: "instagram",
-        destaque: "Meu cílios ficaram perfeitos!"
+        destaque: "Acompanhando aqui vejo seu empenho."
     },
     { 
-        nome: "Camila Torres", 
-        texto: "Nunca recebi tantos elogios pelas minhas sobrancelhas. A Nayra tem a mão muito leve e um senso de visagismo incrível. Recomendo de olhos fechados!", 
-        imagem: "assets/img/Feedbacks/Cliente03.avif",
+        nome: "alive_bocatto",
+        texto: "Um atendimento seu é muito mais do que um simples procedimento, é uma energia positiva vinda de você, um carinho, uma atenção... a autoestima e o brilho que você trás para nós não tem preço ❤️ amo seu trabalho Nayra 🥰",
+        imagem: "assets/img/feedbacks/Cliente06.avif", 
+        rating: 5,
+        source: "instagram",
+        destaque: "Um atendimento seu é muito mais do que um simples procedimento."
+    },
+    { 
+        nome: "gabrielasantos5692",
+        texto: "Maravilhosa, impecável, caprichosa, eu sou suspeita falar pq eu sou realmente fã 😍",
+        imagem: "assets/img/feedbacks/Cliente02.avif",
+        rating: 5,
+        source: "instagram",
+        destaque: "Maravilhosa, impecável, caprichosa."
+    },
+    { 
+        nome: "Mikaela Boaretto",
+        texto: "Maravilhosos! Eu fiquei sem por um período, pois estava me adaptando novamente com os cílios kkkk. Para piscar, é maravilhoso! Realmente, a sensação de que não estou com extensão. O volume atendeu todas as minhas expectativas, não ardeu quando abri os olhos e, depois, também não ardeu nada.",
+        imagem: "assets/img/feedbacks/Cliente07.avif", 
         rating: 5,
         source: "whatsapp",
-        destaque: "Nunca recebi tantos elogios pelas minhas sobrancelhas."
+        destaque: "Realmente, a sensação de que não estou com extensão."
+    },
+    { 
+        nome: "bii_rodriguees",
+        texto: "Foca em cada detalhe!!! Cílios, sobrancelha, maquiagem, simplesmente peritaaa no q faz",
+        imagem: "assets/img/feedbacks/Cliente03.avif", 
+        rating: 5,
+        source: "instagram",
+        destaque: "Foca em cada detalhe!!! Simplesmente perita no que faz."
+    },
+    // Feedback 4 (segundo da mesma pessoa)
+    
+    // Feedback 5
+    { 
+        nome: "eder_sillva019",
+        texto: "Sou seu fã 😍",
+        imagem: "assets/img/feedbacks/Cliente04.avif",
+        rating: 5,
+        source: "instagram",
+        destaque: "Sou seu fã!"
+    },
+    // Feedback 6
+    { 
+        nome: "prettyboxbraids2",
+        texto: "Muito boa, inclusive sdds do seu atendimento",
+        imagem: "assets/img/feedbacks/Cliente05.avif",
+        rating: 5,
+        source: "instagram",
+        destaque: "Muito boa, inclusive sinto saudades do seu atendimento."
+    },
+    { 
+        nome: "bii_rodriguees",
+        texto: "Desde quando vc começou sempre faço qualquer procedimento com vc!!! Impecável",
+        imagem: "assets/img/feedbacks/Cliente03.avif",
+        source: "instagram",
+        destaque: "Sempre faço qualquer procedimento com você! Impecável."
+    },
+    { 
+        nome: "Mikaela Boaretto",
+        texto: "Você arrasou! Amei tudo. O atendimento foi de suma importância, especialmente quando você me mostrou detalhadamente os tamanhos e como seria feito, atendendo ao contorno dos meus olhos e à minha satisfação. De atendimento, nota 10; procedimento, nota 10.",
+        imagem: "assets/img/feedbacks/Cliente07.avif",
+        rating: 5,
+        source: "whatsapp",
+        destaque: "Atendimento, nota 10; procedimento, nota 10."
+    },
+    
+    { 
+        nome: "Aline Guimarães",
+        texto: "Me senti tão confortável e bem acolhida por você! Por ser o meu primeiro atendimento, a gente fica com vergonha, mas você sabe como lidar com a cliente do início ao fim. Atenciosa com nosso conforto, bem-estar e trabalho impecável. Não poderia estar mais contente com a escolha da profissional.",
+        imagem: "assets/img/feedbacks/Cliente08.avif", 
+        rating: 5,
+        source: "whatsapp",
+        destaque: "Me senti tão confortável e bem acolhida por você!"
     }
 ];
 
@@ -91,16 +155,23 @@ const slidesFeedbacks = [
 const combos = [
     {
         nome: "Combo Impacto Laminado",
-        imagem: "assets/img/combos/Combo1.jpg", // Atualize com o caminho real da imagem
+        imagem: "assets/img/combos/Combo1.avif", 
         descricao: "Cílios volumosos com acabamento impecável e sobrancelhas perfeitamente alinhadas com a técnica de Brow Lamination.",
         servicos: ["Volume Brasileiro", "Brow Lamination"],
         destaque: true
     },
     {
         nome: "Combo Moana Perfeito",
-        imagem: "assets/img/combos/Combo2.jpg", // Atualize com o caminho real da imagem
+        imagem: "assets/img/combos/Combo2.avif", 
         descricao: "Um olhar marcante com o charme natural do Volume Moana e sobrancelhas desenhadas com precisão usando henna.",
         servicos: ["Volume Moana", "Design com Henna"],
+        destaque: false
+    },
+    {
+        nome: "Combo Lifting Total",
+        imagem: "assets/img/combos/Combo3.avif",
+        descricao: "O pacote definitivo para um efeito lifting no olhar. Cílios perfeitamente curvados com o Lash Lifting e sobrancelhas alinhadas e volumosas com a Brow Lamination.",
+        servicos: ["Lash Lifting", "Brow Lamination"],
         destaque: false
     }
 ];
@@ -110,7 +181,7 @@ const cursos = [
     { 
         titulo: "Extensão de Cílios - Iniciante", 
         chamada: "Desperte seu Olhar de Artista com Extensão de Cílios.",
-        imagem: "assets/img/cursos/lash.jpg",
+        imagem: "assets/img/cursos/lash.avif",
         conteudo: {
             "para_quem": "Para iniciantes que desejam ingressar no mercado de cílios com uma base sólida, mesmo sem nenhuma experiência prévia.",
             "aprendizado": ["História e fundamentos da extensão", "Biossegurança e saúde ocular", "Materiais e ferramentas", "Técnica de Fio a Fio Clássico", "Mapeamento e visagismo do olhar", "Manutenção e remoção segura"],
@@ -121,7 +192,7 @@ const cursos = [
     { 
         titulo: "Especialização em Volume Brasileiro", 
         chamada: "By Perfect Lash: Domine a técnica que conquista.",
-        imagem: "assets/img/cursos/cilios.jpg",
+        imagem: "assets/img/cursos/cilios.avif",
         conteudo: {
             "para_quem": "Para lash designers já certificadas na técnica clássica que buscam se diferenciar, aumentar seu portfólio e faturamento.",
             "aprendizado": ["O que são os fios em formato 'Y'", "Diferença entre Volume Brasileiro e Russo", "Técnica de acoplagem para volume", "Como criar o famoso 'efeito delineado'", "Manutenção e durabilidade da técnica", "Dicas de precificação e marketing"],
@@ -132,7 +203,7 @@ const cursos = [
     { 
         titulo: "Design de Sobrancelhas com Henna", 
         chamada: "Sobrancelhas Perfeitas: Design, Henna e Geometria.",
-        imagem: "assets/img/cursos/sobrancelhas.png",
+        imagem: "assets/img/cursos/sobrancelhas.avif",
         conteudo: {
             "para_quem": "Para iniciantes ou profissionais que desejam se tornar especialistas em sobrancelhas.",
             "aprendizado": ["Mapeamento facial com paquímetro e linha", "Visagismo aplicado ao design", "Epilação correta com pinça", "Colorimetria e preparação da henna", "Aplicação com efeito ombré e sem marcações", "Finalização e dicas de fotografia"],
@@ -309,8 +380,14 @@ function renderizarCursos() {
                 <div class="curso-card__info">
                     <h3>${curso.titulo}</h3>
                     <p>${curso.chamada}</p>
-                    <button class="curso-card__toggle-btn">Ver Detalhes</button>
-                </div>
+                    
+                    <div class="card-botoes-container">
+                        <button class="curso-card__toggle-btn">Ver Detalhes</button>
+                        <a href="https://wa.me/5519999670165?text=Oi, Nayra! Tenho interesse no curso de ${encodeURIComponent(curso.titulo)} e gostaria de tirar umas dúvidas." target="_blank" class="botao-whatsapp-curso">
+                            <i class="fab fa-whatsapp"></i> Falar com Nayra
+                        </a>
+                    </div>
+                    </div>
             </div>
 
             <div class="curso-card__detalhes">
@@ -337,7 +414,7 @@ function renderizarCursos() {
                     </div>
                 </div>
                 <div class="detalhes__cta-final">
-                        <a href="https://wa.me/5519999670165?text=Oi, Nayra! Tenho interesse no curso de ${encodeURIComponent(curso.titulo)}." class="botao-principal" target="_blank">Quero me Inscrever</a>
+                    <a href="https://wa.me/5519999670165?text=Oi, Nayra! Quero me inscrever no curso de ${encodeURIComponent(curso.titulo)}." class="botao-principal" target="_blank">Quero me Inscrever</a>
                 </div>
             </div>
         `;
