@@ -30,49 +30,121 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 
-    <!-- Schema.org para SEO (Dados Estruturados) -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BeautySalon",
-        "name": "Studio Nayra Ananias",
-        "image": "https://studionayraananias.com.br/assets/img/logo_nayra.png",
-        "@id": "https://studionayraananias.com.br/",
-        "url": "https://studionayraananias.com.br/",
-        "telephone": "+5519999670165",
-        "priceRange": "$$",
-        "description": "Especialista em extensão de cílios, design de sobrancelhas e estética em Piracicaba. Agende seu horário e realce sua beleza.",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Rua Ingá, 62",
-            "addressLocality": "Piracicaba",
-            "addressRegion": "SP",
-            "postalCode": "13401-543",
-            "addressCountry": "BR"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": -22.74760,
-            "longitude": -47.65076
-        },
-        "openingHoursSpecification": [
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "09:00",
-                "closes": "18:00"
+        {
+            "@context": "https://schema.org",
+            "@type": "BeautySalon",
+            "name": "Studio Nayra Ananias",
+            "image": "https://studionayraananias.com.br/assets/img/logo_nayra.png",
+            "@id": "https://studionayraananias.com.br/",
+            "url": "https://studionayraananias.com.br/",
+            "telephone": "+5519999670165",
+            "priceRange": "$$",
+            // MUDANÇA: Descrição mais completa
+            "description": "Especialista em extensão de cílios, design de sobrancelhas e cursos de formação para lash e brow designers em Piracicaba.",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rua Ingá, 62",
+                "addressLocality": "Piracicaba",
+                "addressRegion": "SP",
+                "postalCode": "13401-543",
+                "addressCountry": "BR"
             },
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": "Saturday",
-                "opens": "09:00",
-                "closes": "13:00"
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": -22.74760,
+                "longitude": -47.65076
+            },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "09:00",
+                    "closes": "18:00"
+                },
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": "Saturday",
+                    "opens": "09:00",
+                    "closes": "13:00"
+                }
+            ],
+            "sameAs": [
+                "https://www.instagram.com/studionayraananias"
+            ],
+            // =================================================================== //
+            // ======================= SEÇÃO NOVA ADICIONADA ===================== //
+            // =================================================================== //
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Serviços e Cursos",
+                "itemListElement": [
+                    // --- Catálogo de Serviços ---
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Serviços de Beleza do Olhar",
+                        "itemListElement": [
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Extensão de Cílios"
+                                }
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Design de Sobrancelhas"
+                                }
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Lash Lifting"
+                                }
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Brow Lamination"
+                                }
+                            }
+                        ]
+                    },
+                    // --- Catálogo de Cursos ---
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Cursos de Formação Profissional",
+                        "itemListElement": [
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service", // Cursos são um tipo de serviço para o Schema
+                                    "name": "Curso de Extensão de Cílios para Iniciantes"
+                                }
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Curso de Especialização em Volume Brasileiro"
+                                }
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Curso de Design de Sobrancelhas com Henna"
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
-        ],
-        "sameAs": [
-            "https://www.instagram.com/studionayraananias"
-        ]
-    }
+        }
     </script>
 </head>
 
@@ -143,7 +215,7 @@
             <div class="textos-titulo animate-on-scroll">
     
                 <h1 class="titulo-seo-escondido">
-                    Extensão de Cílios e Design de Sobrancelhas em Piracicaba - Studio Nayra Ananias
+                    Cílios, Sobrancelhas e Cursos de Formação em Piracicaba - Studio Nayra Ananias
                 </h1>
 
                 <div class="linha linha-superior"></div>
