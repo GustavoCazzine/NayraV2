@@ -66,25 +66,25 @@ const servicosCilios = [
 const slidesFeedbacks = [
     // Feedback 1
     { 
-        nome: "brubsg2",
+        nome: "@brubsg2",
         texto: "Nunca fui ao studio, mas acompanhando aqui vejo seu empenho ❤️ continue!",
-        imagem: "assets/img/feedbacks/Cliente01.avif", 
+        imagem: "/assets/img/feedbacks/Cliente01.avif", 
         rating: 5,
         source: "instagram",
         destaque: "Acompanhando aqui vejo seu empenho."
     },
     { 
-        nome: "alive_bocatto",
+        nome: "@aline_bocatto",
         texto: "Um atendimento seu é muito mais do que um simples procedimento, é uma energia positiva vinda de você, um carinho, uma atenção... a autoestima e o brilho que você trás para nós não tem preço ❤️ amo seu trabalho Nayra 🥰",
-        imagem: "assets/img/feedbacks/Cliente06.avif", 
+        imagem: "/assets/img/feedbacks/Cliente06.avif", 
         rating: 5,
         source: "instagram",
         destaque: "Um atendimento seu é muito mais do que um simples procedimento."
     },
     { 
-        nome: "gabrielasantos5692",
+        nome: "@gabrielasantos5692",
         texto: "Maravilhosa, impecável, caprichosa, eu sou suspeita falar pq eu sou realmente fã 😍",
-        imagem: "assets/img/feedbacks/Cliente02.avif",
+        imagem: "/assets/img/feedbacks/Cliente02.avif",
         rating: 5,
         source: "instagram",
         destaque: "Maravilhosa, impecável, caprichosa."
@@ -92,50 +92,47 @@ const slidesFeedbacks = [
     { 
         nome: "Mikaela Boaretto",
         texto: "Maravilhosos! Eu fiquei sem por um período, pois estava me adaptando novamente com os cílios kkkk. Para piscar, é maravilhoso! Realmente, a sensação de que não estou com extensão. O volume atendeu todas as minhas expectativas, não ardeu quando abri os olhos e, depois, também não ardeu nada.",
-        imagem: "assets/img/feedbacks/Cliente07.avif", 
+        imagem: "/assets/img/feedbacks/Cliente07.avif", 
         rating: 5,
         source: "whatsapp",
         destaque: "Realmente, a sensação de que não estou com extensão."
     },
     { 
-        nome: "bii_rodriguees",
+        nome: "@bii_rodriguees",
         texto: "Foca em cada detalhe!!! Cílios, sobrancelha, maquiagem, simplesmente peritaaa no q faz",
-        imagem: "assets/img/feedbacks/Cliente03.avif", 
+        imagem: "/assets/img/feedbacks/Cliente03.avif", 
         rating: 5,
         source: "instagram",
         destaque: "Foca em cada detalhe!!! Simplesmente perita no que faz."
     },
-    // Feedback 4 (segundo da mesma pessoa)
-    
-    // Feedback 5
     { 
-        nome: "eder_sillva019",
+        nome: "@eder_sillva019",
         texto: "Sou seu fã 😍",
-        imagem: "assets/img/feedbacks/Cliente04.avif",
+        imagem: "/assets/img/feedbacks/Cliente04.avif",
         rating: 5,
         source: "instagram",
         destaque: "Sou seu fã!"
     },
     // Feedback 6
     { 
-        nome: "prettyboxbraids2",
+        nome: "@prettyboxbraids2",
         texto: "Muito boa, inclusive sdds do seu atendimento",
-        imagem: "assets/img/feedbacks/Cliente05.avif",
+        imagem: "/assets/img/feedbacks/Cliente05.avif",
         rating: 5,
         source: "instagram",
         destaque: "Muito boa, inclusive sinto saudades do seu atendimento."
     },
     { 
-        nome: "bii_rodriguees",
+        nome: "@bii_rodriguees",
         texto: "Desde quando vc começou sempre faço qualquer procedimento com vc!!! Impecável",
-        imagem: "assets/img/feedbacks/Cliente03.avif",
+        imagem: "/assets/img/feedbacks/Cliente03.avif",
         source: "instagram",
         destaque: "Sempre faço qualquer procedimento com você! Impecável."
     },
     { 
         nome: "Mikaela Boaretto",
         texto: "Você arrasou! Amei tudo. O atendimento foi de suma importância, especialmente quando você me mostrou detalhadamente os tamanhos e como seria feito, atendendo ao contorno dos meus olhos e à minha satisfação. De atendimento, nota 10; procedimento, nota 10.",
-        imagem: "assets/img/feedbacks/Cliente07.avif",
+        imagem: "/assets/img/feedbacks/Cliente07.avif",
         rating: 5,
         source: "whatsapp",
         destaque: "Atendimento, nota 10; procedimento, nota 10."
@@ -144,7 +141,7 @@ const slidesFeedbacks = [
     { 
         nome: "Aline Guimarães",
         texto: "Me senti tão confortável e bem acolhida por você! Por ser o meu primeiro atendimento, a gente fica com vergonha, mas você sabe como lidar com a cliente do início ao fim. Atenciosa com nosso conforto, bem-estar e trabalho impecável. Não poderia estar mais contente com a escolha da profissional.",
-        imagem: "assets/img/feedbacks/Cliente08.avif", 
+        imagem: "/assets/img/feedbacks/Cliente08.avif", 
         rating: 5,
         source: "whatsapp",
         destaque: "Me senti tão confortável e bem acolhida por você!"
